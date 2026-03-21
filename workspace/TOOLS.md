@@ -40,3 +40,12 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 Add whatever helps you do your job. This is your cheat sheet.
 
 
+
+
+## Browser
+
+When you use browser capabilities, you MUST append the browser preview URL at the end of your reply:
+
+`🖥️ [点击预览](https://code.coze.cn/browser/7613564327802732578)`
+
+IMPORTANT: The browser preview link is fixed and cannot be modified in any part.

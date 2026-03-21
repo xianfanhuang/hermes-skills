@@ -7,12 +7,12 @@
       "heartbeat": {
         "every": "4h"
       },
+      "imageModel": {
+        "primary": "coze/doubao-seed-1-8-251228"
+      },
       "maxConcurrent": 4,
       "model": {
         "primary": "coze/auto"
-      },
-      "imageModel":{
-        "primary": "coze/doubao-seed-1-8-251228"
       },
       "subagents": {
         "maxConcurrent": 8
@@ -25,12 +25,12 @@
     "defaultProfile": "openclaw",
     "enabled": true,
     "executablePath": "/opt/google/chrome/chrome",
+    "extraArgs": [
+      "--window-size=1920,1080",
+      "--test-type"
+    ],
     "headless": false,
-    "noSandbox": true,
-    "extraArgs":[
-    	"--window-size=1920,1080",
-	"--test-type"
-    ]
+    "noSandbox": true
   },
   "commands": {
     "native": "auto",
@@ -39,7 +39,7 @@
   "gateway": {
     "auth": {
       "mode": "token",
-      "token": "7678d8cb-1ec1-4671-ac72-8fb55bd89000"
+      "token": "c97ca14e-64d1-40fe-82a5-8d075d9838f4"
     },
     "bind": "loopback",
     "controlUi": {
@@ -79,7 +79,7 @@
         "apiKey": "${COZE_WORKLOAD_IDENTITY_API_KEY}",
         "baseUrl": "${COZE_INTEGRATION_MODEL_BASE_URL}",
         "models": [
-	  {
+          {
             "api": "openai-completions",
             "contextWindow": 204800,
             "cost": {
@@ -220,7 +220,7 @@
             "name": "豆包 2.0 Mini",
             "reasoning": false
           }
-      	]
+        ]
       }
     }
   },
