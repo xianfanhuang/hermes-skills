@@ -1,0 +1,19 @@
+{
+  "account": {
+    "name": "Captain's Paper Trading Account",
+    "initialCapital": 100000,
+    "currentCapital": 100000,
+    "currency": "USD",
+    "createdAt": "2026-03-23",
+    "owner": "Captain"
+  },
+  "positions": [],
+  "cash": 100000,
+  "totalValue": 100000,
+  "dailyPnL": 0,
+  "totalPnL": 0,
+  "winRate": 0,
+  "totalTrades": 0,
+  "winningTrades": 0,
+  "losingTrades": 0
+}
