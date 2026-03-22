@@ -8,6 +8,34 @@
     "auto-trading-strategy": {
       "version": "1.1.0",
       "installedAt": 1774213141936
+    },
+    "backtest-expert": {
+      "version": "0.1.0",
+      "installedAt": 1774216502853
+    },
+    "crypto-backtest": {
+      "version": "1.0.0",
+      "installedAt": 1774216562192
+    },
+    "quant-strategy": {
+      "version": "1.0.0",
+      "installedAt": 1774216621722
+    },
+    "trading-signal": {
+      "version": "0.1.0",
+      "installedAt": 1774216682336
+    },
+    "us-stock-analysis": {
+      "version": "0.1.1",
+      "installedAt": 1774216742169
+    },
+    "china-stock-analysis": {
+      "version": "1.0.0",
+      "installedAt": 1774216801860
+    },
+    "risk-management-specialist": {
+      "version": "2.1.1",
+      "installedAt": 1774216862219
     }
   }
 }
