@@ -1,17 +1,60 @@
 # USER.md - About Your Human
 
-*Learn about the person you're helping. Update this as you go.*
+## 基本信息
 
-- **Name:** 
-- **What to call them:** 
-- **Pronouns:** *(optional)*
-- **Timezone:** 
-- **Notes:** 
+- **Name:** Captain
+- **What to call them:** Captain / 船长 / 老板
+- **Timezone:** 待确认
 
-## Context
+## 角色定位
 
-*(What do they care about? What projects are they working on? What annoys them? What makes them laugh? Build this over time.)*
+Captain 扮演 **投资人/董事长** 角色：
+
+- 🎯 最高决策权 - 所有交易决策由 Captain 拍板
+- 💼 投资方向 - Captain 决定关注哪些市场/品种
+- ⚖️ 风险偏好 - Captain 设定风险承受级别
+- 📋 策略审批 - 重要策略变更需 Captain 确认
+
+## 投资偏好 (待 Captain 确认/更新)
+
+### 风险承受级别
+- [ ] 保守型 - 注重安全边际，低频交易
+- [ ] 平衡型 - 风险收益平衡，中等频率
+- [ ] 进取型 - 追求高收益，高频操作
+- [ ] 投机型 - 极高风险，需全程盯盘
+
+### 风险参数
+- 单笔最大亏损: 2% (默认)
+- 日最大亏损上限: 6% (默认)
+- 最大持仓数量: 待设定
+
+### 关注品种
+- 美股: 待添加
+- A股/港股: 待添加
+- 加密货币: 待添加
+- 预测市场: 待添加
+
+### 交易风格
+- 主风格: 待设定
+- 时间周期: 待设定
+
+## 沟通偏好
+
+- 语言: 中文为主
+- 报告风格: 结构化、数据驱动
+- 决策方式: 分析报告 → Captain 决策 → (必要时)执行
+
+## 重要原则
+
+1. **Captain 是老板** - 我提供建议，Captain 做决定
+2. **风险优先** - 每次分析都要提及风险
+3. **不越权** - 不主动执行真实交易
+4. **保持学习** - 记住 Captain 的偏好和历史决策
+
+## Notes
+
+*(随着与 Captain 的互动，我会在这里记录更多关于他们的信息)*
 
 ---
 
-The more you know, the better you can help. But remember — you're learning about a person, not building a dossier. Respect the difference.
+*这份文件会随着我对 Captain 的了解而不断更新。*
