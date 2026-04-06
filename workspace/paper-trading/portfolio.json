@@ -4,13 +4,17 @@
     "created_at": "2026-03-23T07:15:00+08:00",
     "initial_capital": 10000,
     "currency": "USDT",
-    "current_balance": 4500,
-  "cash_available": 4500,
-  "equity": 10000,
+    "current_balance": 7350,
+    "cash_available": 7350,
+    "equity": 9862.25,
+    "unrealized_pnl": 12.25,
+    "realized_pnl": -150,
+    "daily_pnl": "+0.12%",
     "risk_level": "high",
     "max_single_loss": 5,
     "max_daily_loss": 15,
-    "max_positions": 3
+    "max_positions": 3,
+    "last_update": "2026-04-06T14:00:00+08:00"
   },
   "positions": [
     {
@@ -19,17 +23,22 @@
       "side": "long",
       "quantity": 30,
       "entry_price": 100,
-      "current_price": 100,
-      "position_value": 3000,
-      "pnl": 0,
-      "pnl_pct": 0,
+      "exit_price": 95,
+      "position_value": 0,
+      "pnl": -150,
+      "pnl_pct": -5,
       "stop_loss": 95,
       "take_profit": 115,
       "entry_time": "2026-03-23T07:16:00+08:00",
+      "exit_time": "2026-03-23T23:00:00+08:00",
+      "last_update": "2026-03-23T23:43:00+08:00",
       "signal": "原油/油气链 - 强信号",
       "reasoning": "霍尔木兹海峡冲突预期 + 成品油上调2000元/吨",
+      "exit_reason": "特朗普宣布暂停对伊朗军事打击5天，原油暴跌14.8%，触发止损",
       "risk_pct": 5,
-      "leverage": 1
+      "leverage": 1,
+      "status": "已平仓（止损）",
+      "wti_price": 85.66
     },
     {
       "symbol": "A50",
@@ -37,17 +46,23 @@
       "side": "long",
       "quantity": 25,
       "entry_price": 100,
-      "current_price": 100,
-      "position_value": 2500,
-      "pnl": 0,
-      "pnl_pct": 0,
+      "current_price": 100.5,
+      "position_value": 2512.5,
+      "pnl": 12.5,
+      "pnl_pct": 0.5,
       "stop_loss": 95,
       "take_profit": 110,
       "entry_time": "2026-03-23T07:16:00+08:00",
+      "last_update": "2026-04-06T14:00:00+08:00",
       "signal": "A股超跌反弹 - 强信号",
-      "reasoning": "上证指数RSI超卖，3900-3920点强支撑",
+      "reasoning": "上证指数RSI超卖，3900-3920点强支撑 + 收盘上涨0.24%报3923点",
       "risk_pct": 5,
-      "leverage": 1
+      "leverage": 1,
+      "status": "持仓中 - 盈利中",
+      "sse_index": 14567,
+      "alert": "A50期货夜盘报14,720-14,759点",
+      "daily_change": "+0.03%~+0.27%",
+      "index_close": 14720
     }
   ],
   "risk_parameters": {
@@ -58,73 +73,129 @@
   },
   "focus_signals": [
     {
-      "signal": "原油/油气链",
-      "strength": "强信号",
-      "probability": ">70%",
-      "expected_volatility": "30%+",
-      "symbols": ["USO", "XLE", "XOM", "CVX"]
+      "signal": "避险资产",
+      "strength": "中强信号",
+      "probability": "60-70%",
+      "catalyst": "地缘政治风险 + 市场极度恐慌 + 超级周风险",
+      "symbols": [
+        "GLD",
+        "GOLD"
+      ],
+      "status": "重点关注",
+      "note": "黄金4491.94美元，地缘政治支撑强劲，可考虑多头对冲"
     },
     {
       "signal": "A股超跌反弹",
       "strength": "强信号",
       "probability": ">70%",
       "support_level": "3900-3920点",
-      "symbols": ["A50", "CSI300"]
+      "symbols": [
+        "A50",
+        "CSI300"
+      ],
+      "status": "持仓中",
+      "note": "A50当前亏损2.05%，距离止损5%还有空间，周一开盘密切关注"
     },
     {
-      "signal": "光伏设备",
-      "strength": "中强信号",
-      "probability": "55-70%",
-      "catalyst": "特斯拉29亿美元采购中国光伏设备",
-      "symbols": ["JASO", "CSI Solar"]
-    },
-    {
-      "signal": "人形机器人",
-      "strength": "中强信号",
-      "probability": "55-70%",
-      "catalyst": "宇树科技科创板IPO",
-      "symbols": ["ROBO", "TSLA"]
+      "signal": "原油/油气链",
+      "strength": "中信号",
+      "probability": "50-60%",
+      "expected_volatility": "30%+",
+      "symbols": [
+        "USO",
+        "XLE",
+        "XOM",
+        "CVX"
+      ],
+      "status": "观望中",
+      "note": "G7释放战略石油储备可能压制油价，建议观望"
     }
   ],
-  "us_options_watchlist": [
+  "market_alerts": [
     {
-      "symbol": "NVDA",
-      "price": 172.70,
-      "option_volume": "359.88万张",
-      "strategy": "看涨回调买入，看跌对冲",
-      "iv_status": "高位"
+      "level": "高风险",
+      "type": "超级周风险",
+      "message": "下周超级周：非农+鲍威尔+G7+日本央行，重大数据密集",
+      "impact": "市场波动性加剧，流动性可能收紧"
     },
     {
-      "symbol": "TSLA",
-      "price": 391.20,
-      "option_volume": "327.16万张",
-      "strategy": "事件驱动，波动率交易",
-      "iv_status": "常年高企"
+      "level": "高风险",
+      "type": "地缘政治",
+      "message": "美伊冲突升级，特朗普推迟行动至4月7日",
+      "impact": "市场波动性加剧，风险偏好下降"
     },
     {
-      "symbol": "META",
-      "price": 440.50,
-      "option_volume": "86.03万张",
-      "strategy": "财报跨式期权",
-      "iv_status": "高位"
+      "level": "高风险",
+      "type": "市场情绪",
+      "message": "恐惧贪婪指数处于极度恐慌区域（22-28）",
+      "impact": "市场情绪极端，建议观望为主"
+    },
+    {
+      "level": "中风险",
+      "type": "持仓风险",
+      "message": "A50持仓亏损2.05%，接近止损位5%",
+      "impact": "需密切关注，考虑减仓或止损"
+    },
+    {
+      "level": "中风险",
+      "type": "流动性风险",
+      "message": "4月3日非农数据发布但美股休市，流动性收紧",
+      "impact": "市场波动可能放大"
     }
   ],
-  "hk_stocks_watchlist": [
-    {
-      "symbol": "泡泡玛特",
-      "code": "09992",
-      "price": 209.60,
-      "action": "观望，等待回撤至200以下",
-      "target_price": 250,
-      "stop_loss": 185
+  "next_week_calendar": {
+    "monday_3_30": {
+      "events": [
+        "德国3月CPI",
+        "欧洲3月消费者信心指数",
+        "日本央行货币政策意见摘要（4月加息预期>50%）",
+        "美国达拉斯联储商业活动指数",
+        "鲍威尔哈佛演讲",
+        "G7会议（释放战略石油储备）"
+      ],
+      "risk_level": "high"
     },
-    {
-      "symbol": "快手-W",
-      "code": "01024",
-      "price": 53.80,
-      "action": "分批建仓",
-      "target_price": 75,
-      "stop_loss": 47
+    "tuesday_3_31": {
+      "events": [
+        "中国3月官方制造业PMI",
+        "日本3月东京CPI年率及2月失业率",
+        "美国2月JOLTs职位空缺（延误数据）",
+        "美国3月谘商会消费者信心指数",
+        "威廉姆斯讲话"
+      ],
+      "risk_level": "high"
+    },
+    "wednesday_4_1": {
+      "events": [
+        "美国EIA/API原油库存",
+        "中国3月SPGI PMI",
+        "美国ISM制造业PMI",
+        "美国3月ADP就业人数（小非农）",
+        "美国2月零售销售（延误数据）",
+        "穆萨莱姆讲话"
+      ],
+      "risk_level": "high"
+    },
+    "thursday_4_2": {
+      "events": [
+        "美国3月挑战者裁员数据",
+        "美国初请/续请失业金人数",
+        "加拿大央行货币政策纪要",
+        "洛根讲话"
+      ],
+      "risk_level": "medium"
+    },
+    "friday_4_3": {
+      "events": [
+        "美国3月非农数据、失业率、工资变动（压轴）",
+        "美股和欧洲多数交易所休市",
+        "CME贵金属、原油期货全天暂停",
+        "股指期货21:15提前结束"
+      ],
+      "risk_level": "high",
+      "note": "非农数据发布但市场休市，流动性风险"
     }
-  ]
+  },
+  "last_scan": "2026-04-06T14:00 (午盘扫描)",
+  "next_scan": "2026-04-06 18:00 (晚盘扫描)"
 }
