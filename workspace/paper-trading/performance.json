@@ -6,9 +6,9 @@
   },
   "performance": {
     "initial_capital": 10000,
-    "current_equity": 9950.5,
-    "total_pnl": -49.5,
-    "total_pnl_pct": -0.50,
+    "current_equity": 9864.0,
+    "total_pnl": -136.0,
+    "total_pnl_pct": -1.36,
     "realized_pnl": -150,
     "unrealized_pnl": 100.5,
     "win_rate": 0,
@@ -160,6 +160,16 @@
       "positions_count": 1,
       "trades_closed": 0,
       "notes": "A股大涨！沪指+2.69%站上3995点，深成+4.79%，创业板+5.59%，成交额2.45万亿。A50持仓盈利扩大至+3.8%"
+    },
+    {
+      "date": "2026-04-09",
+      "opening_balance": 9950.5,
+      "closing_balance": 9864.0,
+      "daily_pnl": -86.5,
+      "daily_pnl_pct": -0.87,
+      "positions_count": 1,
+      "trades_closed": 0,
+      "notes": "A股正常回调-0.72%报3966点，全天缩量3033亿。A50持仓盈利收窄至+0.56%，今日回撤约-86.5"
     }
   ],
   "weekly_performance": {
@@ -178,10 +188,10 @@
   },
   "monthly_performance": {
     "month": "2026-04",
-    "monthly_pnl": 88.25,
-    "monthly_pnl_pct": 0.89,
+    "monthly_pnl": 1.75,
+    "monthly_pnl_pct": 0.02,
     "trades_closed": 0,
-    "notes": "4月第二周：A50持仓盈利扩大至+3.8%，A股大涨2.69%提振持仓"
+    "notes": "4月：A股暴涨后回调，A50持仓盈利从+3.8%收窄至+0.56%，今日回撤-86.5"
   },
   "risk_metrics": {
     "max_single_loss_pct": -5,
