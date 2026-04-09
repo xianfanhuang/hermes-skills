@@ -1,7 +1,57 @@
 {
   "date": "2026-04-09",
-  "scan_time": "18:10 (Asia/Shanghai)",
-  "scan_type": "晚盘扫描",
+  "scan_time": "22:00 (Asia/Shanghai)",
+  "scan_type": "夜盘扫描/每日报告",
+  "market_summary": {
+    "crypto": {
+      "btc_price": "$71,549 (+3.04%)",
+      "eth_price": "$2,110",
+      "btc_trend": "突破7万美元关键阻力，多头动能强劲",
+      "status": "强势",
+      "catalyst": "美伊停火协议 + 流动性注入",
+      "note": "BTC市值1.43万亿，24h成交量472亿美元，关注70000-71000支撑"
+    },
+    "a_share": {
+      "close_sh": "沪指-0.72%报3966.17点",
+      "volume": "全天约1.7万亿（昨日2.45万亿，缩量3033亿）",
+      "market_character": "缩量回调整固，4000点前蓄势，抛压不重",
+      "active_sectors": "消费电子、通信设备、半导体",
+      "weak_sectors": "酿酒、医药、保险、贵金属"
+    },
+    "us_stocks": {
+      "dow": "+2.8% (大涨1300点)",
+      "nasdaq": "+2.8% (六连涨)",
+      "sp500": "+2.51% (六连涨)",
+      "status": "六连涨，能源股重挫，芯片股爆发",
+      "catalyst": "美伊停火协议"
+    },
+    "commodities": {
+      "wti_cude": "昨夜暴跌-18.31%至约$92（停火后供给预期改善）",
+      "brent": "昨夜暴跌-16.22%至约$91",
+      "gold": "突破$4800后震荡",
+      "geopolitical_alert": "⚠️ 伊朗怒斥美以破坏停火，明日4/10伊斯兰堡谈判"
+    }
+  },
+  "portfolio": {
+    "equity": 9864.0,
+    "cash": 7350,
+    "positions": [
+      {
+        "symbol": "A50",
+        "side": "long",
+        "quantity": 25,
+        "entry": 100,
+        "current_price": 100.56,
+        "pnl_pct": "+0.56%",
+        "stop_loss": 95,
+        "take_profit": 110,
+        "status": "持仓中 - 小幅盈利",
+        "note": "A股收盘-0.72%，持仓盈利收窄但仍盈利，距止损95约5.6%"
+      }
+    ],
+    "risk_exposure": "25.56%",
+    "daily_pnl": "-$86.5 (-0.87%)"
+  },
   "market_summary": {
     "crypto": {
       "status": "强势震荡",
