@@ -9,12 +9,12 @@
     "equity": 9862.25,
     "unrealized_pnl": 12.25,
     "realized_pnl": -150,
-    "daily_pnl": "+0.12%",
+    "daily_pnl": "+0.15%",
     "risk_level": "high",
     "max_single_loss": 5,
     "max_daily_loss": 15,
     "max_positions": 3,
-    "last_update": "2026-04-06T18:10:00+08:00"
+    "last_update": "2026-04-07T22:10:00+08:00"
   },
   "positions": [
     {
@@ -59,11 +59,11 @@
       "risk_pct": 5,
       "leverage": 1,
       "status": "持仓中 - 盈利中",
-      "sse_index": 14567,
-      "alert": "A50期货夜盘报14,720-14,759点",
-      "daily_change": "+0.03%~+0.27%",
-      "index_close": 14720,
-      "evening_move": "A50期货夜盘直线拉升近1.3%"
+      "sse_index": 3995.00,
+      "alert": "A股大涨！沪指+2.69%，深成+4.79%，创业板+5.59%，成交额2.45万亿！",
+      "daily_change": "+2.69%",
+      "index_close": 3995,
+      "evening_move": "A股集体大涨，持仓盈利扩大"
     }
   ],
   "risk_parameters": {
@@ -114,34 +114,34 @@
   ],
   "market_alerts": [
     {
-      "level": "高风险",
-      "type": "超级周风险",
-      "message": "下周超级周：非农+鲍威尔+G7+日本央行，重大数据密集",
-      "impact": "市场波动性加剧，流动性可能收紧"
-    },
-    {
-      "level": "高风险",
+      "level": "中风险",
       "type": "地缘政治",
-      "message": "美伊冲突升级，特朗普推迟行动至4月7日",
-      "impact": "市场波动性加剧，风险偏好下降"
+      "message": "美以伊三方同意停火2周，4月10日伊斯兰堡谈判",
+      "impact": "地缘风险大幅缓解，原油暴跌、黄金暴涨"
     },
     {
       "level": "高风险",
       "type": "市场情绪",
-      "message": "恐惧贪婪指数处于极度恐慌区域（22-28）",
-      "impact": "市场情绪极端，建议观望为主"
+      "message": "恐惧贪婪指数仍处于恐慌区域",
+      "impact": "市场情绪谨慎，但有所缓和"
     },
     {
-      "level": "中风险",
+      "level": "低风险",
       "type": "持仓风险",
-      "message": "A50持仓亏损2.05%，接近止损位5%",
-      "impact": "需密切关注，考虑减仓或止损"
+      "message": "A50持仓盈利+1.3%，止损5%未触发",
+      "impact": "继续持有观察"
     },
     {
-      "level": "中风险",
-      "type": "流动性风险",
-      "message": "4月3日非农数据发布但美股休市，流动性收紧",
-      "impact": "市场波动可能放大"
+      "level": "关注",
+      "type": "信号反转",
+      "message": "USO原油信号反转：强多→观望，地缘溢价消退",
+      "impact": "昨日信号已失效，不建议追多"
+    },
+    {
+      "level": "关注",
+      "type": "新信号",
+      "message": "GLD黄金信号增强：中多→强多，突破$4800",
+      "impact": "避险需求确认，可考虑入场"
     }
   ],
   "next_week_calendar": {
@@ -197,6 +197,6 @@
       "note": "非农数据发布但市场休市，流动性风险"
     }
   },
-  "last_scan": "2026-04-06T18:10 (晚盘扫描)",
-  "next_scan": "2026-04-06 22:00 (夜盘扫描)"
+  "last_scan": "2026-04-09T10:10 (早盘扫描)",
+  "next_scan": "2026-04-09 12:00 (午盘扫描)"
 }
