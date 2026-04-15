@@ -2,9 +2,10 @@
 
 ## 基本信息
 
-- **Name:** Captain
-- **What to call them:** Captain / 船长 / 老板
+- **Name:** VAN
+- **What to call them:** VAN / 船长 / 老板
 - **Timezone:** 待确认
+- **飞书 ID:** ou_1a64d3ea99c24cac146f8ec1b670f683
 
 ## 角色定位
 

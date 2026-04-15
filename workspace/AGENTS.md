@@ -67,6 +67,35 @@ Before doing anything else:
 4. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
 5. **If in MAIN SESSION** (direct chat with Captain): Also read `MEMORY.md`
 
+**🔄 自动记忆（新增）**
+
+在任何重要对话后，自动写入记忆文件，无需用户提醒：
+
+### 自动记忆触发场景：
+
+| 场景 | 触发条件 | 执行命令 |
+|------|---------|---------|
+| 用户偏好 | 检测到"我喜欢"、"我偏好"、"我的风格" | `bash /workspace/projects/workspace/scripts/memory-write.sh "preference" "用户喜欢保守型策略，单笔最大亏损2%"` |
+| 重要决策 | 交易决策、策略选择 | `bash /workspace/projects/workspace/scripts/memory-write.sh "decision" "决定平仓 A50，盈利 +2%"` |
+| 学到知识 | 解释新概念、分析新市场 | `bash /workspace/projects/workspace/scripts/memory-write.sh "knowledge" "学习到缠论第三类买点的确认方法"` |
+| 错误教训 | 失败、报错、用户纠正 | `bash /workspace/projects/workspace/scripts/memory-write.sh "error" "之前的止损设置太紧，导致被频繁止损"` |
+| 市场观察 | 重要新闻、价格突破 | `bash /workspace/projects/workspace/scripts/memory-write.sh "observation" "比特币突破 $73,000，恐惧贪婪指数 11"` |
+| 对话记录 | 用户明确要求记录 | `bash /workspace/projects/workspace/scripts/memory-write.sh "conversation" "用户询问关于黄金的投资策略"` |
+
+### 自动记忆关键字检测：
+
+以下关键字出现时，自动判断需要写入记忆：
+- **偏好类**: 记住、重要、偏好、喜欢、习惯、风格
+- **决策类**: 决定、决策、策略、交易计划、平仓、开仓
+- **知识类**: 学习、学到、理解、明白了
+- **错误类**: 错误、失败、不要、避免、注意、警告
+- **观察类**: 注意到、观察到、发现
+
+**注意**:
+- 不要等待用户说"记住这个"
+- 自动检测并记录重要信息
+- 记忆文件：`workspace/memory/YYYY-MM-DD.md`（每日记忆）+ `workspace/MEMORY.md`（长期记忆）
+
 Don't ask permission. Just do it.
 
 ## Memory
@@ -84,6 +113,28 @@ You wake up fresh each session. These files are your continuity:
 - When Captain says "remember this" → update `memory/YYYY-MM-DD.md` or relevant file
 - When you learn a lesson → update AGENTS.md, TOOLS.md, or the relevant skill
 - **Text > Brain** 📝
+
+### 🔄 自动记忆管理（新增）
+
+**Session 结束时自动执行**：
+
+当检测到会话即将结束（用户说"/bye"、"再见"、"结束对话"）时：
+
+1. **执行自动记忆脚本**：
+   ```bash
+   bash /workspace/projects/workspace/scripts/auto-memory.sh
+   ```
+
+2. **生成会话摘要**：
+   - 提取本次会话的关键对话
+   - 总结重要决策和学习内容
+   - 记录到今天的记忆文件
+
+3. **更新长期记忆**：
+   - 如果有新的用户偏好，同步到 `MEMORY.md`
+   - 如果学到重要知识，添加到长期记忆
+
+**注意**：这是自动执行的，不需要用户提醒。
 
 ## 📊 Trading Skills 已安装
 
@@ -104,6 +155,49 @@ You wake up fresh each session. These files are your continuity:
 - Don't run destructive commands without asking.
 - `trash` > `rm` (recoverable beats gone forever)
 - When in doubt, ask Captain.
+
+## 🛠️ 记忆工具（新增）
+
+### 可用脚本：
+
+| 脚本 | 用途 | 调用方式 |
+|------|------|---------|
+| `auto-memory.sh` | 自动更新今日记忆 | `bash /workspace/projects/workspace/scripts/auto-memory.sh` |
+| `memory-write.sh` | 手动写入特定类别记忆 | `bash /workspace/projects/workspace/scripts/memory-write.sh "类别" "内容"` |
+| `memory-archive.sh` | 归档旧记忆文件 | `bash /workspace/projects/workspace/scripts/memory-archive.sh` |
+
+### memory-write.sh 支持的类别：
+
+- `preference` - 用户偏好
+- `decision` - 重要决策
+- `knowledge` - 学到的知识
+- `error` - 错误和教训
+- `observation` - 市场观察
+- `conversation` - 对话记录
+
+**示例**：
+```bash
+# 记录用户偏好
+bash /workspace/projects/workspace/scripts/memory-write.sh "preference" "用户喜欢保守型策略，单笔最大亏损2%"
+
+# 记录重要决策
+bash /workspace/projects/workspace/scripts/memory-write.sh "decision" "决定平仓 A50，盈利 +2%"
+
+# 记录学到知识
+bash /workspace/projects/workspace/scripts/memory-write.sh "knowledge" "学习到缠论第三类买点的确认方法"
+```
+
+### 定时任务（可选）：
+
+如需自动化归档，可配置 crontab：
+
+```cron
+# 每小时检查记忆更新
+0 * * * * /workspace/projects/workspace/scripts/auto-memory.sh
+
+# 每天凌晨 2:00 归档旧记忆
+0 2 * * * /workspace/projects/workspace/scripts/memory-archive.sh
+```
 
 ## 📝 Platform Formatting
 
