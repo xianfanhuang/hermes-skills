@@ -6,15 +6,15 @@
     "currency": "USDT",
     "current_balance": 7350,
     "cash_available": 7350,
-    "equity": 9864,
-    "unrealized_pnl": 14,
+    "equity": 9909,
+    "unrealized_pnl": 59,
     "realized_pnl": -150,
-    "daily_pnl": "-0.62%",
+    "daily_pnl": "+0.60%",
     "risk_level": "high",
     "max_single_loss": 5,
     "max_daily_loss": 15,
     "max_positions": 3,
-    "last_update": "2026-04-09T18:10:00+08:00"
+    "last_update": "2026-04-15T13:25:00+08:00"
   },
   "positions": [
     {
@@ -46,24 +46,24 @@
       "side": "long",
       "quantity": 25,
       "entry_price": 100,
-      "current_price": 100.56,
-      "position_value": 2514,
-      "pnl": 14,
-      "pnl_pct": 0.56,
+      "current_price": 102.36,
+      "position_value": 2559,
+      "pnl": 59,
+      "pnl_pct": 2.36,
       "stop_loss": 95,
       "take_profit": 110,
       "entry_time": "2026-03-23T07:16:00+08:00",
-      "last_update": "2026-04-06T18:10:00+08:00",
-      "signal": "A股超跌反弹 - 强信号",
-      "reasoning": "上证指数RSI超卖，3900-3920点强支撑 + 收盘上涨0.24%报3923点",
+      "last_update": "2026-04-15T13:25:00+08:00",
+      "signal": "A股超跌反弹 - 中等偏强信号",
+      "reasoning": "沪指重返4000点，创业板涨超2%，算力产业链大爆发",
       "risk_pct": 5,
       "leverage": 1,
-      "status": "持仓中 - 盈利中",
-      "sse_index": 3995.00,
-      "alert": "A股大涨！沪指+2.69%，深成+4.79%，创业板+5.59%，成交额2.45万亿！",
-      "daily_change": "+2.69%",
-      "index_close": 3995,
-      "evening_move": "A股缩量回调-0.72%，持仓小幅回撤但仍盈利"
+      "status": "持仓中 - 盈利扩大",
+      "sse_index": 4026.63,
+      "alert": "A股强势反弹！沪指+0.95%，深成+1.61%，创业板+2.36%！",
+      "daily_change": "+0.35%",
+      "index_close": 4026.63,
+      "evening_move": "午盘继续上涨，持仓盈利扩大"
     }
   ],
   "risk_parameters": {
@@ -95,7 +95,7 @@
         "CSI300"
       ],
       "status": "持仓中",
-      "note": "A50当前亏损2.05%，距离止损5%还有空间，周一开盘密切关注"
+      "note": "A50当前盈利+1.05%，距离止损5%还有空间，继续持有观察"
     },
     {
       "signal": "原油/油气链",
@@ -114,10 +114,17 @@
   ],
   "market_alerts": [
     {
+      "level": "高风险",
+      "type": "地缘政治",
+      "message": "霍尔木兹海峡再次关闭（4月10日）",
+      "impact": "⚠️ 伊朗指责美以违反停火协议，再次关闭霍尔木兹，原油/黄金可能反弹",
+      "source": "上观新闻 2026-04-10"
+    },
+    {
       "level": "中风险",
       "type": "地缘政治",
-      "message": "美以伊三方同意停火2周，4月10日伊斯兰堡谈判",
-      "impact": "地缘风险大幅缓解，原油暴跌、黄金暴涨"
+      "message": "美以伊三方同意停火2周（4月8日），但谈判再生变数",
+      "impact": "地缘风险不确定性仍然较高"
     },
     {
       "level": "高风险",
@@ -197,7 +204,5 @@
       "note": "非农数据发布但市场休市，流动性风险"
     }
   },
-  "last_scan": "2026-04-09T14:10 (午盘扫描)",
-  "next_scan": "2026-04-09 18:00 (晚盘扫描)"
-}��告)"
+  "last_scan": "2026-04-15T13:25 (午盘扫描 - 美伊和谈预期升温)"
 }

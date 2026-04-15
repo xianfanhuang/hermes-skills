@@ -1,0 +1,99 @@
+{
+  "date": "2026-04-03",
+  "scan_time": "22:10 (Asia/Shanghai)",
+  "scan_type": "夜盘扫描",
+  "market_summary": {
+    "crypto": {
+      "btc": {
+        "price_usd": 66300,
+        "change_24h": -3.32,
+        "unit": "%"
+      },
+      "fear_greed_index": "extreme_fear",
+      "fear_greed_value": 25
+    },
+    "us_stocks": {
+      "sp500_futures": -1.0,
+      "nasdaq_futures": -1.3,
+      "dow_futures": -0.52,
+      "note": "美股休市，流动性风险"
+    },
+    "a50": {
+      "price": 14720,
+      "change": 0.03,
+      "unit": "%"
+    },
+    "gold": {
+      "price_usd": 4682,
+      "change": "突破4700",
+      "trend": "强势上涨"
+    }
+  },
+  "portfolio_status": {
+    "equity": 9862.25,
+    "cash": 7350,
+    "unrealized_pnl": 12.25,
+    "daily_pnl_pct": 0.12,
+    "total_pnl_pct": -1.38,
+    "positions": [
+      {
+        "symbol": "A50",
+        "side": "long",
+        "entry_price": 100,
+        "current_price": 100.49,
+        "quantity": 25,
+        "pnl": 12.25,
+        "pnl_pct": 0.49,
+        "stop_loss": 95,
+        "take_profit": 110,
+        "status": "持仓中-盈利"
+      }
+    ]
+  },
+  "risk_alerts": [
+    {
+      "level": "中高",
+      "type": "市场波动",
+      "message": "BTC 24h跌幅超3%，市场极度恐慌"
+    },
+    {
+      "level": "高",
+      "type": "地缘政治",
+      "message": "美伊冲突持续，4月7日最后期限"
+    },
+    {
+      "level": "中",
+      "type": "流动性",
+      "message": "非农发布但美股休市"
+    }
+  ],
+  "signals": [
+    {
+      "signal": "A50超跌反弹",
+      "strength": "强",
+      "status": "持仓中",
+      "action": "持有，设置移动止损"
+    },
+    {
+      "signal": "避险资产",
+      "strength": "中强",
+      "status": "观望",
+      "action": "黄金强势，可小仓配置对冲"
+    },
+    {
+      "signal": "加密货币恐慌",
+      "strength": "中",
+      "status": "观望",
+      "action": "极度恐慌区域，分批建仓机会？"
+    }
+  ],
+  "recommendations": [
+    "A50持仓盈利0.49%，建议设置移动止损保护利润",
+    "若A50跌破14,500，考虑减仓",
+    "黄金突破$4,700，技术面强势，可小仓配置",
+    "BTC极度恐慌，严控仓位不超10%",
+    "关注4月7日美伊冲突最后期限"
+  ],
+  "next_scan": "2026-04-04 08:00",
+  "generated_by": "Trading Assistant 🦞"
+}

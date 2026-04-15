@@ -1,0 +1,228 @@
+{
+  "date": "2026-03-28",
+  "generated_at": "2026-03-28T22:10:00+08:00",
+  "scan_type": "夜盘扫描（收盘数据,每日报告）",
+  "market_sentiment": {
+    "crypto_fear_greed_index": 18,
+    "sentiment_level": "极度恐惧",
+    "major_trend": "震荡下行,横盘整理",
+    "daily_summary": "加密货币市场横盘整理,比特币在66000附近震荡;美股周六休市;地缘政治风险持续,霍尔木兹海峡仍处关闭状态,美以冲突第28天;每日报告已生成,performance.json已更新"
+  },
+  "market_data": {
+    "crypto": {
+      "bitcoin": {
+        "price": 66032,
+        "trend": "横盘整理",
+        "change_pct": "-4.3%",
+        "status": "跌破66000后横盘,关注65000支撑",
+        "24h_liquidation": "超12万人爆仓,4.46亿美元",
+        "support": 65000,
+        "resistance": 67500
+      },
+      "ethereum": {
+        "price": 1985,
+        "trend": "横盘整理",
+        "change_pct": "-3.9%",
+        "status": "跌破2000,极度恐慌,等待企稳",
+        "support": 1900,
+        "resistance": 2020
+      },
+      "others": {
+        "SOL": {"change_pct": "-4.2%"},
+        "XRP": {"change_pct": "-1.17%"},
+        "狗狗币": {"change_pct": "-1.12%"}
+      }
+    },
+    "stocks": {
+      "us_status": {
+        "date": "2026-03-28",
+        "note": "美股周六休市",
+        "next_open": "2026-03-31 21:30 CST (周一晚)"
+      },
+      "us_indices_last_close": {
+        "date": "2026-03-27",
+        "dow_jones": {"value": 45167.44, "change_pct": "-1.72%"},
+        "sp500": {"value": 6368.85, "change_pct": "-1.67%"},
+        "nasdaq": {"value": 20948.36, "change_pct": "-2.15%"}
+      },
+      "europe_monthly": {
+        "Stoxx_Europe_600": {
+          "month_change": "-9.2%",
+          "note": "自2020年新冠疫情以来最差单月表现"
+        }
+      }
+    },
+    "commodities": {
+      "wti_crude": {
+        "price": 99.64,
+        "change_pct": "+5.46%",
+        "note": "盘中一度触及100.04美元,创2022年以来新高"
+      },
+      "brent_crude": {
+        "price": 112.38,
+        "change_pct": "+4.05%"
+      },
+      "gold": {
+        "price": 4495.55,
+        "change_pct": "+2.62%",
+        "note": "盘中一度突破4555美元"
+      },
+      "silver": {
+        "price": 69.76,
+        "change_pct": "+2.45%"
+      }
+    }
+  },
+  "key_news": [
+    {
+      "category": "地缘政治",
+      "title": "霍尔木兹海峡仍处关闭状态",
+      "summary": "伊朗伊斯兰革命卫队发布声明称,霍尔木兹海峡已处于关闭状态,任何试图通过该海峡的行为都将遭到严厉打击",
+      "impact": "负面",
+      "timestamp": "2026-03-27T17:48:00+08:00"
+    },
+    {
+      "category": "地缘政治",
+      "title": "美以冲突进入第28天",
+      "summary": "美国和以色列对伊朗发动的军事打击进入第28天。美以袭击伊朗多地包括钢铁厂等设施。袭击已造成伊朗超1900人死亡,至少2万人受伤",
+      "impact": "负面",
+      "timestamp": "2026-03-28T01:23:00+08:00"
+    },
+    {
+      "category": "加密货币",
+      "title": "加密货币市场横盘整理",
+      "summary": "比特币跌超4%至66000美元附近,以太坊跌超3%至1985美元。市场极度恐慌,恐惧贪婪指数18",
+      "impact": "负面",
+      "timestamp": "2026-03-28T08:17:00+08:00"
+    },
+    {
+      "category": "黄金市场",
+      "title": "黄金避险上涨",
+      "summary": "现货黄金突破4555美元/盎司后回落至4495美元,避险情绪推动上涨",
+      "impact": "正面",
+      "timestamp": "2026-03-28T08:17:00+08:00"
+    },
+    {
+      "category": "机构动态",
+      "title": "摩根士丹利拟推比特币现货ETF",
+      "summary": "彭博ETF分析师Eric Balchunas透露,摩根士丹利拟推出比特币现货ETF,费率仅0.14%,或成为市场上费率最低的同类产品",
+      "impact": "正面",
+      "timestamp": "2026-03-28T09:19:00+08:00"
+    }
+  ],
+  "geopolitical_update": {
+    "iran_conflict": {
+      "duration": "第28天",
+      "strait_status": "关闭",
+      "casualties": {
+        "iran_deaths": ">1900",
+        "iran_injured": ">20,000"
+      },
+      "facilities_attacked": "伊斯法罕和胡齐斯坦的两处主要钢铁厂",
+      "us_estimated_duration": "2-4周 (美国国务卿鲁比奥)"
+    },
+    "un_response": {
+      "action": "联合国秘书长成立专门工作组",
+      "focus": "霍尔木兹海峡局势"
+    },
+    "iran_position": {
+      "statement": "任何往返于美国和以色列及其盟友和支持者港口的船只,无论目的地或航线如何,均禁止通过霍尔木兹海峡",
+      "note": "局势发展由伊朗掌控"
+    }
+  },
+  "market_outlook": {
+    "crypto": {
+      "short_term": "横盘整理,等待方向",
+      "key_level": "BTC 65000支撑 / ETH 1900支撑",
+      "strategy": "横盘期间观望,等待突破或企稳信号",
+      "risk": "高 - 恐慌情绪仍未缓解"
+    },
+    "stocks": {
+      "short_term": "休市",
+      "note": "美股周六休市,周一晚21:30开盘",
+      "next_focus": "美股开盘后关注回调延续情况"
+    },
+    "commodities": {
+      "short_term": "强势延续",
+      "key_level": "原油100美元关口/黄金4500美元",
+      "strategy": "关注油气链和黄金,但波动性极大",
+      "risk": "高 - 地缘政治高度敏感"
+    }
+  },
+  "signals_status": [
+    {
+      "signal": "A股超跌反弹",
+      "strength": "中性偏强",
+      "probability": "60-70%",
+      "status": "✅ 持仓中 (A50)",
+      "comment": "A50持仓周末休市,当前亏损-1.51%。A股相对独立,受外盘影响较小",
+      "recommendation": "继续持有,关注周一开盘情况"
+    },
+    {
+      "signal": "原油/油气链",
+      "strength": "强",
+      "probability": "70-80%",
+      "status": "🟡 重新关注",
+      "comment": "WTI原油盘中突破100美元,收盘99.64美元。地缘政治风险持续,霍尔木兹海峡关闭",
+      "recommendation": "等待回调后重新入场,但波动性极高,需严格止损"
+    },
+    {
+      "signal": "避险资产 (黄金/白银)",
+      "strength": "强",
+      "probability": "75-85%",
+      "status": "🟡 观察中",
+      "comment": "黄金突破4555美元后回落至4495,避险情绪推动上涨。与加密货币形成分化",
+      "recommendation": "关注黄金ETF或相关期权,但注意高位回调风险"
+    },
+    {
+      "signal": "加密货币恐慌抄底",
+      "strength": "中强",
+      "probability": "45-55%",
+      "status": "🟡 观察中",
+      "condition": "BTC守稳65000支撑 / ETH守稳1900支撑",
+      "comment": "横盘整理中,恐慌情绪仍未缓解。等待明确的企稳信号",
+      "recommendation": "继续观望,避免盲目抄底"
+    }
+  ],
+  "risk_alerts": [
+    {
+      "level": "高",
+      "category": "地缘政治",
+      "message": "伊朗封锁霍尔木兹海峡,美以冲突进入第28天。美国务卿估计战事还将持续2-4周",
+      "action": "密切关注局势发展,做好风险对冲"
+    },
+    {
+      "level": "高",
+      "category": "加密货币",
+      "message": "市场极度恐慌,恐惧贪婪指数18。横盘整理中,等待方向选择",
+      "action": "严格控制仓位,避免高杠杆,等待企稳信号"
+    },
+    {
+      "level": "中高",
+      "category": "原油",
+      "message": "WTI原油盘中突破100美元,地缘政治高度敏感,波动性极大",
+      "action": "严格控制仓位,做好止损管理"
+    }
+  ],
+  "today_focus": [
+    "1. 加密货币能否在65000支撑位企稳或继续下行",
+    "2. WTI原油能否维持在100美元上方",
+    "3. 霍尔木兹海峡局势最新发展",
+    "4. 美股周一开盘情况",
+    "5. 黄金能否继续突破4500美元"
+  ],
+  "action_plan": [
+    "1. A50持仓: 继续持有,等待周一开盘数据更新",
+    "2. 加密货币: 保持观望,等待BTC横盘整理后选择方向",
+    "3. 原油: 关注回调后的重新入场机会,但波动性极高",
+    "4. 黄金: 关注避险机会,突破4500后注意回调风险",
+    "5. 风险控制: 总体维持低仓位,密切关注地缘政治局势"
+  ],
+  "reports_generated": {
+    "daily_report": "reports/daily/2026-03-28.md",
+    "performance": "paper-trading/performance.json",
+    "status": "已完成"
+  },
+  "weekend_notice": "周末停更,祝 Captain 周末愉快！🎉",
+  "daily_summary": "夜盘扫描完成。加密货币市场横盘整理,比特币66032美元(-4.3%),以太坊1985美元(-3.9%),恐惧贪婪指数18。美股周六休市,周一晚21:30开盘。欧洲股市本月跌幅-9.2%,为2020年以来最差。地缘政治风险持续,霍尔木兹海峡仍处关闭状态,美以冲突进入第28天,伊朗超1900人死亡,超2万人受伤。黄金避险上涨,突破4555美元后回落至4495美元。WTI原油盘中突破100美元。A50持仓周末休市,当前亏损-1.51%。每日报告已生成至reports/daily/2026-03-28.md,performance.json已更新。下次扫描:周一早8:00。"
+}

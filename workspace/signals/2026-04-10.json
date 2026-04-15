@@ -1,0 +1,200 @@
+{
+  "date": "2026-04-10",
+  "scan_time": "18:10",
+  "market_overview": {
+    "sentiment": "极度恐惧（加密货币FGI=11）但美股风险偏好回升",
+    "major_indices": {
+      "us_dow": "+0.58%",
+      "us_spx": "+0.62%",
+      "us_nasdaq": "+0.83%",
+      "a50_futures": "+0.40%",
+      "china_sse": "+0.63%",
+      "china_szse": "+1.74%",
+      "china_cy": "+2.62%"
+    },
+    "crypto": {
+      "btc_price": "$73,000+",
+      "btc_change": "+2.7%",
+      "fear_greed_index": "11 (极度恐惧)"
+    },
+    "commodities": {
+      "wti_crude": "$97.98/bbl (+3.78%)",
+      "brent_crude": "$96.41/bbl (+1.75%)",
+      "gold": "$4,790.50/oz (+0.28%)",
+      "silver": "$75.47/oz (+0.12%)"
+    },
+    "us_stocks_streak": {
+      "spx_days": "7",
+      "nasdaq_days": "7",
+      "note": "连续七日上涨"
+    }
+  },
+  "geopolitical_risks": [
+    {
+      "event": "以黎谈判启动",
+      "status": "以色列同意与黎巴嫩直接谈判",
+      "impact": "地缘风险缓解但仍存不确定性",
+      "timeline": "下周在华盛顿举行"
+    },
+    {
+      "event": "霍尔木兹海峡通行",
+      "status": "仍受限，仅少量干散货船通行",
+      "impact": "能源供应担忧持续",
+      "trump_stance": "警告伊朗不收取过路费",
+      "iran_response": "议长指责美国违反停火协议"
+    }
+  ],
+  "key_events_today": [
+    {
+      "time": "09:30",
+      "event": "中国3月CPI/PPI数据发布",
+      "market_impact": "A股消费、周期板块",
+      "status": "已发布"
+    },
+    {
+      "time": "20:30",
+      "event": "美国3月CPI数据发布",
+      "market_impact": "美联储政策预期、美股波动",
+      "expectation": "年率3.3%",
+      "status": "待发布 - 高风险事件"
+    },
+    {
+      "time": "20:30",
+      "event": "美国3月核心CPI",
+      "expectation": "年率2.7%",
+      "status": "待发布"
+    },
+    {
+      "time": "22:00",
+      "event": "美国4月密歇根消费者信心指数",
+      "expectation": "52",
+      "status": "待发布"
+    }
+  ],
+  "signals": [
+    {
+      "id": "S20260410-001",
+      "name": "A股超跌反弹",
+      "strength": "中等信号",
+      "probability": "60-70%",
+      "symbols": ["A50", "CSI300"],
+      "entry_zone": "A50 14800-14850",
+      "stop_loss": "5%",
+      "take_profit": "10-15%",
+      "reasoning": "A50夜盘收涨0.40%，A股午盘收涨超4,400股上涨，沪指盘中突破4000点",
+      "risk_level": "中",
+      "status": "持仓中",
+      "note": "已持有A50多头，当前盈利+1.05%"
+    },
+    {
+      "id": "S20260410-002",
+      "name": "黄金避险",
+      "strength": "观望信号",
+      "probability": "50-60%",
+      "symbols": ["GLD", "GOLD"],
+      "entry_zone": "待确认",
+      "stop_loss": "待定",
+      "take_profit": "待定",
+      "reasoning": "COMEX黄金收涨0.28%至$4,790.50，地缘政治缓解削弱避险需求",
+      "risk_level": "中",
+      "status": "观望中",
+      "note": "建议等待更明确信号"
+    },
+    {
+      "id": "S20260410-003",
+      "name": "原油波动",
+      "strength": "观望信号",
+      "probability": "50-60%",
+      "symbols": ["USO", "XLE", "XOM", "CVX"],
+      "entry_zone": "待确认",
+      "stop_loss": "待定",
+      "take_profit": "待定",
+      "reasoning": "WTI原油收涨3.78%至$97.98，谈判前景缓解但海峡仍关闭，波动性高",
+      "risk_level": "高",
+      "status": "观望中",
+      "note": "波动性高，不建议追多"
+    },
+    {
+      "id": "S20260410-004",
+      "name": "美股科技股",
+      "strength": "关注信号",
+      "probability": "55-65%",
+      "symbols": ["NVDA", "AMD", "INTC", "AMZN", "META"],
+      "entry_zone": "回调后入场",
+      "stop_loss": "待定",
+      "take_profit": "待定",
+      "reasoning": "美股连续两日收高，纳指和标普500七连涨，科技股领涨",
+      "risk_level": "中",
+      "status": "观察中",
+      "note": "关注回调机会，不宜追高"
+    },
+    {
+      "id": "S20260410-005",
+      "name": "存储芯片",
+      "strength": "强关注信号",
+      "probability": "65-75%",
+      "symbols": ["SNDK", "MU", "WDC"],
+      "entry_zone": "待确认",
+      "stop_loss": "待定",
+      "take_profit": "待定",
+      "reasoning": "闪迪涨超9%创历史新高，美光科技涨逾3%，存储芯片板块表现强劲",
+      "risk_level": "中高",
+      "status": "观察中",
+      "note": "板块火热，需等待回调机会"
+    }
+  ],
+  "portfolio_status": {
+    "total_equity": 9876,
+    "cash": 7350,
+    "positions_value": 2526.25,
+    "unrealized_pnl": 26.25,
+    "realized_pnl": -150,
+    "positions": [
+      {
+        "symbol": "A50",
+        "side": "long",
+        "quantity": 25,
+        "entry_price": 100,
+        "current_price": 101.05,
+        "pnl": 26.25,
+        "pnl_pct": 1.05,
+        "stop_loss": 95,
+        "take_profit": 110,
+        "status": "持仓中 - 盈利中"
+      }
+    ],
+    "risk_checks": {
+      "all_stops_ok": true,
+      "daily_loss_limit_ok": true,
+      "max_positions_ok": true
+    }
+  },
+  "risk_alerts": [
+    {
+      "level": "高关注",
+      "type": "数据风险",
+      "message": "今晚20:30美国CPI数据可能引发市场剧烈波动",
+      "action": "建议减少杠杆或设置严格止损"
+    },
+    {
+      "level": "中风险",
+      "type": "持仓风险",
+      "message": "A50持仓盈利但未触发止盈，关注CPI数据后的市场反应",
+      "action": "如跌破支撑位考虑部分止盈"
+    },
+    {
+      "level": "低风险",
+      "type": "系统风险",
+      "message": "市场情绪极度恐惧（FGI=11）但美股风险偏好回升",
+      "action": "情绪反转时可能出现快速反弹，保持警惕"
+    },
+    {
+      "level": "关注",
+      "type": "板块风险",
+      "message": "存储芯片板块过热，闪迪创历史新高",
+      "action": "不宜追高，等待回调机会"
+    }
+  ],
+  "next_scan": "22:00 (夜盘扫描 - 美国CPI数据发布后)",
+  "generated_by": "Trading Assistant"
+}

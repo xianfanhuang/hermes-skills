@@ -1,0 +1,77 @@
+{
+  "account": {
+    "name": "期权高胜率交易账户",
+    "created_at": "2026-03-24T01:07:00+08:00",
+    "initial_capital": 10000,
+    "currency": "USDT",
+    "account_type": "options_intraday",
+    "risk_level": "aggressive"
+  },
+  "capital": {
+    "initial": 10000,
+    "current": 10000,
+    "available": 10000,
+    "locked": 0
+  },
+  "performance": {
+    "total_trades": 0,
+    "wins": 0,
+    "losses": 0,
+    "win_rate": 0,
+    "total_profit": 0,
+    "total_loss": 0,
+    "net_pnl": 0,
+    "net_pnl_pct": 0,
+    "max_drawdown": 0,
+    "max_drawdown_pct": 0,
+    "max_consecutive_wins": 0,
+    "max_consecutive_losses": 0
+  },
+  "today": {
+    "date": "2026-03-24",
+    "trades_count": 0,
+    "wins": 0,
+    "losses": 0,
+    "win_rate": 0,
+    "profit": 0,
+    "loss": 0,
+    "net_pnl": 0,
+    "consecutive_wins": 0,
+    "consecutive_losses": 0
+  },
+  "week": {
+    "start_date": "2026-03-24",
+    "end_date": "2026-03-30",
+    "trades_count": 0,
+    "wins": 0,
+    "losses": 0,
+    "win_rate": 0,
+    "profit": 0,
+    "loss": 0,
+    "net_pnl": 0,
+    "weekly_return_pct": 0,
+    "target_return_pct": 61
+  },
+  "risk_limits": {
+    "max_position_per_trade_pct": 5,
+    "max_single_loss_pct": 2.5,
+    "max_daily_loss_pct": 15,
+    "max_consecutive_losses": 3,
+    "max_daily_trades": 10
+  },
+  "current_state": {
+    "positions": [],
+    "open_orders": [],
+    "consecutive_wins": 0,
+    "consecutive_losses": 0,
+    "trading_status": "ready",
+    "can_trade": true,
+    "pause_reason": null
+  },
+  "target_metrics": {
+    "target_win_rate": 70,
+    "target_profit_per_trade_pct": 50,
+    "target_weekly_return_pct": 61,
+    "target_max_consecutive_losses": 2
+  }
+}

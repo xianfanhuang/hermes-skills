@@ -1,0 +1,80 @@
+{
+  "date": "2026-04-13",
+  "scan_time": "22:00",
+  "scan_type": "夜盘扫描",
+  "advisor": "李小军-简约缠论体系",
+  "market_overview": {
+    "note": "美股低开后反弹，A股低开高走V型反转",
+    "a_shares_close": "上证指数3988.56点 (+0.06%)，A股V型反转",
+    "us_market": "美股低开后反弹，纳指转涨，道指仍跌",
+    "wti_crude": "开盘暴涨8-9%后大幅回落",
+    "geopolitical": "⚠️ 美军封锁伊朗港口正式生效"
+  },
+  "us_market_detail": {
+    "开盘": {
+      "道指": "-0.51%",
+      "纳指": "-0.24%",
+      "标普500": "-0.22%"
+    },
+    "盘中反弹": {
+      "道指": "-0.36%",
+      "纳指": "+0.19%",
+      "标普500": "转涨"
+    },
+    "收盘（预估）": {
+      "道指": "~47,700 (-0.4%)",
+      "纳指": "~22,920 (+0.1%)",
+      "标普500": "~6,820 (持平)"
+    }
+  },
+  "a50_analysis": {
+    "position": "持仓多",
+    "entry": 100,
+    "close_estimate": "101.1",
+    "pnl_pct": "+1.1%",
+    "structure": "A股低开高走V型反转确认持仓",
+    "stop_loss": 95,
+    "warning_level": 99.5,
+    "target": 110,
+    "status": "🟢 持仓盈利中，结构保持"
+  },
+  "signals": [
+    {
+      "name": "A50超跌反弹",
+      "symbol": "A50",
+      "strength": "中强",
+      "status": "持仓中，盈利+1.1%",
+      "probability": "65-70%"
+    },
+    {
+      "name": "美股",
+      "symbol": "SPX/NDX",
+      "strength": "观望",
+      "status": "低开后反弹，纳指转涨",
+      "note": "地缘风险影响，但市场已消化"
+    },
+    {
+      "name": "原油",
+      "symbol": "WTI",
+      "strength": "高波动",
+      "status": "开盘暴涨后大幅回落",
+      "note": "地缘溢价消化中"
+    }
+  ],
+  "account": {
+    "equity": 9877,
+    "cash": 7350,
+    "unrealized_pnl": 27.5,
+    "realized_pnl": -150,
+    "total_pnl_pct": "-1.23%"
+  },
+  "risk": {
+    "a50_alert": "✅ 未触发 (101.1 > 99.5)",
+    "a50_stop": "✅ 未触发 (101.1 > 95)",
+    "daily_loss": "✅ 未超限"
+  },
+  "tomorrow_watch": {
+    "date": "2026-04-14",
+    "关注": "A股能否突破4000点，美股财报季"
+  }
+}

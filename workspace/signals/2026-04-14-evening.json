@@ -1,0 +1,95 @@
+{
+  "scan_time": "2026-04-14T17:25:00+08:00",
+  "scan_type": "evening",
+  "signals": [
+    {
+      "symbol": "A50",
+      "name": "FTSE China A50 Index Futures",
+      "signal": "持有",
+      "strength": "中性偏多",
+      "price": 102.0,
+      "daily_change": "+2.0%",
+      "volume": "正常",
+      "technical": {
+        "trend": "反弹延续",
+        "support": "99.5",
+        "resistance": "105.0",
+        "rsi": 58,
+        "macd": "金叉延续"
+      },
+      "fundamental": "富时A50期货涨幅扩大至1%，市场情绪改善",
+      "action": "继续持有，观察105阻力位",
+      "risk_level": "中等"
+    },
+    {
+      "symbol": "BTC",
+      "name": "Bitcoin",
+      "signal": "观望",
+      "strength": "中性",
+      "price": 74000,
+      "daily_change": "+3.5%",
+      "volume": "放量",
+      "technical": {
+        "trend": "突破反弹",
+        "support": "70000",
+        "resistance": "78000",
+        "rsi": 62,
+        "macd": "金叉形成"
+      },
+      "fundamental": "美伊和谈预期推动风险资产上涨，比特币冲上四周高点",
+      "action": "观望，不追多",
+      "risk_level": "高"
+    },
+    {
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "signal": "观望",
+      "strength": "中性",
+      "price": 2400,
+      "daily_change": "+6.0%",
+      "volume": "放量",
+      "technical": {
+        "trend": "强势反弹",
+        "support": "2200",
+        "resistance": "2600",
+        "rsi": 65,
+        "macd": "金叉形成"
+      },
+      "fundamental": "跟随比特币上涨，涨幅超过BTC",
+      "action": "观望",
+      "risk_level": "高"
+    },
+    {
+      "symbol": "SPX",
+      "name": "S&P 500",
+      "signal": "观望",
+      "strength": "中性偏多",
+      "price": 6886,
+      "daily_change": "+1.02%",
+      "volume": "正常",
+      "technical": {
+        "trend": "企稳反弹",
+        "support": "6700",
+        "resistance": "7000",
+        "rsi": 55,
+        "macd": "零轴附近"
+      },
+      "fundamental": "市场押注特朗普将达成和平协议，三大股指全线收涨",
+      "action": "观望",
+      "risk_level": "中等"
+    }
+  ],
+  "market_summary": {
+    "sentiment": "风险偏好回升",
+    "fear_greed_index": 45,
+    "vix": 22,
+    "major_news": [
+      "美伊和谈预期升温，风险资产集体反弹",
+      "美股三大指数集体收涨，纳指涨1.23%",
+      "比特币突破74000美元，创四周新高",
+      "富时A50期货涨幅扩大至1%"
+    ]
+  },
+  "alerts": [],
+  "next_scan": "2026-04-14T22:00:00+08:00"
+}

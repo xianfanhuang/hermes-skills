@@ -1,4 +1,40 @@
 {
   "version": 1,
-  "jobs": []
+  "jobs": [
+    {
+      "id": "683a06f0-e238-432d-a3fc-147771750811",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "缠论每日模拟交易报告",
+      "enabled": true,
+      "createdAtMs": 1775870699897,
+      "updatedAtMs": 1776124860362,
+      "schedule": {
+        "everyMs": 86400000,
+        "kind": "every",
+        "anchorMs": 1744329600000
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是李小军，缠论交易顾问。请执行以下任务：\n\n1. 读取 /workspace/projects/workspace/paper-trading/portfolio.json 获取当前持仓\n2. 读取 /workspace/projects/workspace/signals/ 中的最新信号文件\n3. 以缠论视角生成每日模拟交易报告，输出到 /workspace/projects/workspace/reports/daily/YYYY-MM-DD.md\n4. 报告要求：\n   - 简洁全面，500字以内\n   - 包含：持仓状态、缠论结构分析（多级别）、操作建议、风险提示\n   - 格式用Markdown\n5. 完成后用message工具发送到飞书用户 ou_1a64d3ea99c24cac146f8ec1b670f683（频道feishu）\n\n分析当前可用的市场数据（crypto 24/7；A股/美股根据日期判断是否开盘）。\n如果当日是周六/周日且无法获取实时数据，则基于最近收盘数据分析。",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1776211200010,
+        "lastRunAtMs": 1776124800010,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 60352,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "runningAtMs": 1776211202010
+      }
+    }
+  ]
 }

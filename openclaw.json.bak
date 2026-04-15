@@ -1,238 +1,372 @@
 {
+  "meta": {
+    "lastTouchedVersion": "2026.3.13",
+    "lastTouchedAt": "2026-04-15T16:04:18.118Z"
+  },
+  "wizard": {
+    "lastRunAt": "2026-02-05T16:16:05.545Z",
+    "lastRunVersion": "2026.2.1",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local"
+  },
+  "update": {
+    "checkOnStart": false
+  },
+  "browser": {
+    "enabled": true,
+    "color": "#00AA00",
+    "executablePath": "/opt/google/chrome/chrome",
+    "headless": false,
+    "noSandbox": true,
+    "defaultProfile": "openclaw",
+    "extraArgs": [
+      "--window-size=1920,1080",
+      "--test-type"
+    ]
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "coze": {
+        "baseUrl": "${COZE_INTEGRATION_MODEL_BASE_URL}",
+        "apiKey": "${COZE_WORKLOAD_IDENTITY_API_KEY}",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "auto",
+            "name": "自动",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 204800,
+            "maxTokens": 8192
+          },
+          {
+            "id": "kimi-k2-5-260127",
+            "name": "Kimi K2.5",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 262144,
+            "maxTokens": 8192
+          },
+          {
+            "id": "glm-4-7-251222",
+            "name": "GLM 4.7",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 204800,
+            "maxTokens": 8192
+          },
+          {
+            "id": "deepseek-v3-2-251201",
+            "name": "DeepSeek 3.2",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          },
+          {
+            "id": "doubao-seed-1-8-251228",
+            "name": "豆包 1.8",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 262144,
+            "maxTokens": 8192
+          },
+          {
+            "id": "doubao-seed-2-0-pro-260215",
+            "name": "豆包 2.0 Pro",
+            "api": "openai-completions",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 262144,
+            "maxTokens": 8192
+          },
+          {
+            "id": "doubao-seed-2-0-lite-260215",
+            "name": "豆包 2.0 Lite",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 262144,
+            "maxTokens": 8192
+          },
+          {
+            "id": "doubao-seed-2-0-mini-260215",
+            "name": "豆包 2.0 Mini",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 262144,
+            "maxTokens": 8192
+          }
+        ]
+      },
+      "gitcode": {
+        "baseUrl": "https://api.gitcode.com/api/v5",
+        "apiKey": "VM5Bo25UzEvooA565Xy7iEyY",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "qwen3.5-397b-a17b",
+            "name": "Qwen3.5 397B",
+            "api": "openai-completions",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          },
+          {
+            "id": "Qwen/Qwen3.5-35B-A3B",
+            "name": "Qwen3.5-35B（轻量）",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 32000,
+            "maxTokens": 7168
+          },
+          {
+            "id": "Qwen/Qwen3.5-122B-A10B",
+            "name": "Qwen3.5-122B（主力）",
+            "api": "openai-completions",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 32000,
+            "maxTokens": 7168
+          },
+          {
+            "id": "Qwen/Qwen3.5-397B-A17B",
+            "name": "Qwen3.5-397B（旗舰）",
+            "api": "openai-completions",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 32000,
+            "maxTokens": 7168
+          },
+          {
+            "id": "deepseek-ai/DeepSeek-V3.1",
+            "name": "DeepSeek-V3.1（备用）",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 32000,
+            "maxTokens": 7168
+          }
+        ]
+      }
+    }
+  },
   "agents": {
     "defaults": {
+      "model": {
+        "primary": "gitcode/Qwen/Qwen3.5-122B-A10B"
+      },
+      "imageModel": {
+        "primary": "coze/doubao-seed-1-8-251228"
+      },
+      "workspace": "/workspace/projects/workspace",
       "compaction": {
         "mode": "safeguard"
       },
       "heartbeat": {
         "every": "4h"
       },
-      "imageModel": {
-        "primary": "coze/doubao-seed-1-8-251228"
-      },
       "maxConcurrent": 4,
-      "model": {
-        "primary": "coze/auto"
-      },
       "subagents": {
         "maxConcurrent": 8
-      },
-      "workspace": "/workspace/projects/workspace"
-    }
-  },
-  "browser": {
-    "color": "#00AA00",
-    "defaultProfile": "openclaw",
-    "enabled": true,
-    "executablePath": "/opt/google/chrome/chrome",
-    "extraArgs": [
-      "--window-size=1920,1080",
-      "--test-type"
-    ],
-    "headless": false,
-    "noSandbox": true
-  },
-  "commands": {
-    "native": "auto",
-    "nativeSkills": "auto"
-  },
-  "gateway": {
-    "auth": {
-      "mode": "token",
-      "token": "c97ca14e-64d1-40fe-82a5-8d075d9838f4"
-    },
-    "bind": "loopback",
-    "controlUi": {
-      "allowedOrigins": [
-        "https://dev.coze.site"
-      ],
-      "dangerouslyDisableDeviceAuth": true,
-      "enabled": true
-    },
-    "mode": "local",
-    "nodes": {
-      "browser": {
-        "mode": "off"
       }
     },
-    "port": 5000,
-    "tailscale": {
-      "mode": "off",
-      "resetOnExit": false
-    },
-    "trustedProxies": [
-      "::1",
-      "127.0.0.1"
+    "list": [
+      {
+        "id": "main",
+        "identity": {
+          "name": "Captain's Trading Assistant",
+          "emoji": "🦞"
+        }
+      }
     ]
+  },
+  "tools": {
+    "web": {
+      "search": {
+        "enabled": false
+      },
+      "fetch": {
+        "enabled": false
+      }
+    }
   },
   "messages": {
     "ackReactionScope": "group-mentions"
   },
-  "meta": {
-    "lastTouchedAt": "2026-02-07T15:38:05.339Z",
-    "lastTouchedVersion": "2026.2.3-1"
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
   },
-  "models": {
-    "providers": {
-      "coze": {
-        "api": "openai-completions",
-        "apiKey": "${COZE_WORKLOAD_IDENTITY_API_KEY}",
-        "baseUrl": "${COZE_INTEGRATION_MODEL_BASE_URL}",
-        "models": [
-          {
-            "api": "openai-completions",
-            "contextWindow": 204800,
-            "cost": {
-              "cacheRead": 0,
-              "cacheWrite": 0,
-              "input": 0,
-              "output": 0
-            },
-            "id": "auto",
-            "input": [
-              "text"
-            ],
-            "maxTokens": 8192,
-            "name": "自动",
-            "reasoning": false
-          },
-          {
-            "api": "openai-completions",
-            "contextWindow": 262144,
-            "cost": {
-              "cacheRead": 0,
-              "cacheWrite": 0,
-              "input": 0,
-              "output": 0
-            },
-            "id": "kimi-k2-5-260127",
-            "input": [
-              "text",
-              "image"
-            ],
-            "maxTokens": 8192,
-            "name": "Kimi K2.5",
-            "reasoning": false
-          },
-          {
-            "api": "openai-completions",
-            "contextWindow": 204800,
-            "cost": {
-              "cacheRead": 0,
-              "cacheWrite": 0,
-              "input": 0,
-              "output": 0
-            },
-            "id": "glm-4-7-251222",
-            "input": [
-              "text"
-            ],
-            "maxTokens": 8192,
-            "name": "GLM 4.7",
-            "reasoning": false
-          },
-          {
-            "api": "openai-completions",
-            "contextWindow": 131072,
-            "cost": {
-              "cacheRead": 0,
-              "cacheWrite": 0,
-              "input": 0,
-              "output": 0
-            },
-            "id": "deepseek-v3-2-251201",
-            "input": [
-              "text"
-            ],
-            "maxTokens": 8192,
-            "name": "DeepSeek 3.2",
-            "reasoning": false
-          },
-          {
-            "api": "openai-completions",
-            "contextWindow": 262144,
-            "cost": {
-              "cacheRead": 0,
-              "cacheWrite": 0,
-              "input": 0,
-              "output": 0
-            },
-            "id": "doubao-seed-1-8-251228",
-            "input": [
-              "text",
-              "image"
-            ],
-            "maxTokens": 8192,
-            "name": "豆包 1.8",
-            "reasoning": false
-          },
-          {
-            "api": "openai-completions",
-            "contextWindow": 262144,
-            "cost": {
-              "cacheRead": 0,
-              "cacheWrite": 0,
-              "input": 0,
-              "output": 0
-            },
-            "id": "doubao-seed-2-0-pro-260215",
-            "input": [
-              "text",
-              "image"
-            ],
-            "maxTokens": 8192,
-            "name": "豆包 2.0 Pro",
-            "reasoning": true
-          },
-          {
-            "api": "openai-completions",
-            "contextWindow": 262144,
-            "cost": {
-              "cacheRead": 0,
-              "cacheWrite": 0,
-              "input": 0,
-              "output": 0
-            },
-            "id": "doubao-seed-2-0-lite-260215",
-            "input": [
-              "text",
-              "image"
-            ],
-            "maxTokens": 8192,
-            "name": "豆包 2.0 Lite",
-            "reasoning": false
-          },
-          {
-            "api": "openai-completions",
-            "contextWindow": 262144,
-            "cost": {
-              "cacheRead": 0,
-              "cacheWrite": 0,
-              "input": 0,
-              "output": 0
-            },
-            "id": "doubao-seed-2-0-mini-260215",
-            "input": [
-              "text",
-              "image"
-            ],
-            "maxTokens": 8192,
-            "name": "豆包 2.0 Mini",
-            "reasoning": false
-          }
-        ]
+  "channels": {
+    "feishu": {
+      "appId": "cli_a94b9b34aafadbb6",
+      "appSecret": "hf39q4FVKqst4lR7NPSLMfJLlEOUkM0S",
+      "enabled": true,
+      "dmPolicy": "allowlist",
+      "allowFrom": [
+        "ou_1a64d3ea99c24cac146f8ec1b670f683"
+      ]
+    }
+  },
+  "gateway": {
+    "port": 5000,
+    "mode": "local",
+    "bind": "loopback",
+    "controlUi": {
+      "enabled": true,
+      "allowedOrigins": [
+        "https://dev.coze.site"
+      ],
+      "dangerouslyDisableDeviceAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "c97ca14e-64d1-40fe-82a5-8d075d9838f4"
+    },
+    "trustedProxies": [
+      "::1",
+      "127.0.0.1"
+    ],
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "nodes": {
+      "browser": {
+        "mode": "off"
       }
     }
   },
-  "plugins": {
-    "entries": {
-      "feishu": {
-        "enabled": true
-      }
-    },
-    "installs": {}
-  },
   "skills": {
+    "install": {
+      "nodeManager": "npm"
+    },
     "entries": {
       "1password": {
         "enabled": false
@@ -321,25 +455,50 @@
       "wacli": {
         "enabled": false
       }
-    },
-    "install": {
-      "nodeManager": "npm"
     }
   },
-  "tools": {
-    "web": {
-      "fetch": {
-        "enabled": false
+  "plugins": {
+    "entries": {
+      "feishu": {
+        "enabled": true
       },
-      "search": {
-        "enabled": false
+      "openclaw-weixin": {
+        "enabled": true
+      },
+      "coze-openclaw-plugin": {
+        "enabled": true,
+        "config": {
+          "apiKey": "${COZE_WORKLOAD_IDENTITY_API_KEY}"
+        }
+      }
+    },
+    "installs": {
+      "openclaw-weixin": {
+        "source": "npm",
+        "spec": "@tencent-weixin/openclaw-weixin",
+        "installPath": "/workspace/projects/extensions/openclaw-weixin",
+        "version": "1.0.2",
+        "resolvedName": "@tencent-weixin/openclaw-weixin",
+        "resolvedVersion": "1.0.2",
+        "resolvedSpec": "@tencent-weixin/openclaw-weixin@1.0.2",
+        "integrity": "sha512-kYPEowHB/0VWt9nQFee/AS6Fb+jbnu38wjkgZDBdKTuJoBL0IBW2obQ0ymgFKBFJJL9rDwnFrb/17ORGZD/X8Q==",
+        "shasum": "244baf0a873683a9c350d0f0b5bc055c07b0eb39",
+        "resolvedAt": "2026-03-23T11:38:53.626Z",
+        "installedAt": "2026-03-23T11:39:00.086Z"
+      },
+      "coze-openclaw-plugin": {
+        "source": "npm",
+        "spec": "coze-openclaw-plugin",
+        "installPath": "/workspace/projects/extensions/coze-openclaw-plugin",
+        "version": "0.1.15",
+        "resolvedName": "coze-openclaw-plugin",
+        "resolvedVersion": "0.1.15",
+        "resolvedSpec": "coze-openclaw-plugin@0.1.15",
+        "integrity": "sha512-kOXnq3Dt/aZh6GstdBJeDt3FNOWzg7g63IdGGzjuYi+4LSsvgmRBa1PLhbZvnJs851gF3ULltk2Gv+at4gbpjw==",
+        "shasum": "a3f71cc988b173e42bdd98500abfd46389ad23a9",
+        "resolvedAt": "2026-03-26T10:10:37.489Z",
+        "installedAt": "2026-03-26T10:10:41.911Z"
       }
     }
-  },
-  "wizard": {
-    "lastRunAt": "2026-02-05T16:16:05.545Z",
-    "lastRunCommand": "onboard",
-    "lastRunMode": "local",
-    "lastRunVersion": "2026.2.1"
   }
 }
