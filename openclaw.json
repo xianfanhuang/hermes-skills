@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-04-15T16:17:42.422Z"
+    "lastTouchedAt": "2026-04-15T16:18:41.423Z"
   },
   "wizard": {
     "lastRunAt": "2026-02-05T16:16:05.545Z",
@@ -214,7 +214,7 @@
               "cacheWrite": 0
             },
             "contextWindow": 32000,
-            "maxTokens": 7168
+            "maxTokens": 4096
           },
           {
             "id": "Qwen/Qwen3.5-122B-A10B",
@@ -232,7 +232,7 @@
               "cacheWrite": 0
             },
             "contextWindow": 32000,
-            "maxTokens": 7168
+            "maxTokens": 4096
           },
           {
             "id": "Qwen/Qwen3.5-397B-A17B",
@@ -250,7 +250,7 @@
               "cacheWrite": 0
             },
             "contextWindow": 32000,
-            "maxTokens": 7168
+            "maxTokens": 4096
           },
           {
             "id": "deepseek-ai/DeepSeek-V3.1",
@@ -268,7 +268,7 @@
               "cacheWrite": 0
             },
             "contextWindow": 32000,
-            "maxTokens": 7168
+            "maxTokens": 4096
           }
         ]
       }

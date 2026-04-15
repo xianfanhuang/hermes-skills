@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-03-26T10:10:41.941Z"
+    "lastTouchedAt": "2026-04-15T11:52:17.764Z"
   },
   "wizard": {
     "lastRunAt": "2026-02-05T16:16:05.545Z",
@@ -25,6 +25,7 @@
     ]
   },
   "models": {
+    "mode": "merge",
     "providers": {
       "coze": {
         "baseUrl": "${COZE_INTEGRATION_MODEL_BASE_URL}",
@@ -173,13 +174,38 @@
             "maxTokens": 8192
           }
         ]
+      },
+      "gitcode": {
+        "baseUrl": "https://api-ai.gitcode.com/v1",
+        "apiKey": "VM5Bo25UzEvooA565Xy7iEyY",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "qwen3.5-397b-a17b",
+            "name": "Qwen3.5 397B",
+            "api": "openai-completions",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          }
+        ]
       }
     }
   },
   "agents": {
     "defaults": {
       "model": {
-        "primary": "coze/auto"
+        "primary": "gitcode/qwen3.5-397b-a17b"
       },
       "imageModel": {
         "primary": "coze/doubao-seed-1-8-251228"
