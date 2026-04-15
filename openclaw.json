@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-04-15T16:18:41.423Z"
+    "lastTouchedAt": "2026-04-15T17:27:45.889Z"
   },
   "wizard": {
     "lastRunAt": "2026-02-05T16:16:05.545Z",
@@ -322,6 +322,16 @@
     "nativeSkills": "auto",
     "restart": true,
     "ownerDisplay": "raw"
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "session-memory": {
+          "enabled": true
+        }
+      }
+    }
   },
   "channels": {
     "feishu": {
