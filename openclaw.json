@@ -175,14 +175,14 @@
           }
         ]
       },
-      "gitcode": {
-        "baseUrl": "https://api.gitcode.com/api/v5",
-        "apiKey": "4QKfGjVN-WEinGRk_Pz5-HZ8",
+      "xiaomimimo": {
+        "baseUrl": "https://token-plan-cn.xiaomimimo.com/v1",
+        "apiKey": "tp-cyh07jfp1ae4yzitjcotkhuy8c1dyettvv4qngvoegepfc5n",
         "api": "openai-completions",
         "models": [
           {
             "id": "qwen3.5-397b-a17b",
-            "name": "Qwen3.5 397B",
+            "name": "Qwen3.5 397B（旗舰）",
             "api": "openai-completions",
             "reasoning": true,
             "input": [
@@ -199,8 +199,26 @@
             "maxTokens": 8192
           },
           {
-            "id": "Qwen/Qwen3.5-35B-A3B",
-            "name": "Qwen3.5-35B（轻量）",
+            "id": "qwen3.5-122b-a10b",
+            "name": "Qwen3.5 122B（主力）",
+            "api": "openai-completions",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          },
+          {
+            "id": "qwen3.5-35b-a3b",
+            "name": "Qwen3.5 35B（轻量）",
             "api": "openai-completions",
             "reasoning": false,
             "input": [
@@ -213,45 +231,16 @@
               "cacheRead": 0,
               "cacheWrite": 0
             },
-            "contextWindow": 32000,
-            "maxTokens": 4096
-          },
-          {
-            "id": "Qwen/Qwen3.5-122B-A10B",
-            "name": "Qwen3.5-122B（主力）",
-            "api": "openai-completions",
-            "reasoning": true,
-            "input": [
-              "text",
-              "image"
-            ],
-            "cost": {
-              "input": 0,
-              "output": 0,
-              "cacheRead": 0,
-              "cacheWrite": 0
-            },
-            "contextWindow": 32000,
-            "maxTokens": 4096
-          },
-          {
-            "id": "Qwen/Qwen3.5-397B-A17B",
-            "name": "Qwen3.5-397B（旗舰）",
-            "api": "openai-completions",
-            "reasoning": true,
-            "input": [
-              "text",
-              "image"
-            ],
-            "cost": {
-              "input": 0,
-              "output": 0,
-              "cacheRead": 0,
-              "cacheWrite": 0
-            },
-            "contextWindow": 32000,
-            "maxTokens": 4096
-          },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          }
+        ]
+      },
+      "gitcode": {
+        "baseUrl": "https://api.gitcode.com/api/v5",
+        "apiKey": "4QKfGjVN-WEinGRk_Pz5-HZ8",
+        "api": "openai-completions",
+        "models": [
           {
             "id": "deepseek-ai/DeepSeek-V3.1",
             "name": "DeepSeek-V3.1（备用）",
@@ -277,7 +266,7 @@
   "agents": {
     "defaults": {
       "model": {
-        "primary": "gitcode/Qwen/Qwen3.5-122B-A10B"
+        "primary": "xiaomimimo/qwen3.5-122b-a10b"
       },
       "imageModel": {
         "primary": "coze/doubao-seed-1-8-251228"
