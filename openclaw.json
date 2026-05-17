@@ -293,10 +293,23 @@
   "agents": {
     "defaults": {
       "model": {
-        "primary": "xiaomimimo/mimo-v2.5"
+        "primary": "xiaomimimo/mimo-v2.5-pro",
+        "fallbacks": [
+          "xiaomimimo/mimo-v2.5",
+          "xiaomimimo/mimo-v2-pro",
+          "xiaomimimo/mimo-v2-omni",
+          "coze/kimi-k2-5-260127",
+          "coze/deepseek-v3-2-251201",
+          "coze/doubao-seed-2-0-pro-260215"
+        ]
       },
       "imageModel": {
-        "primary": "coze/doubao-seed-1-8-251228"
+        "primary": "xiaomimimo/mimo-v2.5-pro",
+        "fallbacks": [
+          "xiaomimimo/mimo-v2.5",
+          "xiaomimimo/mimo-v2-omni",
+          "coze/doubao-seed-1-8-251228"
+        ]
       },
       "workspace": "/workspace/projects/workspace",
       "compaction": {
