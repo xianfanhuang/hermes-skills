@@ -181,8 +181,8 @@
         "api": "openai-completions",
         "models": [
           {
-            "id": "qwen3.5-397b-a17b",
-            "name": "Qwen3.5 397B（旗舰）",
+            "id": "mimo-v2.5-pro",
+            "name": "Mimo V2.5 Pro（旗舰）",
             "api": "openai-completions",
             "reasoning": true,
             "input": [
@@ -199,8 +199,8 @@
             "maxTokens": 8192
           },
           {
-            "id": "qwen3.5-122b-a10b",
-            "name": "Qwen3.5 122B（主力）",
+            "id": "mimo-v2.5",
+            "name": "Mimo V2.5（主力）",
             "api": "openai-completions",
             "reasoning": true,
             "input": [
@@ -217,13 +217,65 @@
             "maxTokens": 8192
           },
           {
-            "id": "qwen3.5-35b-a3b",
-            "name": "Qwen3.5 35B（轻量）",
+            "id": "mimo-v2-pro",
+            "name": "Mimo V2 Pro（标准）",
             "api": "openai-completions",
             "reasoning": false,
             "input": [
               "text",
               "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          },
+          {
+            "id": "mimo-v2-omni",
+            "name": "Mimo V2 Omni（多模态）",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          },
+          {
+            "id": "mimo-v2.5-tts",
+            "name": "Mimo V2.5 TTS（语音合成）",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 131072,
+            "maxTokens": 8192
+          },
+          {
+            "id": "mimo-v2.5-tts-voiceclone",
+            "name": "Mimo V2.5 TTS VoiceClone（语音克隆）",
+            "api": "openai-completions",
+            "reasoning": false,
+            "input": [
+              "text"
             ],
             "cost": {
               "input": 0,
@@ -241,7 +293,7 @@
   "agents": {
     "defaults": {
       "model": {
-        "primary": "xiaomimimo/qwen3.5-122b-a10b"
+        "primary": "xiaomimimo/mimo-v2.5"
       },
       "imageModel": {
         "primary": "coze/doubao-seed-1-8-251228"
