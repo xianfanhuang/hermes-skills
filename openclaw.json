@@ -236,31 +236,6 @@
           }
         ]
       },
-      "gitcode": {
-        "baseUrl": "https://api.gitcode.com/api/v5",
-        "apiKey": "4QKfGjVN-WEinGRk_Pz5-HZ8",
-        "api": "openai-completions",
-        "models": [
-          {
-            "id": "deepseek-ai/DeepSeek-V3.1",
-            "name": "DeepSeek-V3.1（备用）",
-            "api": "openai-completions",
-            "reasoning": false,
-            "input": [
-              "text",
-              "image"
-            ],
-            "cost": {
-              "input": 0,
-              "output": 0,
-              "cacheRead": 0,
-              "cacheWrite": 0
-            },
-            "contextWindow": 32000,
-            "maxTokens": 4096
-          }
-        ]
-      }
     }
   },
   "agents": {
