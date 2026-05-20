@@ -1,0 +1,17 @@
+{
+  "symbol": "TEST",
+  "strategy": "czsc_extension",
+  "start_date": "2025-01-01 00:00:00",
+  "end_date": "2026-05-15 00:00:00",
+  "initial_capital": 10000,
+  "final_capital": 10000,
+  "total_trades": 0,
+  "winning_trades": 0,
+  "losing_trades": 0,
+  "win_rate": 0,
+  "avg_win": 0,
+  "avg_loss": 0,
+  "profit_factor": 0,
+  "max_drawdown": 0,
+  "trades": []
+}

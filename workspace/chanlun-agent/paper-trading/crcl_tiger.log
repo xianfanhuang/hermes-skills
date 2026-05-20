@@ -333,3 +333,27 @@
 2026-05-20 21:58:31,270 [INFO] ✅ CRCL kline(30min) via tiger: 200 bars (287ms)
 2026-05-20 21:58:31,271 [INFO]   czsc 30min: 200 bars loaded
 2026-05-20 21:58:31,276 [INFO]   多级别分析完成，最佳信号: 无
+2026-05-20 22:10:29,813 [INFO] sdk version: 3.5.8
+2026-05-20 22:10:30,140 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 22:10:30,141 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 22:10:30,141 [INFO] ✅ 风控引擎已初始化
+2026-05-20 22:10:30,141 [INFO] ✅ 反思引擎已初始化
+2026-05-20 22:10:30,141 [INFO] ✅ RGB知识库更新引擎已初始化
+2026-05-20 22:12:03,544 [INFO] sdk version: 3.5.8
+2026-05-20 22:12:03,831 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 22:12:03,831 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 22:12:22,697 [INFO] sdk version: 3.5.8
+2026-05-20 22:12:23,006 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 22:12:23,006 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 22:12:57,256 [INFO] sdk version: 3.5.8
+2026-05-20 22:12:57,545 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 22:12:57,545 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 22:13:15,302 [INFO] sdk version: 3.5.8
+2026-05-20 22:13:15,616 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 22:13:15,616 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 22:13:51,712 [INFO] sdk version: 3.5.8
+2026-05-20 22:13:52,018 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 22:13:52,018 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 22:14:12,302 [INFO] sdk version: 3.5.8
+2026-05-20 22:14:12,594 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 22:14:12,594 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169

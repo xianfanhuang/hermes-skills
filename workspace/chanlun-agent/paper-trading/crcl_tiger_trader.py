@@ -67,6 +67,14 @@ except ImportError:
     REFLECTION_AVAILABLE = False
     logger.warning("ReflectionEngine not available")
 
+# RGB 知识库更新
+try:
+    from rgb_updater import RGBUpdater
+    RGB_AVAILABLE = True
+except ImportError:
+    RGB_AVAILABLE = False
+    logger.warning("RGBUpdater not available")
+
 # 日志配置
 logging.basicConfig(
     level=logging.INFO,
@@ -521,6 +529,15 @@ class CRCLTrader:
             except Exception as e:
                 logger.warning(f"反思引擎初始化失败: {e}")
 
+        # 初始化 RGB 知识库更新
+        self.rgb_updater = None
+        if RGB_AVAILABLE:
+            try:
+                self.rgb_updater = RGBUpdater()
+                logger.info("✅ RGB知识库更新引擎已初始化")
+            except Exception as e:
+                logger.warning(f"RGB知识库更新失败: {e}")
+
     def load_portfolio(self) -> Dict:
         """加载投资组合"""
         if PORTFOLIO_PATH.exists():
@@ -879,6 +896,24 @@ class CRCLTrader:
                             logger.info(f"📝 自动反思:\n{reflection}")
                         except Exception as e:
                             logger.warning(f"反思生成失败: {e}")
+
+                    # RGB 知识库自动更新
+                    if self.rgb_updater:
+                        try:
+                            trade_data = {
+                                'symbol': 'CRCL',
+                                'direction': 'long',
+                                'entry_price': pos['entry_price'],
+                                'exit_price': current_price,
+                                'pnl': pnl,
+                                'pnl_pct': pnl_pct,
+                                'reason': signal.get('reason', 'N/A'),
+                                'signal_type': signal.get('reason', 'N/A'),
+                            }
+                            self.rgb_updater.record_trade_reflection(trade_data, analysis={})
+                            logger.info("📚 RGB知识库已更新")
+                        except Exception as e:
+                            logger.warning(f"RGB更新失败: {e}")
 
                     return True
 
