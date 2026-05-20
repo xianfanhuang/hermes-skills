@@ -1,2 +1,6 @@
-2026/04/08-12:13:07.259 ecd3f Creating DB /workspace/projects/browser/openclaw/user-data/Default/Local Storage/leveldb since it was missing.
-2026/04/08-12:13:07.318 ecd3f Reusing MANIFEST /workspace/projects/browser/openclaw/user-data/Default/Local Storage/leveldb/MANIFEST-000001
+2026/05/18-20:08:38.715 8c2f8 Reusing MANIFEST /workspace/projects/browser/openclaw/user-data/Default/Local Storage/leveldb/MANIFEST-000001
+2026/05/18-20:08:38.718 8c2f8 Recovering log #827
+2026/05/18-20:08:38.718 8c2f8 Reusing old log /workspace/projects/browser/openclaw/user-data/Default/Local Storage/leveldb/000827.log 
+2026/05/18-20:09:38.738 8c2f8 Level-0 table #831: started
+2026/05/18-20:09:38.740 8c2f8 Level-0 table #831: 24384 bytes OK
+2026/05/18-20:09:38.741 8c2f8 Delete type=0 #827

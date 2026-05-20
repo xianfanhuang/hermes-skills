@@ -1,0 +1,538 @@
+{
+  "_version": "1.0",
+  "_description": "信息源配置文件 - Agent感知基础设施",
+  "_last_updated": "2026-05-17",
+  "sources": {
+    "hackernews": {
+      "name": "Hacker News",
+      "type": "community",
+      "status": "active",
+      "priority": 1,
+      "aligned_goals": [
+        "paradigm_shift",
+        "tech_breakthrough"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 106909,
+        "signal_count_7d": 30,
+        "actionable_ratio": 0.47
+      },
+      "last_fetch": "2026-05-17T17:12:16.083357",
+      "last_evaluated": "2026-05-17",
+      "failure_history": [],
+      "fetch_history": [
+        {
+          "timestamp": "2026-05-17T17:12:16.083340",
+          "success": true,
+          "item_count": 30,
+          "duration_ms": 106909,
+          "error": null
+        }
+      ]
+    },
+    "lobste": {
+      "name": "Lobste.rs",
+      "type": "community",
+      "status": "active",
+      "priority": 1,
+      "aligned_goals": [
+        "paradigm_shift",
+        "tech_breakthrough"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 1358,
+        "signal_count_7d": 25,
+        "actionable_ratio": 0.47
+      },
+      "last_fetch": "2026-05-17T17:12:16.352561",
+      "last_evaluated": "2026-05-17",
+      "failure_history": [],
+      "fetch_history": [
+        {
+          "timestamp": "2026-05-17T17:12:16.352542",
+          "success": true,
+          "item_count": 25,
+          "duration_ms": 1358,
+          "error": null
+        }
+      ]
+    },
+    "github_trending": {
+      "name": "GitHub Trending",
+      "type": "ecosystem",
+      "status": "active",
+      "priority": 1,
+      "aligned_goals": [
+        "ecosystem_change",
+        "tech_breakthrough"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 2012,
+        "signal_count_7d": 8,
+        "actionable_ratio": 0.45
+      },
+      "last_fetch": "2026-05-17T17:12:16.319146",
+      "last_evaluated": "2026-05-17",
+      "failure_history": [],
+      "fetch_history": [
+        {
+          "timestamp": "2026-05-17T17:12:16.319125",
+          "success": true,
+          "item_count": 8,
+          "duration_ms": 2012,
+          "error": null
+        }
+      ]
+    },
+    "reddit": {
+      "name": "Reddit",
+      "type": "community",
+      "status": "degraded",
+      "priority": 2,
+      "aligned_goals": [
+        "paradigm_shift",
+        "tech_breakthrough",
+        "market_signal"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 70729,
+        "signal_count_7d": 0,
+        "actionable_ratio": 0.25
+      },
+      "last_fetch": "2026-05-17T17:12:16.292821",
+      "last_evaluated": "2026-05-17",
+      "failure_history": [],
+      "notes": "沙箱环境常超时，降级为次要数据源",
+      "fetch_history": [
+        {
+          "timestamp": "2026-05-17T17:12:16.292777",
+          "success": true,
+          "item_count": 0,
+          "duration_ms": 70729,
+          "error": null
+        }
+      ]
+    },
+    "rss": {
+      "name": "RSS Feeds聚合",
+      "type": "aggregated",
+      "status": "active",
+      "priority": 1,
+      "aligned_goals": [
+        "paradigm_shift",
+        "tech_breakthrough",
+        "market_signal",
+        "platform_update"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 151129,
+        "signal_count_7d": 152,
+        "actionable_ratio": 0.42
+      },
+      "last_fetch": "2026-05-17T17:12:16.380250",
+      "last_evaluated": "2026-05-17",
+      "failure_history": [],
+      "sub_sources": [
+        "openai_blog",
+        "anthropic_blog",
+        "deepmind_blog",
+        "techcrunch",
+        "mit_tech_review",
+        "threatpost",
+        "dark_reading",
+        "机器之心",
+        "量子位",
+        "少数派",
+        "simonw_ai"
+      ],
+      "fetch_history": [
+        {
+          "timestamp": "2026-05-17T17:12:16.380230",
+          "success": true,
+          "item_count": 152,
+          "duration_ms": 151129,
+          "error": null
+        }
+      ]
+    },
+    "arxiv": {
+      "name": "arXiv学术论文",
+      "type": "perception",
+      "status": "active",
+      "priority": 1,
+      "aligned_goals": [
+        "paradigm_shift",
+        "tech_breakthrough"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 574845,
+        "signal_count_7d": 15,
+        "actionable_ratio": 0.47
+      },
+      "last_fetch": "2026-05-17T17:12:16.432531",
+      "last_evaluated": "2026-05-17",
+      "failure_history": [],
+      "search_keywords": [
+        "AI agent",
+        "autonomous agent",
+        "LLM agent",
+        "self-evolving AI",
+        "multi-agent system",
+        "agent architecture"
+      ],
+      "fetch_history": [
+        {
+          "timestamp": "2026-05-17T17:12:16.432507",
+          "success": true,
+          "item_count": 15,
+          "duration_ms": 574845,
+          "error": null
+        }
+      ]
+    },
+    "nvd": {
+      "name": "NVD/CVE安全漏洞",
+      "type": "perception",
+      "status": "active",
+      "priority": 1,
+      "aligned_goals": [
+        "security"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 14608,
+        "signal_count_7d": 25,
+        "actionable_ratio": 0.45
+      },
+      "last_fetch": "2026-05-17T17:12:16.452617",
+      "last_evaluated": "2026-05-17",
+      "failure_history": [],
+      "search_keywords": [
+        "AI",
+        "agent",
+        "LLM",
+        "MCP",
+        "OpenAI",
+        "Anthropic"
+      ],
+      "notes": "安全威胁核心数据源，高优先级",
+      "fetch_history": [
+        {
+          "timestamp": "2026-05-17T17:12:16.452602",
+          "success": true,
+          "item_count": 25,
+          "duration_ms": 14608,
+          "error": null
+        }
+      ]
+    },
+    "coze": {
+      "name": "Coze/扣子平台",
+      "type": "perception",
+      "status": "active",
+      "priority": 1,
+      "aligned_goals": [
+        "platform_update"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 208,
+        "signal_count_7d": 4,
+        "actionable_ratio": 0.4
+      },
+      "last_fetch": "2026-05-17T17:12:16.480054",
+      "last_evaluated": "2026-05-17",
+      "failure_history": [],
+      "endpoints": [
+        "https://www.coze.cn/llms.txt"
+      ],
+      "fetch_history": [
+        {
+          "timestamp": "2026-05-17T17:12:16.480031",
+          "success": true,
+          "item_count": 4,
+          "duration_ms": 208,
+          "error": null
+        }
+      ]
+    },
+    "agent_news": {
+      "name": "AI Agent社区新闻",
+      "type": "community",
+      "status": "active",
+      "priority": 2,
+      "aligned_goals": [
+        "paradigm_shift",
+        "ecosystem_change"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 110747,
+        "signal_count_7d": 0,
+        "actionable_ratio": 0.4
+      },
+      "last_fetch": "2026-05-17T17:12:16.406246",
+      "last_evaluated": "2026-05-17",
+      "failure_history": [],
+      "fetch_history": [
+        {
+          "timestamp": "2026-05-17T17:12:16.406229",
+          "success": true,
+          "item_count": 0,
+          "duration_ms": 110747,
+          "error": null
+        }
+      ]
+    },
+    "itick_stock": {
+      "name": "iTick 股票行情",
+      "type": "finance",
+      "status": "active",
+      "priority": 1,
+      "aligned_goals": [
+        "financial_perception"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 500,
+        "signal_count_7d": 0,
+        "actionable_ratio": 0.3
+      },
+      "last_fetch": null,
+      "last_evaluated": "2026-05-18",
+      "failure_history": [],
+      "notes": "iTick免费版REST API: 5次/分钟，每次K线最多500条，Key过期日2026-05-25",
+      "api_config": {
+        "base_url": "https://api0.itick.org",
+        "supports_markets": ["US", "HK", "SH", "SZ"],
+        "supports_kline": true,
+        "supports_forex": true,
+        "rate_limit": {
+          "requests_per_minute": 5,
+          "kline_max_per_call": 500
+        }
+      },
+      "fetch_history": []
+    },
+    "itick_forex": {
+      "name": "iTick 外汇行情",
+      "type": "finance",
+      "status": "active",
+      "priority": 2,
+      "aligned_goals": [
+        "financial_perception"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 500,
+        "signal_count_7d": 0,
+        "actionable_ratio": 0.2
+      },
+      "last_fetch": null,
+      "last_evaluated": "2026-05-18",
+      "failure_history": [],
+      "notes": "使用iTick API获取外汇数据，共享itick_stock的5次/分钟配额",
+      "api_config": {
+        "base_url": "https://api0.itick.org/forex",
+        "supports_markets": ["GB"],
+        "rate_limit": "shared_with_itick_stock"
+      },
+      "fetch_history": []
+    },
+    "binance": {
+      "name": "Binance 加密货币",
+      "type": "finance",
+      "status": "active",
+      "priority": 1,
+      "aligned_goals": [
+        "financial_perception"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 200,
+        "signal_count_7d": 0,
+        "actionable_ratio": 0.3
+      },
+      "last_fetch": null,
+      "last_evaluated": "2026-05-18",
+      "failure_history": [],
+      "notes": "完全免费，无需API Key，1200权重/分钟，部分品种可能被墙",
+      "api_config": {
+        "base_url": "https://api.binance.com",
+        "ws_url": "wss://stream.binance.com",
+        "supports_markets": ["CC"],
+        "supports_kline": true,
+        "rate_limit": {
+          "weight_per_minute": 1200
+        }
+      },
+      "fetch_history": []
+    },
+    "akshare": {
+      "name": "AKShare A股/期货",
+      "type": "finance",
+      "status": "active",
+      "priority": 1,
+      "aligned_goals": [
+        "financial_perception"
+      ],
+      "quality_metrics": {
+        "success_rate": 0.8,
+        "avg_response_time_ms": 2000,
+        "signal_count_7d": 0,
+        "actionable_ratio": 0.3
+      },
+      "last_fetch": null,
+      "last_evaluated": "2026-05-18",
+      "failure_history": [],
+      "notes": "Python库，完全免费，覆盖A股/期货/宏观，需import或subprocess调用",
+      "api_config": {
+        "type": "python_library",
+        "supports_markets": ["SH", "SZ"],
+        "supports_futures": true,
+        "supports_macro": true,
+        "requires_import": true,
+        "fallback_method": "subprocess"
+      },
+      "fetch_history": []
+    },
+    "fred": {
+      "name": "FRED 宏观经济数据",
+      "type": "finance",
+      "status": "pending",
+      "priority": 2,
+      "aligned_goals": [
+        "financial_perception"
+      ],
+      "quality_metrics": {
+        "success_rate": 0.0,
+        "avg_response_time_ms": 0,
+        "signal_count_7d": 0,
+        "actionable_ratio": 0.0
+      },
+      "last_fetch": null,
+      "last_evaluated": "2026-05-18",
+      "failure_history": [],
+      "notes": "待配置API Key，完全免费，1000次/天，覆盖美国宏观指标",
+      "api_config": {
+        "base_url": "https://api.stlouisfed.org/fred",
+        "requires_key": true,
+        "rate_limit": {
+          "requests_per_day": 1000
+        },
+        "popular_series": ["GDP", "CPI", "UNRATE", "FEDFUNDS", "DGS10"]
+      },
+      "fetch_history": []
+    },
+    "polygon": {
+      "name": "Polygon.io 美股/外汇/加密",
+      "type": "finance",
+      "status": "active",
+      "priority": 1,
+      "aligned_goals": [
+        "financial_perception"
+      ],
+      "quality_metrics": {
+        "success_rate": 1.0,
+        "avg_response_time_ms": 300,
+        "signal_count_7d": 0,
+        "actionable_ratio": 0.3
+      },
+      "last_fetch": null,
+      "last_evaluated": "2026-05-18",
+      "failure_history": [],
+      "notes": "Polygon.io 免费版：5次/分钟，支持美股/外汇/加密/期权延迟行情，V2 API优先",
+      "api_config": {
+        "base_url": "https://api.polygon.io",
+        "supports_markets": ["US", "GB", "CC"],
+        "supports_kline": true,
+        "supports_forex": true,
+        "supports_crypto": true,
+        "rate_limit": {
+          "requests_per_minute": 5
+        }
+      },
+      "fetch_history": []
+    }
+  },
+  "goal_source_mapping": {
+    "security": {
+      "primary": [
+        "nvd"
+      ],
+      "secondary": [
+        "threatpost",
+        "dark_reading"
+      ]
+    },
+    "self_evolution": {
+      "primary": [
+        "arxiv",
+        "hackernews",
+        "lobste"
+      ],
+      "secondary": [
+        "github_trending",
+        "reddit"
+      ]
+    },
+    "ecosystem": {
+      "primary": [
+        "github_trending",
+        "rss"
+      ],
+      "secondary": [
+        "agent_news"
+      ]
+    },
+    "user_interests": {
+      "primary": [
+        "rss"
+      ],
+      "chinese": [
+        "机器之心",
+        "量子位",
+        "少数派"
+      ]
+    },
+    "platform_changes": {
+      "primary": [
+        "coze"
+      ],
+      "secondary": [
+        "rss"
+      ]
+    },
+    "financial_perception": {
+      "primary": [
+        "polygon",
+        "akshare",
+        "binance"
+      ],
+      "secondary": [
+        "itick_stock",
+        "itick_forex",
+        "fred"
+      ]
+    }
+  },
+  "lifecycle_rules": {
+    "trial_period_days": 7,
+    "min_success_rate": 0.7,
+    "min_actionable_ratio": 0.1,
+    "degrade_threshold": 0.5,
+    "retire_threshold": 0.3,
+    "auto_promote_threshold": 0.4
+  },
+  "audit_schedule": {
+    "frequency": "monthly",
+    "day_of_month": 1,
+    "time": "10:00"
+  }
+}

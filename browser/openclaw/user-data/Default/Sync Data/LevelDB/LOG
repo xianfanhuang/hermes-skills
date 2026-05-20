@@ -1,3 +1,3 @@
-2026/04/08-12:13:15.152 ecdc2 Reusing MANIFEST /workspace/projects/browser/openclaw/user-data/Default/Sync Data/LevelDB/MANIFEST-000001
-2026/04/08-12:13:15.152 ecdc2 Recovering log #3
-2026/04/08-12:13:15.153 ecdc2 Reusing old log /workspace/projects/browser/openclaw/user-data/Default/Sync Data/LevelDB/000003.log 
+2026/05/20-00:12:58.196 68b Reusing MANIFEST /workspace/projects/browser/openclaw/user-data/Default/Sync Data/LevelDB/MANIFEST-000001
+2026/05/20-00:12:58.197 68b Recovering log #3
+2026/05/20-00:12:58.222 68b Reusing old log /workspace/projects/browser/openclaw/user-data/Default/Sync Data/LevelDB/000003.log 

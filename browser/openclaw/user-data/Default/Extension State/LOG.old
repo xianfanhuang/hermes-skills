@@ -1,2 +1,3 @@
-2026/04/08-12:13:07.449 ecd24 Creating DB /workspace/projects/browser/openclaw/user-data/Default/Extension State since it was missing.
-2026/04/08-12:13:07.456 ecd24 Reusing MANIFEST /workspace/projects/browser/openclaw/user-data/Default/Extension State/MANIFEST-000001
+2026/05/18-20:08:38.863 8c2ce Reusing MANIFEST /workspace/projects/browser/openclaw/user-data/Default/Extension State/MANIFEST-000001
+2026/05/18-20:08:38.864 8c2ce Recovering log #3
+2026/05/18-20:08:38.865 8c2ce Reusing old log /workspace/projects/browser/openclaw/user-data/Default/Extension State/000003.log 

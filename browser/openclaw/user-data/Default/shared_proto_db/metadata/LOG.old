@@ -1,2 +1,3 @@
-2026/04/08-12:13:07.423 ecd1b Creating DB /workspace/projects/browser/openclaw/user-data/Default/shared_proto_db/metadata since it was missing.
-2026/04/08-12:13:07.429 ecd1b Reusing MANIFEST /workspace/projects/browser/openclaw/user-data/Default/shared_proto_db/metadata/MANIFEST-000001
+2026/05/18-20:08:38.833 8c2ce Reusing MANIFEST /workspace/projects/browser/openclaw/user-data/Default/shared_proto_db/metadata/MANIFEST-000001
+2026/05/18-20:08:38.833 8c2ce Recovering log #3
+2026/05/18-20:08:38.836 8c2ce Reusing old log /workspace/projects/browser/openclaw/user-data/Default/shared_proto_db/metadata/000003.log 

@@ -1,0 +1,57 @@
+# 缠论元交易体系 - 配置文件
+# Version: 1.0.0
+
+# 数据源配置
+data_sources:
+  akshare:
+    enabled: true
+    description: "akshare - 覆盖A股/港股/美股/期货"
+  ccxt:
+    enabled: true
+    exchange: "binance"
+    description: "ccxt - 覆盖加密货币交易所"
+
+# 关注品种
+watchlist:
+  futures:
+    - symbol: "A50"
+      code: "CHINA_A50"
+      exchange: "SGX"
+  crypto:
+    - symbol: "BTCUSDT"
+      exchange: "binance"
+    - symbol: "ETHUSDT"
+      exchange: "binance"
+  stocks_cn:
+    - code: "000001"
+      name: "平安银行"
+    - code: "600519"
+      name: "贵州茅台"
+  stocks_us:
+    - code: "AAPL"
+      name: "Apple"
+    - code: "NVDA"
+      name: "NVIDIA"
+
+# 缠论配置
+chanlun:
+  freqs:
+    - "日线"
+    - "30分钟"
+    - "5分钟"
+  bi_algo: "normal"
+  seg_algo: "chan"
+  zs_algo: "normal"
+  divergence_rate: 0.9
+
+# 飞书配置
+feishu:
+  app_id: ""
+  app_secret: ""
+
+# 扫描调度
+schedule:
+  morning_scan: "08:00"
+  noon_scan: "12:00"
+  evening_scan: "18:00"
+  night_scan: "22:00"

@@ -8,7 +8,7 @@
       "name": "缠论每日模拟交易报告",
       "enabled": true,
       "createdAtMs": 1775870699897,
-      "updatedAtMs": 1778889604519,
+      "updatedAtMs": 1779148885179,
       "schedule": {
         "everyMs": 86400000,
         "kind": "every",
@@ -25,15 +25,48 @@
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1778976004364,
-        "lastRunAtMs": 1778889604364,
+        "nextRunAtMs": 1779235204381,
+        "lastRunAtMs": 1779148804381,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 155,
-        "lastDelivered": false,
-        "lastDeliveryStatus": "not-delivered",
+        "lastDurationMs": 80798,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0,
-        "runningAtMs": 1778976004365
+        "runningAtMs": 1779235204383
+      }
+    },
+    {
+      "id": "34e64e00-4a31-4589-a9c7-4cdd9b7944bf",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "CRCL 1:00 AM 准时报价",
+      "enabled": false,
+      "deleteAfterRun": true,
+      "createdAtMs": 1779121819082,
+      "updatedAtMs": 1779124027721,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-05-18T17:00:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "对 CRCL (Circle) 进行准时报价测试。分别调用所有可用数据提供商（Polygon、iTick）获取实时行情，记录每个数据源的价格、时间戳、成交量。对比各数据源差异，确认是否为实时数据。结果通知 VAN。"
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "lastRunAtMs": 1779123600005,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 427716,
+        "lastError": "⚠️ ✉️ Message failed",
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 1
       }
     }
   ]
