@@ -77,6 +77,30 @@
 - **技术栈选型**：czsc (Rust计算) + TradingAgents (多Agent) + OpenClaw (调度) + 飞书 (生态)
 - **融合李小军Skill**：保留简约缠论框架 + 增强自动计算能力
 
+### 2026-05-20 - 多渠道统一协议 v1.0
+- **核心原则**: 一个身份、记忆统一、Session 归档、无缝切换
+- **已接入渠道**: 飞书(feishu) + Kimi(kimi-claw)
+- **协议文件**: `memory/multi-channel-protocol.md`
+- **Session 归档**: `memory/sessions/` — 每个渠道对话定期归档
+- **归档脚本**: `scripts/session-archive.sh`
+- **保留策略**: 7天全量 → 30天摘要 → 30天+关键决策
+- **切换机制**: 每个新 session 自动加载 MEMORY.md + 今日记忆 + 最近归档摘要
+- **Kimi Claw 插件安装完成** — 新增 Kimi 消息渠道，bot-token 已配置
+- **多渠道架构**: 飞书 + Kimi 并行，对话上下文独立，文件级记忆共享
+- **跨渠道协议**: 见 `memory/cross-channel-protocol.md`
+- **Smart Data Router**: `data/smart_data_router.py` — 智能数据路由器
+  - 美股实时 → Finnhub → iTick → Polygon
+  - 美股K线 → Tiger (免费)
+  - 港股 → Tiger (免费L2)
+  - 加密 → Binance (免费)
+- **CRCL 交易系统改造**: 接入 SmartDataRouter，实时行情走 Finnhub
+
+### 2026-05-20 - czsc 升级决策
+- **结论**: 保持 v0.10.12，不升级核心库
+- **方案**: 构建 CzscExtension 扩展层（类二买/中枢震荡买卖点/分型过滤/特殊形态）
+- **工作量**: 4-6天
+- **优先级**: 信号质量 > 风控 > 自进化
+
 *此文件会随着与 Captain 的互动不断更新。*
 
 ### 2026-05-19 - 新增数据源
@@ -143,3 +167,14 @@
 - **首次扫描:** CRCL $112.39，中性盘整，无信号
 - **交易逻辑:** 买入=日线上升+5分钟底背驰；卖出=顶背驰/止损
 - **仓位管理:** 3%风险比例，最大50%仓位
+
+### 2026-05-20 - ChanlunAgent MVP Day 1 & 飞书群协作
+- **飞书群成员**: Trading Assistant (我), Top Sailor (COO), Vas, Nova, Linda
+- **协作规范**: Superpowers AI编程流程, CONTACT.md动态维护, sessions_send直连
+- **飞书卡片限制**: Interactive Card API只返回fallback文本，Bot间通信用post/text类型
+- **MVP完成**: iTick bug修复, SQLite TokenStore, ChanlunAgent核心(8指令), RGB知识库初始
+- **ChanlunAgent Skill**: 已集成到OpenClaw，通过现有Bot调用，不需要新建Bot
+- **路径**: `/workspace/projects/workspace/chanlun-agent/`
+- **使用**: `python3 ChanlunAgent.py -c 分析 -a CRCL`
+
+### 2026-05-20 - Python Enum 陷阱：类内定义 dict = {...} 会被当作枚举成员而非类属性，需提取为模块级常量
