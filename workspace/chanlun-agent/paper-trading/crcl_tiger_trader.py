@@ -41,6 +41,15 @@ except ImportError:
     ROUTER_AVAILABLE = False
     logger.warning("SmartDataRouter not available, using Tiger only")
 
+# czsc 扩展层
+try:
+    from czsc import CZSC, RawBar, Freq
+    from czsc_extension import CzscExtension
+    CZSC_AVAILABLE = True
+except ImportError:
+    CZSC_AVAILABLE = False
+    logger.warning("CzscExtension not available")
+
 # 日志配置
 logging.basicConfig(
     level=logging.INFO,
@@ -447,7 +456,7 @@ class CRCLTrader:
             json.dump(self.portfolio, f, indent=2, ensure_ascii=False)
 
     def analyze(self) -> Dict:
-        """执行缠论分析"""
+        """执行缠论分析（czsc 扩展层 + 旧版分析器）"""
         logger.info("📊 开始 CRCL 缠论分析...")
 
         # 获取日线数据
@@ -469,10 +478,54 @@ class CRCLTrader:
             'min5': min5_analysis,
         }
 
+        # czsc 扩展层分析（如果可用）
+        if CZSC_AVAILABLE:
+            czsc_result = self._czsc_analyze()
+            result['czsc'] = czsc_result
+
         self.portfolio['last_analysis'] = result
         self.save_portfolio()
 
         return result
+
+    def _czsc_analyze(self) -> Dict:
+        """czsc 扩展层分析"""
+        from datetime import datetime as dt_parser
+
+        results = {}
+
+        for period, timeframe_name, limit in [
+            ('day', 'daily', 100),
+            ('5min', '5min', 200),
+            ('30min', '30min', 200),
+        ]:
+            try:
+                klines = self.client.get_kline_from_router("CRCL", period=period, limit=limit)
+                if not klines:
+                    continue
+
+                bars = []
+                for k in klines:
+                    try:
+                        d = dt_parser.strptime(k.time[:10], '%Y-%m-%d') if hasattr(k, 'time') else k.get('dt')
+                    except:
+                        d = dt_parser.now()
+                    bars.append(RawBar(
+                        symbol='CRCL', dt=d, freq=Freq.D,
+                        open=k.open, high=k.high, low=k.low, close=k.close,
+                        vol=float(k.volume), amount=float(k.volume * k.close),
+                    ))
+
+                ka = CZSC(bars)
+                ext = CzscExtension(ka, symbol='CRCL', timeframe=timeframe_name)
+                results[timeframe_name] = ext.analyze_all()
+
+                logger.info(f"  czsc {timeframe_name}: {len(ext.bi_list)}笔 {len(ext.zs_list)}中枢")
+
+            except Exception as e:
+                logger.warning(f"  czsc {timeframe_name} failed: {e}")
+
+        return results
 
     def generate_signal(self, analysis: Dict) -> Optional[Dict]:
         """

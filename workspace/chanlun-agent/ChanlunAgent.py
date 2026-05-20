@@ -123,6 +123,15 @@ class ChanlunAgent:
         self.config = config or load_config()
         self.store = TokenStore(self.config.db_path)
         self.perception = ChanlunPerception()
+        self.risk_engine = RiskEngine(self.store, {
+            'technical_stop_pct': self.config.risk.technical_stop_pct,
+            'time_stop_bars': self.config.risk.time_stop_bars,
+            'time_stop_reduce_pct': self.config.risk.time_stop_reduce_pct,
+            'max_loss_per_trade': self.config.risk.max_loss_per_trade,
+            'max_daily_loss': self.config.risk.max_daily_loss,
+            'consecutive_loss_limit': self.config.risk.consecutive_loss_limit,
+            'halt_duration_minutes': self.config.risk.halt_duration_minutes,
+        })
         self.feishu: Optional[FeishuClient] = None
 
         # 初始化飞书客户端
@@ -186,7 +195,7 @@ class ChanlunAgent:
         return "\n".join(lines)
 
     def _cmd_analyze(self, args: str) -> str:
-        """缠论分析"""
+        """缠论分析（含扩展：类二买/中枢震荡/背驰/风控）"""
         symbol = args.strip() or self.config.symbol.symbol
         market = self.config.symbol.market
 
@@ -200,7 +209,26 @@ class ChanlunAgent:
             if structure.last_zs_range:
                 lines.append(f"  中枢区间: [{structure.last_zs_range[0]:.2f}, {structure.last_zs_range[1]:.2f}]")
             lines.append(f"  背驰: {'⚠️ 是' if structure.divergence else '否'}")
+            if structure.buy_sell_points:
+                for bsp in structure.buy_sell_points:
+                    lines.append(f"  🔔 买卖点: {bsp}")
             lines.append("")
+
+        # 风控检查
+        open_trades = self.store.get_open_trades(symbol=symbol)
+        if open_trades:
+            quote = self.perception.get_quote(symbol, market)
+            if quote:
+                current_price = quote.get('price', 0) or quote.get('last_price', 0)
+                for t in open_trades:
+                    zs_range = structures.get('日线', structures.get(list(structures.keys())[0]))
+                    zs = zs_range.last_zs_range if zs_range else None
+                    alerts = self.risk_engine.check_all(t, current_price, zs)
+                    if alerts:
+                        lines.append("⚠️ 风控告警:")
+                        for a in alerts:
+                            lines.append(f"  [{a.level}] {a.message}")
+                        lines.append("")
 
         return "\n".join(lines)
 
