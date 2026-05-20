@@ -1,33 +1,45 @@
 {
-  "symbol": "CRCL",
+  "symbol": "SOXS",
   "position": {
     "direction": "long",
-    "entry_price": 112.265,
-    "quantity": 445,
-    "entry_time": "2026-05-21T03:23:27.729087",
-    "stop_loss": 108.89705,
-    "signal_type": "单级别: 日线up | 共振级别: 1",
+    "entry_price": 8.595,
+    "quantity": 62,
+    "entry_time": "2026-05-21T03:46:30.886609",
+    "stop_loss": 34.4,
+    "signal_type": "两级共振: 日线up + 30分钟up | 共振级别: 2",
     "signal_analysis": {
       "daily": {
-        "bi_count": 16,
+        "bi_count": 15,
         "zs_count": 3,
         "direction": "up"
       },
       "30min": {
-        "bi_count": 16,
-        "zs_count": 1,
-        "direction": "neutral"
+        "bi_count": 9,
+        "zs_count": 2,
+        "direction": "up"
       },
       "5min": {
-        "bi_count": 15,
-        "zs_count": 2,
+        "bi_count": 14,
+        "zs_count": 3,
         "direction": "down"
       }
     }
   },
-  "trade_history": [],
-  "daily_pnl": 0,
-  "consecutive_losses": 0,
+  "trade_history": [
+    {
+      "direction": "long",
+      "entry_price": 112.265,
+      "exit_price": 8.64,
+      "quantity": 445,
+      "pnl": -46113.12,
+      "pnl_pct": -92.3,
+      "reason": "止损触发 ($108.90)",
+      "entry_time": "2026-05-21T03:23:27.729087",
+      "exit_time": "2026-05-21T03:46:30.583597"
+    }
+  ],
+  "daily_pnl": -46113.125,
+  "consecutive_losses": 1,
   "cooldown_until": null,
-  "last_update": "2026-05-21T03:23:27.729182"
+  "last_update": "2026-05-21T03:46:30.886682"
 }

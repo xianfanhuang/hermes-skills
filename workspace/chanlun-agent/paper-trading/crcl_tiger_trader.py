@@ -273,25 +273,27 @@ class TigerClient:
         """
         try:
             from tigeropen.trade.domain.contract import Contract
-            contract = Contract(symbol=symbol, currency='USD', exchange='SMART')
+            contract = Contract(symbol=symbol, sec_type='STK', currency='USD', exchange='SMART')
 
             if order_type == "MKT":
                 order = self.trade_client.create_order(
+                    account=self.account,
                     contract=contract,
                     action=action,
-                    order_type=OrderType.MKT,
+                    order_type='MKT',
                     quantity=quantity,
-                    time_in_force='day',
+                    time_in_force='DAY',
                     outside_rth=True
                 )
             else:  # LMT
                 order = self.trade_client.create_order(
+                    account=self.account,
                     contract=contract,
                     action=action,
-                    order_type=OrderType.LMT,
+                    order_type='LMT',
                     quantity=quantity,
                     limit_price=price,
-                    time_in_force='day',
+                    time_in_force='DAY',
                     outside_rth=True
                 )
 
