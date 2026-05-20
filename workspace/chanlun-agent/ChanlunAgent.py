@@ -29,6 +29,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 from config import AgentConfig, load_config
 from store import TokenStore, TradeRecord, SignalLog
 from chanlun_perception import ChanlunPerception
+from czsc_extension import CzscExtension
+from risk_engine import RiskEngine
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("ChanlunAgent")
