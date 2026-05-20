@@ -755,3 +755,32 @@ TypeError: Object of type OrderType is not JSON serializable
 2026-05-21 04:08:27,412 [INFO]   5min: 16笔 3中枢 | down
 2026-05-21 04:08:27,412 [INFO]    建议方向: long
 2026-05-21 04:08:27,412 [INFO]    无缠论买点信号
+2026-05-21 04:16:02,879 [INFO] sdk version: 3.5.8
+2026-05-21 04:16:03,161 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 04:16:03,162 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 04:16:19,179 [INFO] sdk version: 3.5.8
+2026-05-21 04:16:19,466 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 04:16:19,466 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 04:16:19,467 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 04:16:20,551 [INFO] ✅ SOXS via finnhub: $8.54 (1084ms)
+2026-05-21 04:16:29,755 [INFO] sdk version: 3.5.8
+2026-05-21 04:16:30,084 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 04:16:30,084 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 04:17:07,037 [INFO] sdk version: 3.5.8
+2026-05-21 04:17:07,331 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 04:17:07,331 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 04:17:07,332 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 04:17:07,332 [INFO] 🐯 Tiger Live Trader 初始化完成
+2026-05-21 04:17:07,333 [INFO]   品种: SOXS
+2026-05-21 04:17:07,333 [INFO]   模式: Tiger模拟账户真实下单
+2026-05-21 04:17:07,333 [INFO] ============================================================
+2026-05-21 04:17:07,333 [INFO] 📊 Tiger Live Scan | 2026-05-21 04:17:07 | SOXS
+2026-05-21 04:17:07,647 [INFO]    可用资金: $998,557.90
+2026-05-21 04:17:07,647 [INFO]    持仓状态: 无
+2026-05-21 04:17:08,718 [INFO] ✅ SOXS via finnhub: $8.54 (1071ms)
+2026-05-21 04:17:08,718 [INFO]    当前价: $8.54
+2026-05-21 04:17:08,858 [INFO]   daily: 15笔 3中枢 | up
+2026-05-21 04:17:08,942 [INFO]   30min: 9笔 2中枢 | up
+2026-05-21 04:17:09,033 [INFO]   5min: 16笔 3中枢 | down
+2026-05-21 04:17:09,034 [INFO]    建议方向: long
+2026-05-21 04:17:09,034 [INFO]    无缠论买点信号

@@ -236,11 +236,15 @@ class TigerLiveTrader:
         return min(quantity, max_quantity)
 
     def place_buy_order(self, quantity: int, price: float):
-        """下买单"""
+        """下买单 (限价单)"""
         try:
-            result = self.tiger_client.place_order(self.symbol, 'BUY', quantity, price, 'MKT')
+            # 限价单，价格略高于当前价确保成交
+            limit_price = round(price + 0.01, 2)
+            result = self.tiger_client.place_order(
+                self.symbol, 'BUY', quantity, limit_price, 'LMT'
+            )
             if result:
-                logger.info(f"🟢 买单已提交: {self.symbol} x {quantity} @ ${price:.2f}")
+                logger.info(f"🟢 限价买单已提交: {self.symbol} x {quantity} @ ${limit_price:.2f}")
                 logger.info(f"   订单ID: {result}")
                 return True
             else:
@@ -250,12 +254,23 @@ class TigerLiveTrader:
             logger.error(f"❌ 买单异常: {e}")
             return False
 
-    def place_sell_order(self, quantity: int):
-        """下卖单"""
+    def place_sell_order(self, quantity: int, price: float = None):
+        """下卖单 (限价单)"""
         try:
-            result = self.tiger_client.place_order(self.symbol, 'SELL', quantity, None, 'MKT')
+            # 如果没有价格，获取当前价
+            if price is None:
+                from smart_data_router import create_router
+                router = create_router()
+                quote = router.get_quote(self.symbol)
+                price = quote.price if quote and hasattr(quote, 'price') else 0
+            
+            # 限价单，价格略低于当前价确保成交
+            limit_price = round(price - 0.01, 2)
+            result = self.tiger_client.place_order(
+                self.symbol, 'SELL', quantity, limit_price, 'LMT'
+            )
             if result:
-                logger.info(f"🔴 卖单已提交: {self.symbol} x {quantity}")
+                logger.info(f"🔴 限价卖单已提交: {self.symbol} x {quantity} @ ${limit_price:.2f}")
                 logger.info(f"   订单ID: {result}")
                 return True
             else:
@@ -314,7 +329,7 @@ class TigerLiveTrader:
             if (account_status['quantity'] > 0 and direction == 'short') or \
                (account_status['quantity'] < 0 and direction == 'long'):
                 logger.info(f"🔄 方向反转，平仓")
-                self.place_sell_order(abs(account_status['quantity']))
+                self.place_sell_order(abs(account_status['quantity']), current_price)
             else:
                 logger.info(f"   方向一致，持仓不动")
             return
