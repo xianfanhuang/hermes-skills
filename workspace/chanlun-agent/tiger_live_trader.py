@@ -179,22 +179,49 @@ class TigerLiveTrader:
 
         return 'none'
 
-    def check_resonance(self, analysis: dict) -> tuple:
-        """检查共振"""
+    def has_valid_buy_signal(self, analysis: dict) -> tuple:
+        """
+        检查是否有有效的缠论买点
+        
+        Returns: (has_signal, signal_type, strength)
+        """
         daily = analysis.get('daily', {})
         m30 = analysis.get('30min', {})
         m5 = analysis.get('5min', {})
-
-        daily_dir = daily.get('direction', 'unknown')
-        m30_dir = m30.get('direction', 'unknown')
-        m5_dir = m5.get('direction', 'unknown')
-
-        if daily_dir == m30_dir == 'up':
-            return True, 2, "日线+30分钟共振向上"
-        elif daily_dir == 'up':
-            return True, 1, "日线向上"
-
-        return False, 0, "无共振"
+        
+        # 获取各级别信号
+        daily_signals = daily.get('signals', [])
+        m30_signals = m30.get('signals', [])
+        m5_signals = m5.get('signals', [])
+        
+        # 过滤有效信号
+        daily_valid = [s for s in daily_signals if not s.get('filtered')]
+        m30_valid = [s for s in m30_signals if not s.get('filtered')]
+        m5_valid = [s for s in m5_signals if not s.get('filtered')]
+        
+        # 检查是否有买点
+        buy_signals = []
+        
+        for signals_list, level in [(daily_valid, 'daily'), (m30_valid, '30min'), (m5_valid, '5min')]:
+            for s in signals_list:
+                if s.get('direction') == 'LONG':
+                    sig_type = s.get('type', '')
+                    # 一买、二买、类二买、背驰买都是有效买点
+                    if any(x in sig_type for x in ['一买', '二买', '类二买', '背驰', '底背驰']):
+                        buy_signals.append({
+                            'type': sig_type,
+                            'level': level,
+                            'strength': s.get('strength', 0.5)
+                        })
+        
+        if not buy_signals:
+            return False, None, 0
+        
+        # 按强度排序
+        buy_signals.sort(key=lambda x: x['strength'], reverse=True)
+        best = buy_signals[0]
+        
+        return True, f"{best['level']} {best['type']}", best['strength']
 
     def calculate_position_size(self, entry_price: float, stop_loss: float, available_funds: float) -> int:
         """计算仓位"""
@@ -272,9 +299,14 @@ class TigerLiveTrader:
         direction = self.determine_direction(analysis)
         logger.info(f"   建议方向: {direction}")
 
-        # 检查共振
-        is_resonance, level, reason = self.check_resonance(analysis)
-        logger.info(f"   共振状态: {reason}")
+        # 检查是否有有效买点
+        has_signal, signal_type, strength = self.has_valid_buy_signal(analysis)
+        
+        if not has_signal:
+            logger.info("   无缠论买点信号")
+            return
+        
+        logger.info(f"   检测到买点: {signal_type} (强度: {strength:.2f})")
 
         # 有持仓时检查是否需要平仓
         if account_status['has_position']:
@@ -288,8 +320,35 @@ class TigerLiveTrader:
             return
 
         # 无持仓，寻找入场机会
-        if direction == 'none' or not is_resonance:
-            logger.info("   无交易信号")
+        if direction == 'none':
+            logger.info("   无明确方向")
+            return
+
+        # 检查是否有有效买点
+        has_signal, signal_type, strength = self.has_valid_buy_signal(analysis)
+        
+        if not has_signal:
+            logger.info("   无缠论买点信号")
+            return
+        
+        logger.info(f"   检测到买点: {signal_type} (强度: {strength:.2f})")
+
+        # 配置限制
+        if self.config['direction'] != 'auto':
+            if self.config['direction'] == 'long' and direction != 'long':
+                logger.info(f"   配置限制只做多，当前方向 {direction}，跳过")
+                return
+            if self.config['direction'] == 'short' and direction != 'short':
+                logger.info(f"   配置限制只做空，当前方向 {direction}，跳过")
+                return
+
+        if not self.config['enable_short'] and direction == 'short':
+            logger.info("   做空未启用，跳过")
+            return
+
+        # 必须有买点才开仓
+        if strength < 0.5:
+            logger.info(f"   买点强度不足 ({strength:.2f} < 0.5)，跳过")
             return
 
         # 计算止损和仓位
@@ -307,7 +366,8 @@ class TigerLiveTrader:
             return
 
         # 执行下单
-        logger.info(f"🎯 信号触发: {reason}")
+        logger.info(f"🎯 缠论买点触发: {signal_type}")
+        logger.info(f"   强度: {strength:.2f}")
         logger.info(f"   方向: {direction.upper()}")
         logger.info(f"   价格: ${current_price:.2f}")
         logger.info(f"   止损: ${stop_loss:.2f}")
