@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "payload": {
+    "kind": "config-patch",
+    "status": "ok",
+    "ts": 1779303557203,
+    "sessionKey": "agent:main:main",
+    "deliveryContext": {
+      "channel": "feishu",
+      "to": "user:ou_1a64d3ea99c24cac146f8ec1b670f683",
+      "accountId": "default"
+    },
+    "message": "已配置 OpenClaw Memory Search，索引 chanlun-agent 知识库（R-rules/G-guides/B-practices + knowledge/）",
+    "doctorHint": "Run: openclaw doctor --non-interactive",
+    "stats": {
+      "mode": "config.patch",
+      "root": "/workspace/projects/openclaw.json"
+    }
+  }
+}

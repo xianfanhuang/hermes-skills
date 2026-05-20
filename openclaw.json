@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-05-20T03:11:52.989Z"
+    "lastTouchedAt": "2026-05-20T18:59:17.188Z"
   },
   "wizard": {
     "lastRunAt": "2026-02-05T16:16:05.545Z",
@@ -312,6 +312,16 @@
         ]
       },
       "workspace": "/workspace/projects/workspace",
+      "memorySearch": {
+        "enabled": true,
+        "extraPaths": [
+          "/workspace/projects/workspace/chanlun-agent/knowledge",
+          "/workspace/projects/workspace/knowledge"
+        ],
+        "cache": {
+          "enabled": true
+        }
+      },
       "compaction": {
         "mode": "safeguard"
       },

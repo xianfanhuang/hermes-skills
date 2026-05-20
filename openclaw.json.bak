@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-05-20T02:53:50.770Z"
+    "lastTouchedAt": "2026-05-20T03:11:52.989Z"
   },
   "wizard": {
     "lastRunAt": "2026-02-05T16:16:05.545Z",
@@ -530,9 +530,6 @@
             }
           }
         }
-      },
-      "openclaw-kimi-bridge-connector": {
-        "enabled": false
       },
       "kimi-claw": {
         "enabled": true,
