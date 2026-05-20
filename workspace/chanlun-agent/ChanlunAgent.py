@@ -31,6 +31,7 @@ from store import TokenStore, TradeRecord, SignalLog
 from chanlun_perception import ChanlunPerception
 from czsc_extension import CzscExtension
 from risk_engine import RiskEngine
+from reflection_engine import ReflectionEngine
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("ChanlunAgent")
@@ -132,6 +133,7 @@ class ChanlunAgent:
             'consecutive_loss_limit': self.config.risk.consecutive_loss_limit,
             'halt_duration_minutes': self.config.risk.halt_duration_minutes,
         })
+        self.reflection_engine = ReflectionEngine(self.store)
         self.feishu: Optional[FeishuClient] = None
 
         # 初始化飞书客户端
@@ -285,30 +287,26 @@ class ChanlunAgent:
         return "\n".join(results)
 
     def _cmd_reflect(self, args: str) -> str:
-        """生成反思"""
+        """生成反思（含优化建议）"""
         trades = self.store.get_trades(status='closed', limit=5)
         if not trades:
             return "📝 暂无已平仓交易，无法生成反思"
 
-        stats = self.store.get_trade_stats() or {}
-        lines = [
-            "📝 交易反思报告:\n",
-            f"总交易: {stats.get('total_trades') or 0} | "
-            f"胜率: {stats.get('win_rate') or 0:.1f}% | "
-            f"盈亏比: {stats.get('profit_factor') or 0:.2f}",
-            f"总盈亏: ${stats.get('total_pnl') or 0:.2f}",
-            ""
-        ]
+        # 生成最近交易反思
+        latest = trades[0]
+        trade_reflection = self.reflection_engine.generate_post_trade_reflection(latest)
 
-        for t in trades[:3]:
-            emoji = "✅" if (t.get('pnl') or 0) > 0 else "❌"
-            lines.append(
-                f"{emoji} {t['symbol']} | {t['signal_type']} | "
-                f"盈亏: {t.get('pnl_pct', 0):+.2f}%"
-            )
-            if t.get('reflection'):
-                lines.append(f"   反思: {t['reflection'][:100]}")
-            lines.append("")
+        # 获取优化建议
+        suggestions = self.reflection_engine.get_optimization_suggestions()
+
+        lines = [trade_reflection, "\n📊 参数优化建议:\n"]
+        for category, data in suggestions.items():
+            if category == "总体建议":
+                lines.append(f"\n💡 总体建议:")
+                for tip in data:
+                    lines.append(f"  • {tip}")
+            elif isinstance(data, dict) and data:
+                lines.append(f"  {category}: {data.get('建议', 'N/A')}")
 
         return "\n".join(lines)
 
