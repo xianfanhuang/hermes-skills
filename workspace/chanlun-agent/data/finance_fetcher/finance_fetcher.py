@@ -509,12 +509,12 @@ class KlineInterval(Enum):
     D1 = "1d"
     W1 = "1w"
     MN = "1M"
-    
-    # iTick映射
-    ITICK_MAP = {
-        "1m": "1", "5m": "5", "15m": "15", "30m": "30",
-        "1h": "60", "1d": "101", "1w": "102", "1M": "103"
-    }
+
+# iTick映射（不能放在Enum内，否则被当作枚举成员）
+ITICK_KLINE_MAP = {
+    "1m": "1", "5m": "5", "15m": "15", "30m": "30",
+    "1h": "60", "1d": "101", "1w": "102", "1M": "103"
+}
 
 class FinanceSignalType(Enum):
     """金融信号类型枚举（扩展现有SignalType）"""
@@ -1981,7 +1981,7 @@ class FinanceFetcher:
                     result = fetcher.get_kline(symbol, multiplier, polygon_timespan, from_date, to_date, limit)
                     
                 elif provider_name == 'itick':
-                    k_type = KlineInterval.ITICK_MAP.get(interval, "101")
+                    k_type = ITICK_KLINE_MAP.get(interval, "101")
                     result = fetcher.get_kline(symbol, market, k_type, limit)
                     
                 elif provider_name == 'binance':
