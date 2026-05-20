@@ -191,3 +191,12 @@
 - 五层记忆架构: 短期→长期→知识库→向量库→交易库
 - 打通方案: 共享文档中转 / sessions_send / 统一 MEMORY.md
 - VAN 要求 Top Sailor 学习 Coze 记忆层内容并沉淀
+
+### 2026-05-21 - ChanlunAgent MVP v1.0.0 全部完成 🎉
+- **总代码量:** ~3,200行
+- **全部11个模块:** SmartDataRouter / czsc扩展层 / 多级别共振 / 风控引擎 / 反思引擎 / RGB知识库 / 回测闭环 / 飞书CLI / Memory Search / 参数优化 / 实时交易模拟
+- **实时交易模拟:** LivePaperTrader — 多周期分析(daily/30min/5min) + 智能方向确定 + 多级别共振 + 做多做空 + 移动止损 + 连亏熔断
+- **首次测试:** CRCL LONG @ $112.27 x 445, 止损 $108.90
+- **OpenClaw Memory Search:** 索引 chanlun-agent/knowledge + knowledge/，支持语义搜索缠论规则/指南
+- **参数优化:** 网格搜索 + 回测评分（胜率30% + 盈利因子30% + 夏普20% + 回撤20%）
+- **关键修复:** Freq.M5→F5, ZhongShu用high/low非zg/zd, CZSC无zs_list需通过CzscExtension访问
