@@ -319,23 +319,74 @@ class TigerClient:
             logger.error(f"❌ 取消订单失败: {e}")
             return False
 
-    def get_orders(self) -> List[Dict]:
-        """获取今日订单"""
+    def get_orders(self, detailed=False) -> List[Dict]:
+        """
+        获取今日订单
+        
+        Args:
+            detailed: 是否返回完整详细信息（用于数据分析/复盘）
+        
+        Returns:
+            订单列表
+        """
+        from datetime import datetime
+        
         orders = self.trade_client.get_orders()
         result = []
         if orders:
             for o in orders:
-                result.append({
-                    'order_id': o.order_id,
-                    'symbol': o.contract.symbol,
-                    'action': o.action,
-                    'quantity': o.quantity,
-                    'filled': o.filled,
-                    'status': o.status,
-                    'order_type': o.order_type,
-                    'limit_price': o.limit_price,
-                })
+                # 解析时间戳
+                trade_time = getattr(o, 'trade_time', getattr(o, 'update_time', ''))
+                if isinstance(trade_time, (int, float)) and trade_time > 1e12:
+                    trade_time_str = datetime.fromtimestamp(trade_time / 1000).strftime('%Y-%m-%d %H:%M:%S')
+                else:
+                    trade_time_str = str(trade_time) if trade_time else ''
+                
+                # 极简格式（默认）
+                if not detailed:
+                    result.append({
+                        'symbol': o.contract.symbol,
+                        'action': o.action,
+                        'avg_fill_price': getattr(o, 'avg_fill_price', 0) or getattr(o, 'avg_price', 0),
+                        'trade_time': trade_time_str,
+                    })
+                else:
+                    # 完整格式（用于复盘分析）
+                    result.append({
+                        'order_id': o.order_id,
+                        'symbol': o.contract.symbol,
+                        'action': o.action,
+                        'quantity': o.quantity,
+                        'filled': o.filled,
+                        'avg_fill_price': getattr(o, 'avg_fill_price', 0) or getattr(o, 'avg_price', 0),
+                        'status': str(o.status),
+                        'order_type': o.order_type,
+                        'limit_price': o.limit_price,
+                        'trade_time': trade_time_str,
+                        'create_time': getattr(o, 'create_time', ''),
+                        'account': getattr(o, 'account', ''),
+                        'contract': {
+                            'symbol': o.contract.symbol,
+                            'sec_type': getattr(o.contract, 'sec_type', ''),
+                            'currency': getattr(o.contract, 'currency', ''),
+                        },
+                        'time_in_force': getattr(o, 'time_in_force', ''),
+                        'outside_rth': getattr(o, 'outside_rth', False),
+                    })
         return result
+
+    def get_trade_report(self) -> str:
+        """
+        生成极简交易报告
+        
+        格式: 品种 买/卖 成交价 成交时间
+        """
+        orders = self.get_orders(detailed=False)
+        lines = []
+        for o in orders:
+            if o.get('avg_fill_price'):  # 只显示已成交的
+                lines.append(f"{o['symbol']} {o['action']} ${o['avg_fill_price']:.2f} {o['trade_time']}")
+        return '\n'.join(lines) if lines else "无成交记录"
 
 
 class ChanlunAnalyzer:

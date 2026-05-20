@@ -784,3 +784,12 @@ TypeError: Object of type OrderType is not JSON serializable
 2026-05-21 04:17:09,033 [INFO]   5min: 16笔 3中枢 | down
 2026-05-21 04:17:09,034 [INFO]    建议方向: long
 2026-05-21 04:17:09,034 [INFO]    无缠论买点信号
+2026-05-21 04:39:13,791 [INFO] sdk version: 3.5.8
+2026-05-21 04:39:14,099 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 04:39:14,099 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 04:49:53,818 [INFO] sdk version: 3.5.8
+2026-05-21 04:49:54,120 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 04:49:54,120 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 04:50:35,242 [INFO] sdk version: 3.5.8
+2026-05-21 04:50:35,517 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 04:50:35,517 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
