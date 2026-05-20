@@ -350,13 +350,21 @@ class TigerClient:
                 else:
                     trade_time_str = str(trade_time) if trade_time else ''
                 
+                # 获取费用数据
+                commission = getattr(o, 'commission', 0) or 0
+                realized_pnl = getattr(o, 'realized_pnl', 0) or 0
+                filled_cash = getattr(o, 'filled_cash_amount', 0) or 0
+                avg_fill = getattr(o, 'avg_fill_price', 0) or 0
+                
                 # 极简格式（默认）
                 if not detailed:
                     result.append({
                         'symbol': o.contract.symbol,
                         'action': o.action,
-                        'avg_fill_price': getattr(o, 'avg_fill_price', 0) or getattr(o, 'avg_price', 0),
+                        'avg_fill_price': avg_fill,
                         'trade_time': trade_time_str,
+                        'commission': commission,
+                        'realized_pnl': realized_pnl,
                     })
                 else:
                     # 完整格式（用于复盘分析）
@@ -366,7 +374,10 @@ class TigerClient:
                         'action': o.action,
                         'quantity': o.quantity,
                         'filled': o.filled,
-                        'avg_fill_price': getattr(o, 'avg_fill_price', 0) or getattr(o, 'avg_price', 0),
+                        'avg_fill_price': avg_fill,
+                        'filled_cash_amount': filled_cash,
+                        'commission': commission,
+                        'realized_pnl': realized_pnl,
                         'status': str(o.status),
                         'order_type': o.order_type,
                         'limit_price': o.limit_price,
@@ -380,6 +391,7 @@ class TigerClient:
                         },
                         'time_in_force': getattr(o, 'time_in_force', ''),
                         'outside_rth': getattr(o, 'outside_rth', False),
+                        'trading_session_type': getattr(o, 'trading_session_type', ''),
                     })
         return result
 
@@ -396,19 +408,18 @@ class TigerClient:
                 lines.append(f"{o['symbol']} {o['action']} ${o['avg_fill_price']:.2f} {o['trade_time']}")
         return '\n'.join(lines) if lines else "无成交记录"
 
-    def record_trade_fees(self, order_id: str, fee_breakdown: Dict[str, float] = None):
+    def record_trade_fees(self, order_id: str):
         """
-        记录交易费用到费率追踪器
+        自动从API获取并记录交易费用
         
         Args:
             order_id: 订单ID
-            fee_breakdown: 费用明细（如APP截图所示）
         """
         if not FEE_TRACKER_AVAILABLE:
             logger.warning("FeeTracker not available, skipping fee recording")
             return
         
-        # 获取订单详情
+        # 获取订单详情（包含费用）
         orders = self.get_orders(detailed=True)
         order = None
         for o in orders:
@@ -427,6 +438,14 @@ class TigerClient:
                 logger.info(f"Trade {order_id} already recorded, skipping")
                 return
         
+        # 从API获取费用数据
+        commission = order.get('commission', 0)
+        realized_pnl = order.get('realized_pnl', 0)
+        
+        if commission <= 0:
+            logger.warning(f"Order {order_id} has no commission data, skipping")
+            return
+        
         # 记录交易
         try:
             ft.add_trade(
@@ -434,12 +453,16 @@ class TigerClient:
                 action=order['action'],
                 quantity=order['filled'],
                 price=order['avg_fill_price'],
-                fee_total=0.0,  # 需要从APP获取完整费用
-                fee_breakdown=fee_breakdown or {},
+                fee_total=commission,
+                fee_breakdown={
+                    "commission": commission,
+                    "realized_pnl": realized_pnl,
+                },
                 trade_time=order['trade_time'],
                 order_id=str(order_id),
             )
             logger.info(f"✅ 交易费用已记录: {order['symbol']} {order['action']} Order#{order_id}")
+            logger.info(f"   费用: ${commission:.2f}, 盈亏: ${realized_pnl:.2f}")
         except Exception as e:
             logger.error(f"❌ 记录交易费用失败: {e}")
 
