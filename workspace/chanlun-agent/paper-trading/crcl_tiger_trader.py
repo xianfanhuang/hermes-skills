@@ -75,6 +75,14 @@ except ImportError:
     RGB_AVAILABLE = False
     logger.warning("RGBUpdater not available")
 
+# 费用追踪
+try:
+    from fee_tracker import get_fee_tracker
+    FEE_TRACKER_AVAILABLE = True
+except ImportError:
+    FEE_TRACKER_AVAILABLE = False
+    logger.warning("FeeTracker not available")
+
 # 日志配置
 logging.basicConfig(
     level=logging.INFO,
@@ -387,6 +395,79 @@ class TigerClient:
             if o.get('avg_fill_price'):  # 只显示已成交的
                 lines.append(f"{o['symbol']} {o['action']} ${o['avg_fill_price']:.2f} {o['trade_time']}")
         return '\n'.join(lines) if lines else "无成交记录"
+
+    def record_trade_fees(self, order_id: str, fee_breakdown: Dict[str, float] = None):
+        """
+        记录交易费用到费率追踪器
+        
+        Args:
+            order_id: 订单ID
+            fee_breakdown: 费用明细（如APP截图所示）
+        """
+        if not FEE_TRACKER_AVAILABLE:
+            logger.warning("FeeTracker not available, skipping fee recording")
+            return
+        
+        # 获取订单详情
+        orders = self.get_orders(detailed=True)
+        order = None
+        for o in orders:
+            if str(o.get('order_id')) == str(order_id):
+                order = o
+                break
+        
+        if not order:
+            logger.warning(f"Order {order_id} not found, cannot record fees")
+            return
+        
+        # 检查是否已记录
+        ft = get_fee_tracker()
+        for trade in ft.trades:
+            if trade.order_id == str(order_id):
+                logger.info(f"Trade {order_id} already recorded, skipping")
+                return
+        
+        # 记录交易
+        try:
+            ft.add_trade(
+                symbol=order['symbol'],
+                action=order['action'],
+                quantity=order['filled'],
+                price=order['avg_fill_price'],
+                fee_total=0.0,  # 需要从APP获取完整费用
+                fee_breakdown=fee_breakdown or {},
+                trade_time=order['trade_time'],
+                order_id=str(order_id),
+            )
+            logger.info(f"✅ 交易费用已记录: {order['symbol']} {order['action']} Order#{order_id}")
+        except Exception as e:
+            logger.error(f"❌ 记录交易费用失败: {e}")
+
+    def get_cost_estimate(self, symbol: str, notional: float, action: str = "BUY") -> Dict:
+        """
+        预估交易成本
+        
+        Args:
+            symbol: 品种代码
+            notional: 预估成交金额
+            action: BUY/SELL
+        
+        Returns:
+            成本预估
+        """
+        if not FEE_TRACKER_AVAILABLE:
+            return {
+                'symbol': symbol,
+                'notional': notional,
+                'action': action,
+                'estimated_fee': notional * 0.0014,  # 默认0.14%
+                'estimated_fee_rate': 0.0014,
+                'confidence': 'low',
+                'note': 'FeeTracker not available, using default 0.14%',
+            }
+        
+        ft = get_fee_tracker()
+        return ft.estimate_cost(symbol, notional, action)
 
 
 class ChanlunAnalyzer:
