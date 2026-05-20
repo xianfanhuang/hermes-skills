@@ -86,3 +86,250 @@
 2026-05-20 04:29:20,438 [INFO] 
 💤 无交易信号
 2026-05-20 04:29:20,438 [INFO] ============================================================
+2026-05-20 16:50:32,817 [INFO] sdk version: 3.5.8
+2026-05-20 16:50:33,127 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:50:33,127 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 16:50:33,128 [INFO] 📊 开始 CRCL 缠论分析...
+2026-05-20 16:50:33,356 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 16:50:33,449 [INFO] sdk version: 3.5.8
+2026-05-20 16:50:33,584 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:50:33,584 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 16:50:33,654 [INFO] ✅ CRCL kline(day) via tiger: 100 bars (298ms)
+2026-05-20 16:50:33,655 [INFO]   czsc daily: 8笔 2中枢
+2026-05-20 16:50:33,656 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 16:50:33,742 [INFO] sdk version: 3.5.8
+2026-05-20 16:50:33,867 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:50:33,867 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 16:50:33,949 [INFO] ✅ CRCL kline(5min) via tiger: 200 bars (293ms)
+2026-05-20 16:50:33,952 [INFO]   czsc 5min: 9笔 2中枢
+2026-05-20 16:50:33,952 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 16:50:34,046 [INFO] sdk version: 3.5.8
+2026-05-20 16:50:34,174 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:50:34,174 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 16:50:34,258 [INFO] ✅ CRCL kline(30min) via tiger: 200 bars (306ms)
+2026-05-20 16:50:34,261 [INFO]   czsc 30min: 15笔 2中枢
+2026-05-20 16:52:22,408 [INFO] sdk version: 3.5.8
+2026-05-20 16:52:22,690 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:52:22,690 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 16:52:53,653 [INFO] sdk version: 3.5.8
+2026-05-20 16:52:53,934 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:52:53,934 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 16:52:53,934 [INFO] 📊 开始 CRCL 缠论分析...
+2026-05-20 16:52:54,157 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 16:52:54,248 [INFO] sdk version: 3.5.8
+2026-05-20 16:52:54,377 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:52:54,377 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 16:52:54,449 [INFO] ✅ CRCL kline(day) via tiger: 100 bars (292ms)
+2026-05-20 16:52:54,451 [INFO]   czsc daily: 8笔 2中枢
+2026-05-20 16:52:54,451 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 16:52:54,548 [INFO] sdk version: 3.5.8
+2026-05-20 16:52:54,673 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:52:54,673 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 16:52:54,762 [INFO] ✅ CRCL kline(5min) via tiger: 200 bars (310ms)
+2026-05-20 16:52:54,764 [INFO]   czsc 5min: 9笔 2中枢
+2026-05-20 16:52:54,765 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 16:52:54,848 [INFO] sdk version: 3.5.8
+2026-05-20 16:52:54,990 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:52:54,991 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 16:52:55,076 [INFO] ✅ CRCL kline(30min) via tiger: 200 bars (311ms)
+2026-05-20 16:52:55,078 [INFO]   czsc 30min: 15笔 2中枢
+2026-05-20 16:53:30,727 [INFO] sdk version: 3.5.8
+2026-05-20 16:53:31,007 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:53:31,007 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 16:53:31,007 [INFO] 📊 开始 CRCL 缠论分析...
+2026-05-20 16:53:31,208 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 16:53:31,302 [INFO] sdk version: 3.5.8
+2026-05-20 16:53:31,426 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:53:31,426 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 16:53:31,502 [INFO] ✅ CRCL kline(day) via tiger: 100 bars (293ms)
+2026-05-20 16:53:31,504 [INFO]   czsc daily: 8笔 2中枢
+2026-05-20 16:53:31,504 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 16:53:31,593 [INFO] sdk version: 3.5.8
+2026-05-20 16:53:31,714 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:53:31,714 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 16:53:31,797 [INFO] ✅ CRCL kline(5min) via tiger: 200 bars (293ms)
+2026-05-20 16:53:31,800 [INFO]   czsc 5min: 9笔 2中枢
+2026-05-20 16:53:31,801 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 16:53:31,889 [INFO] sdk version: 3.5.8
+2026-05-20 16:53:32,008 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:53:32,008 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 16:53:32,086 [INFO] ✅ CRCL kline(30min) via tiger: 200 bars (286ms)
+2026-05-20 16:53:32,089 [INFO]   czsc 30min: 15笔 2中枢
+2026-05-20 16:54:33,760 [INFO] sdk version: 3.5.8
+2026-05-20 16:54:34,032 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:54:34,032 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 16:55:24,651 [INFO] sdk version: 3.5.8
+2026-05-20 16:55:24,942 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:55:24,942 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 16:55:24,942 [INFO] 📊 开始 CRCL 缠论分析...
+2026-05-20 16:55:25,155 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 16:55:25,248 [INFO] sdk version: 3.5.8
+2026-05-20 16:55:25,382 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:55:25,382 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 16:55:25,452 [INFO] ✅ CRCL kline(day) via tiger: 100 bars (297ms)
+2026-05-20 16:55:25,454 [INFO]   czsc daily: 8笔 2中枢
+2026-05-20 16:55:25,455 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 16:55:25,541 [INFO] sdk version: 3.5.8
+2026-05-20 16:55:25,663 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:55:25,663 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 16:55:25,750 [INFO] ✅ CRCL kline(5min) via tiger: 200 bars (295ms)
+2026-05-20 16:55:25,753 [INFO]   czsc 5min: 9笔 2中枢
+2026-05-20 16:55:25,753 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 16:55:25,840 [INFO] sdk version: 3.5.8
+2026-05-20 16:55:25,964 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 16:55:25,964 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 16:55:26,059 [INFO] ✅ CRCL kline(30min) via tiger: 200 bars (305ms)
+2026-05-20 16:55:26,061 [INFO]   czsc 30min: 15笔 2中枢
+2026-05-20 19:12:39,171 [INFO] sdk version: 3.5.8
+2026-05-20 19:12:39,503 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 19:12:39,503 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 19:12:51,936 [INFO] sdk version: 3.5.8
+2026-05-20 19:12:52,217 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 19:12:52,217 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 19:12:52,218 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 19:13:12,252 [ERROR] Finnhub get_quote(CRCL): <urlopen error [Errno 101] Network is unreachable>
+2026-05-20 19:13:13,267 [ERROR] iTick get_quote(CRCL): HTTP Error 404: Not Found
+2026-05-20 19:13:13,267 [ERROR] All providers failed for CRCL (us_stock/realtime)
+2026-05-20 19:13:13,436 [INFO] sdk version: 3.5.8
+2026-05-20 19:13:13,559 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 19:13:13,560 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 19:13:13,560 [INFO] 📊 开始 CRCL 缠论分析...
+2026-05-20 19:13:13,767 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 19:13:13,860 [INFO] sdk version: 3.5.8
+2026-05-20 19:13:13,988 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 19:13:13,988 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 19:13:14,054 [INFO] ✅ CRCL kline(day) via tiger: 100 bars (287ms)
+2026-05-20 19:13:14,056 [INFO]   czsc daily: 8笔 2中枢
+2026-05-20 19:13:14,056 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 19:13:14,146 [INFO] sdk version: 3.5.8
+2026-05-20 19:13:14,267 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 19:13:14,267 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 19:13:14,352 [INFO] ✅ CRCL kline(5min) via tiger: 200 bars (296ms)
+2026-05-20 19:13:14,355 [INFO]   czsc 5min: 9笔 2中枢
+2026-05-20 19:13:14,355 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 19:13:14,446 [INFO] sdk version: 3.5.8
+2026-05-20 19:13:14,572 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 19:13:14,573 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 19:13:14,653 [INFO] ✅ CRCL kline(30min) via tiger: 200 bars (297ms)
+2026-05-20 19:13:14,655 [INFO]   czsc 30min: 15笔 2中枢
+2026-05-20 19:13:43,302 [INFO] sdk version: 3.5.8
+2026-05-20 19:13:43,603 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 19:13:43,604 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 19:13:43,605 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 19:13:44,744 [INFO] ✅ CRCL via finnhub: $111.03 (1140ms)
+2026-05-20 19:13:58,244 [INFO] sdk version: 3.5.8
+2026-05-20 19:13:58,521 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 19:13:58,521 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 19:13:58,522 [INFO] 📊 开始 CRCL 缠论分析...
+2026-05-20 19:13:58,737 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 19:13:58,827 [INFO] sdk version: 3.5.8
+2026-05-20 19:13:58,955 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 19:13:58,955 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 19:13:59,022 [INFO] ✅ CRCL kline(day) via tiger: 100 bars (286ms)
+2026-05-20 19:13:59,024 [INFO]   czsc daily: 8笔 2中枢
+2026-05-20 19:13:59,025 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 19:13:59,113 [INFO] sdk version: 3.5.8
+2026-05-20 19:13:59,247 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 19:13:59,247 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 19:13:59,335 [INFO] ✅ CRCL kline(5min) via tiger: 200 bars (310ms)
+2026-05-20 19:13:59,338 [INFO]   czsc 5min: 9笔 2中枢
+2026-05-20 19:13:59,338 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 19:13:59,427 [INFO] sdk version: 3.5.8
+2026-05-20 19:13:59,550 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 19:13:59,550 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 19:13:59,632 [INFO] ✅ CRCL kline(30min) via tiger: 200 bars (293ms)
+2026-05-20 19:13:59,634 [INFO]   czsc 30min: 15笔 2中枢
+2026-05-20 21:52:12,151 [INFO] sdk version: 3.5.8
+2026-05-20 21:52:12,446 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:52:12,447 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 21:52:12,447 [INFO] 📊 开始 CRCL 缠论分析...
+2026-05-20 21:52:12,660 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 21:52:12,743 [INFO] sdk version: 3.5.8
+2026-05-20 21:52:12,877 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:52:12,877 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 21:52:12,953 [INFO] ✅ CRCL kline(day) via tiger: 100 bars (293ms)
+2026-05-20 21:52:12,954 [INFO]   czsc daily: 100 bars loaded
+2026-05-20 21:52:12,954 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 21:52:13,088 [INFO] sdk version: 3.5.8
+2026-05-20 21:52:13,211 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:52:13,211 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 21:52:13,288 [INFO] ✅ CRCL kline(5min) via tiger: 200 bars (334ms)
+2026-05-20 21:52:13,290 [INFO]   czsc 5min: 200 bars loaded
+2026-05-20 21:52:13,290 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 21:52:13,379 [INFO] sdk version: 3.5.8
+2026-05-20 21:52:13,498 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:52:13,498 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 21:52:13,577 [INFO] ✅ CRCL kline(30min) via tiger: 200 bars (287ms)
+2026-05-20 21:52:13,579 [INFO]   czsc 30min: 200 bars loaded
+2026-05-20 21:52:39,889 [INFO] sdk version: 3.5.8
+2026-05-20 21:52:40,203 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:52:40,203 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 21:52:40,204 [INFO] 📊 开始 CRCL 缠论分析...
+2026-05-20 21:52:40,425 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 21:52:40,514 [INFO] sdk version: 3.5.8
+2026-05-20 21:52:40,657 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:52:40,657 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 21:52:40,729 [INFO] ✅ CRCL kline(day) via tiger: 100 bars (303ms)
+2026-05-20 21:52:40,730 [INFO]   czsc daily: 100 bars loaded
+2026-05-20 21:52:40,730 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 21:52:40,815 [INFO] sdk version: 3.5.8
+2026-05-20 21:52:40,951 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:52:40,951 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 21:52:41,040 [INFO] ✅ CRCL kline(5min) via tiger: 200 bars (309ms)
+2026-05-20 21:52:41,041 [INFO]   czsc 5min: 200 bars loaded
+2026-05-20 21:52:41,041 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 21:52:41,128 [INFO] sdk version: 3.5.8
+2026-05-20 21:52:41,259 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:52:41,259 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 21:52:41,354 [INFO] ✅ CRCL kline(30min) via tiger: 200 bars (313ms)
+2026-05-20 21:52:41,355 [INFO]   czsc 30min: 200 bars loaded
+2026-05-20 21:52:41,360 [INFO]   多级别分析完成，最佳信号: 无
+2026-05-20 21:56:07,661 [INFO] sdk version: 3.5.8
+2026-05-20 21:56:07,947 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:56:07,947 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 21:56:07,948 [INFO] ✅ 风控引擎已初始化
+2026-05-20 21:56:07,948 [INFO] 📊 开始 CRCL 缠论分析...
+2026-05-20 21:56:08,167 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 21:56:08,254 [INFO] sdk version: 3.5.8
+2026-05-20 21:56:08,384 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:56:08,384 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 21:56:08,459 [INFO] ✅ CRCL kline(day) via tiger: 100 bars (292ms)
+2026-05-20 21:56:08,459 [INFO]   czsc daily: 100 bars loaded
+2026-05-20 21:56:08,460 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 21:56:08,540 [INFO] sdk version: 3.5.8
+2026-05-20 21:56:08,666 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:56:08,666 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 21:56:08,745 [INFO] ✅ CRCL kline(5min) via tiger: 200 bars (285ms)
+2026-05-20 21:56:08,746 [INFO]   czsc 5min: 200 bars loaded
+2026-05-20 21:56:08,747 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 21:56:08,834 [INFO] sdk version: 3.5.8
+2026-05-20 21:56:08,957 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:56:08,957 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 21:56:09,041 [INFO] ✅ CRCL kline(30min) via tiger: 200 bars (295ms)
+2026-05-20 21:56:09,043 [INFO]   czsc 30min: 200 bars loaded
+2026-05-20 21:56:09,047 [INFO]   多级别分析完成，最佳信号: 无
+2026-05-20 21:58:29,926 [INFO] sdk version: 3.5.8
+2026-05-20 21:58:30,209 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:58:30,209 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-20 21:58:30,209 [INFO] ✅ 风控引擎已初始化
+2026-05-20 21:58:30,210 [INFO] ✅ 反思引擎已初始化
+2026-05-20 21:58:30,210 [INFO] 📊 开始 CRCL 缠论分析...
+2026-05-20 21:58:30,410 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 21:58:30,500 [INFO] sdk version: 3.5.8
+2026-05-20 21:58:30,627 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:58:30,627 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 21:58:30,694 [INFO] ✅ CRCL kline(day) via tiger: 100 bars (283ms)
+2026-05-20 21:58:30,695 [INFO]   czsc daily: 100 bars loaded
+2026-05-20 21:58:30,695 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 21:58:30,785 [INFO] sdk version: 3.5.8
+2026-05-20 21:58:30,903 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:58:30,903 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 21:58:30,981 [INFO] ✅ CRCL kline(5min) via tiger: 200 bars (286ms)
+2026-05-20 21:58:30,982 [INFO]   czsc 5min: 200 bars loaded
+2026-05-20 21:58:30,983 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-20 21:58:31,064 [INFO] sdk version: 3.5.8
+2026-05-20 21:58:31,186 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-20 21:58:31,186 [INFO] 🐯 Tiger adapter initialized
+2026-05-20 21:58:31,270 [INFO] ✅ CRCL kline(30min) via tiger: 200 bars (287ms)
+2026-05-20 21:58:31,271 [INFO]   czsc 30min: 200 bars loaded
+2026-05-20 21:58:31,276 [INFO]   多级别分析完成，最佳信号: 无

@@ -44,11 +44,28 @@ except ImportError:
 # czsc 扩展层
 try:
     from czsc import CZSC, RawBar, Freq
-    from czsc_extension import CzscExtension
+    from czsc_extension import CzscExtension, analyze_multi_level
     CZSC_AVAILABLE = True
 except ImportError:
     CZSC_AVAILABLE = False
     logger.warning("CzscExtension not available")
+
+# 风控引擎
+try:
+    sys.path.insert(0, str(Path(__file__).parent.parent))
+    from risk_engine import RiskEngine, RiskAlert
+    RISK_AVAILABLE = True
+except ImportError:
+    RISK_AVAILABLE = False
+    logger.warning("RiskEngine not available")
+
+# 反思引擎
+try:
+    from reflection_engine import ReflectionEngine
+    REFLECTION_AVAILABLE = True
+except ImportError:
+    REFLECTION_AVAILABLE = False
+    logger.warning("ReflectionEngine not available")
 
 # 日志配置
 logging.basicConfig(
@@ -172,6 +189,54 @@ class TigerClient:
         except Exception as e:
             logger.error(f"Tiger fallback quote failed: {e}")
         return None
+
+    def get_kline_from_router(self, symbol: str = "CRCL", period: str = "day",
+                               limit: int = 100) -> List:
+        """
+        通过 SmartDataRouter 获取K线数据
+
+        Args:
+            symbol: 品种代码
+            period: K线周期 (day/5min/30min)
+            limit: 数量
+
+        Returns:
+            KLine 列表
+        """
+        if ROUTER_AVAILABLE:
+            try:
+                router = create_router()
+                klines = router.get_kline(symbol, AssetType.US_STOCK,
+                                          period=period, limit=limit)
+                if klines:
+                    return klines
+            except Exception as e:
+                logger.warning(f"Router kline failed: {e}")
+
+        # Fallback: Tiger
+        try:
+            if period == 'day':
+                bars = self.get_daily_bars(symbol, limit=limit)
+            else:
+                bars = self.get_intraday_bars(symbol, period=period, limit=limit)
+
+            if bars is not None and not bars.empty:
+                from types import SimpleNamespace
+                result = []
+                for _, row in bars.iterrows():
+                    result.append(SimpleNamespace(
+                        time=str(row.get('datetime', row.name)),
+                        open=float(row['open']),
+                        high=float(row['high']),
+                        low=float(row['low']),
+                        close=float(row['close']),
+                        volume=float(row.get('vol', row.get('volume', 0))),
+                    ))
+                return result
+        except Exception as e:
+            logger.error(f"Tiger kline fallback failed: {e}")
+
+        return []
 
     def get_intraday_bars(self, symbol: str = "CRCL", period: str = "5min", limit: int = 50) -> Optional[any]:
         """获取分钟线数据"""
@@ -430,6 +495,32 @@ class CRCLTrader:
         self.client = TigerClient(account)
         self.portfolio = self.load_portfolio()
 
+        # 初始化风控引擎
+        self.risk_engine = None
+        if RISK_AVAILABLE:
+            try:
+                self.risk_engine = RiskEngine(store=None, config={
+                    'technical_stop_pct': 0.03,
+                    'time_stop_bars': 8,
+                    'time_stop_reduce_pct': 0.5,
+                    'max_loss_per_trade': 0.03,
+                    'max_daily_loss': 0.08,
+                    'consecutive_loss_limit': 3,
+                    'halt_duration_minutes': 60,
+                })
+                logger.info("✅ 风控引擎已初始化")
+            except Exception as e:
+                logger.warning(f"风控引擎初始化失败: {e}")
+
+        # 初始化反思引擎
+        self.reflection_engine = None
+        if REFLECTION_AVAILABLE:
+            try:
+                self.reflection_engine = ReflectionEngine(store=None)
+                logger.info("✅ 反思引擎已初始化")
+            except Exception as e:
+                logger.warning(f"反思引擎初始化失败: {e}")
+
     def load_portfolio(self) -> Dict:
         """加载投资组合"""
         if PORTFOLIO_PATH.exists():
@@ -452,8 +543,17 @@ class CRCLTrader:
 
     def save_portfolio(self):
         """保存投资组合"""
+        import enum
+        class CzscEncoder(json.JSONEncoder):
+            def default(self, obj):
+                if isinstance(obj, enum.Enum):
+                    return str(obj)
+                if hasattr(obj, 'to_dict'):
+                    return obj.to_dict()
+                return super().default(obj)
+
         with open(PORTFOLIO_PATH, 'w') as f:
-            json.dump(self.portfolio, f, indent=2, ensure_ascii=False)
+            json.dump(self.portfolio, f, indent=2, ensure_ascii=False, cls=CzscEncoder)
 
     def analyze(self) -> Dict:
         """执行缠论分析（czsc 扩展层 + 旧版分析器）"""
@@ -489,16 +589,14 @@ class CRCLTrader:
         return result
 
     def _czsc_analyze(self) -> Dict:
-        """czsc 扩展层分析"""
+        """czsc 扩展层分析（多级别共振）"""
+        from czsc_extension import CzscExtension, analyze_multi_level
+        from czsc import CZSC, RawBar, Freq
         from datetime import datetime as dt_parser
 
-        results = {}
+        bars_dict = {}
 
-        for period, timeframe_name, limit in [
-            ('day', 'daily', 100),
-            ('5min', '5min', 200),
-            ('30min', '30min', 200),
-        ]:
+        for period, limit in [('day', 100), ('5min', 200), ('30min', 200)]:
             try:
                 klines = self.client.get_kline_from_router("CRCL", period=period, limit=limit)
                 if not klines:
@@ -507,7 +605,7 @@ class CRCLTrader:
                 bars = []
                 for k in klines:
                     try:
-                        d = dt_parser.strptime(k.time[:10], '%Y-%m-%d') if hasattr(k, 'time') else k.get('dt')
+                        d = dt_parser.strptime(k.time[:10], '%Y-%m-%d')
                     except:
                         d = dt_parser.now()
                     bars.append(RawBar(
@@ -516,95 +614,180 @@ class CRCLTrader:
                         vol=float(k.volume), amount=float(k.volume * k.close),
                     ))
 
-                ka = CZSC(bars)
-                ext = CzscExtension(ka, symbol='CRCL', timeframe=timeframe_name)
-                results[timeframe_name] = ext.analyze_all()
-
-                logger.info(f"  czsc {timeframe_name}: {len(ext.bi_list)}笔 {len(ext.zs_list)}中枢")
+                timeframe_name = 'daily' if period == 'day' else period
+                bars_dict[timeframe_name] = bars
+                logger.info(f"  czsc {timeframe_name}: {len(bars)} bars loaded")
 
             except Exception as e:
-                logger.warning(f"  czsc {timeframe_name} failed: {e}")
+                logger.warning(f"  czsc {period} failed: {e}")
 
-        return results
+        # 多级别联立分析
+        if bars_dict:
+            result = analyze_multi_level(bars_dict, symbol='CRCL')
+            if result:
+                best_type = result.get('best_signal', {}).get('type', '无') if result.get('best_signal') else '无'
+                logger.info(f"  多级别分析完成，最佳信号: {best_type}")
+            return result or {}
+
+        return {}
 
     def generate_signal(self, analysis: Dict) -> Optional[Dict]:
         """
         基于缠论分析生成交易信号
-        
-        信号逻辑:
-        1. 买入信号: 日线上升趋势 + 5分钟底分型确认 + 底背驰
-        2. 卖出信号: 日线下降趋势 + 5分钟顶分型确认 + 顶背驰
+
+        信号逻辑（优先级）:
+        1. czsc 多级别共振信号（最高优先级）
+        2. czsc 背驰/类二买/震荡买卖点
+        3. 旧版信号（日线趋势+5分钟背驰）
+        4. 止损信号 + 风控引擎
         """
         daily = analysis.get('daily')
         min5 = analysis.get('min5')
-        min30 = analysis.get('min30')
+        czsc_analysis = analysis.get('czsc', {})
 
-        if not daily or not min5:
+        # 获取当前价格
+        current_price = None
+        if daily:
+            current_price = daily.get('current_price')
+        if not current_price and czsc_analysis:
+            for tf in ['daily', '30min', '5min']:
+                tf_data = czsc_analysis.get('results', {}).get(tf, {})
+                if tf_data:
+                    current_price = tf_data.get('last_price')
+                    if current_price:
+                        break
+        if not current_price:
             return None
 
-        current_price = daily['current_price']
         has_position = len(self.portfolio['positions']) > 0
 
-        # 信号1: 买入 - 日线上升 + 5分钟回调结束
-        if daily['trend'] == 'up' and min5['last_bi_direction'] == 'up' and not has_position:
-            if min5['has_divergence'] and min5['divergence_type'] == '底背驰':
+        # ====== 信号1: czsc 多级别共振（最高优先级） ======
+        if czsc_analysis:
+            best = czsc_analysis.get('best_signal')
+            if best and not best.get('filtered'):
+                sig_type = best.get('type', '')
+                direction = best.get('direction', '')
+
+                if direction == 'LONG' and not has_position:
+                    stop_loss = best.get('stop_loss', current_price * 0.97)
+                    target = best.get('target', current_price * 1.06)
+
+                    # 风控检查
+                    risk_alerts = self._check_risk({
+                        'entry_price': current_price, 'direction': 'long',
+                    }, current_price)
+                    if any(a.action == 'close_all' for a in risk_alerts):
+                        logger.warning(f"风控阻止开多: {[a.message for a in risk_alerts]}")
+                        return None
+
+                    return {
+                        'type': 'BUY',
+                        'strength': best.get('strength', 0.5),
+                        'reason': f"czsc {sig_type}: {best.get('reason', '')}",
+                        'entry': current_price,
+                        'stop_loss': stop_loss,
+                        'target': target,
+                        'confidence': int(best.get('confidence', 0.5) * 100),
+                        'czsc_level': best.get('level', 'L2'),
+                        'timestamp': datetime.now().isoformat(),
+                    }
+
+                elif direction == 'SHORT' and has_position:
+                    return {
+                        'type': 'SELL',
+                        'strength': best.get('strength', 0.5),
+                        'reason': f"czsc {sig_type}: {best.get('reason', '')}",
+                        'entry': current_price,
+                        'czsc_level': best.get('level', 'L2'),
+                        'timestamp': datetime.now().isoformat(),
+                    }
+
+        # ====== 信号2: 旧版信号（日线趋势+5分钟背驰） ======
+        if daily and min5:
+            if daily.get('trend') == 'up' and min5.get('last_bi_direction') == 'up' and not has_position:
+                if min5.get('has_divergence') and min5.get('divergence_type') == '底背驰':
+                    return {
+                        'type': 'BUY', 'strength': 'STRONG',
+                        'reason': f"日线上升趋势 + 5分钟底背驰确认",
+                        'entry': current_price,
+                        'stop_loss': current_price * 0.97,
+                        'target': current_price * 1.06,
+                        'confidence': 80,
+                        'timestamp': datetime.now().isoformat(),
+                    }
+
+            if daily.get('trend') == 'up' and daily.get('last_zs') and not has_position:
+                zs_high = daily['last_zs']['high']
+                if current_price > zs_high * 1.02:
+                    return {
+                        'type': 'BUY', 'strength': 'MEDIUM',
+                        'reason': f"突破日线中枢上沿 {zs_high:.2f}",
+                        'entry': current_price,
+                        'stop_loss': zs_high,
+                        'target': current_price * 1.08,
+                        'confidence': 65,
+                        'timestamp': datetime.now().isoformat(),
+                    }
+
+            if has_position and min5.get('has_divergence') and min5.get('divergence_type') == '顶背驰':
                 return {
-                    'type': 'BUY',
-                    'strength': 'STRONG',
-                    'reason': f"日线上升趋势 + 5分钟底背驰确认",
+                    'type': 'SELL', 'strength': 'STRONG',
+                    'reason': f"5分钟顶背驰确认",
                     'entry': current_price,
-                    'stop_loss': current_price * 0.97,
-                    'target': current_price * 1.06,
-                    'confidence': 80,
+                    'stop_loss': current_price * 1.03,
+                    'target': current_price * 0.95,
+                    'confidence': 75,
                     'timestamp': datetime.now().isoformat(),
                 }
 
-        # 信号2: 买入 - 日线中枢突破
-        if daily['trend'] == 'up' and daily['last_zs'] and not has_position:
-            zs_high = daily['last_zs']['high']
-            if current_price > zs_high * 1.02:  # 突破中枢上沿 2%
-                return {
-                    'type': 'BUY',
-                    'strength': 'MEDIUM',
-                    'reason': f"突破日线中枢上沿 {zs_high:.2f}",
-                    'entry': current_price,
-                    'stop_loss': zs_high,
-                    'target': current_price * 1.08,
-                    'confidence': 65,
-                    'timestamp': datetime.now().isoformat(),
-                }
-
-        # 信号3: 卖出 - 顶背驰
-        if has_position and min5['has_divergence'] and min5['divergence_type'] == '顶背驰':
-            return {
-                'type': 'SELL',
-                'strength': 'STRONG',
-                'reason': f"5分钟顶背驰确认",
-                'entry': current_price,
-                'stop_loss': current_price * 1.03,
-                'target': current_price * 0.95,
-                'confidence': 75,
-                'timestamp': datetime.now().isoformat(),
-            }
-
-        # 信号4: 卖出 - 跌破止损
+        # ====== 信号3: 止损 + 风控引擎 ======
         if has_position:
             pos = self.portfolio['positions'][0]
-            stop_loss = pos.get('stop_loss', 0)
-            if stop_loss and current_price < stop_loss:
+            stop_loss_price = pos.get('stop_loss', 0)
+
+            # 价格止损
+            if stop_loss_price and current_price < stop_loss_price:
                 return {
-                    'type': 'SELL',
-                    'strength': 'STOP_LOSS',
-                    'reason': f"跌破止损位 {stop_loss:.2f}",
+                    'type': 'SELL', 'strength': 'STOP_LOSS',
+                    'reason': f"跌破止损位 {stop_loss_price:.2f}",
                     'entry': current_price,
-                    'stop_loss': None,
-                    'target': None,
                     'confidence': 100,
                     'timestamp': datetime.now().isoformat(),
                 }
 
+            # 风控引擎
+            risk_alerts = self._check_risk(pos, current_price)
+            for alert in risk_alerts:
+                if alert.action == 'close_all':
+                    return {
+                        'type': 'SELL', 'strength': 'RISK',
+                        'reason': alert.message,
+                        'entry': current_price,
+                        'confidence': 95,
+                        'timestamp': datetime.now().isoformat(),
+                    }
+                elif alert.action == 'reduce_half':
+                    return {
+                        'type': 'REDUCE', 'strength': 'RISK',
+                        'reason': alert.message,
+                        'entry': current_price,
+                        'reduce_pct': 0.5,
+                        'confidence': 80,
+                        'timestamp': datetime.now().isoformat(),
+                    }
+
         return None
 
+    def _check_risk(self, trade: Dict, current_price: float,
+                    zs_range: tuple = None, bars_held: int = 0) -> list:
+        """调用风控引擎"""
+        if not self.risk_engine:
+            return []
+        try:
+            return self.risk_engine.check_all(trade, current_price, zs_range, bars_held)
+        except Exception as e:
+            logger.warning(f"风控检查失败: {e}")
+            return []
     def execute_signal(self, signal: Dict) -> bool:
         """执行交易信号"""
         if not signal:
@@ -679,6 +862,24 @@ class CRCLTrader:
                     self.portfolio['positions'] = []
                     self.save_portfolio()
                     logger.info(f"✅ 卖出订单已提交: {order_id} | 盈亏: ${pnl:+.2f} ({pnl_pct:+.2f}%)")
+
+                    # 自动反思
+                    if self.reflection_engine:
+                        try:
+                            trade_data = {
+                                'symbol': 'CRCL',
+                                'direction': 'short',
+                                'entry_price': pos['entry_price'],
+                                'exit_price': current_price,
+                                'pnl': pnl,
+                                'pnl_pct': pnl_pct,
+                                'signal_type': signal.get('reason', 'N/A'),
+                            }
+                            reflection = self.reflection_engine.generate_post_trade_reflection(trade_data)
+                            logger.info(f"📝 自动反思:\n{reflection}")
+                        except Exception as e:
+                            logger.warning(f"反思生成失败: {e}")
+
                     return True
 
         return False

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "subscribe": {
+    "lastEventId": "19e436c3-64b2-84f7-8000-00000271e4b6"
+  },
+  "chats": {
+    "19c85160-9fc2-8006-8000-090c26abb24e": {
+      "lastSeenMessageId": "19e436c3-6062-80ad-8000-0a0c0da66310",
+      "lastProcessedMessageId": "19e436c3-6062-80ad-8000-0a0c0da66310",
+      "pending": []
+    }
+  }
+}

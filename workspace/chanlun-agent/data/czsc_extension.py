@@ -47,6 +47,19 @@ class ZhongShu:
     def range_pct(self) -> float:
         return self.range / self.mid * 100 if self.mid else 0
 
+    def to_dict(self) -> Dict:
+        return {
+            'high': self.high,
+            'low': self.low,
+            'sdt': str(self.sdt),
+            'edt': str(self.edt),
+            'bi_count': self.bi_count,
+            'direction': str(self.direction),
+            'level': self.level,
+            'mid': self.mid,
+            'range': self.range,
+        }
+
 
 @dataclass
 class Signal:
@@ -62,6 +75,21 @@ class Signal:
     level: str = "L2"     # 级别 (L1=观察, L2=操作, L3=强信号)
     filtered: bool = False
     filtered_reason: str = ""
+
+    def to_dict(self) -> Dict:
+        return {
+            'type': self.type,
+            'direction': self.direction,
+            'strength': self.strength,
+            'price': self.price,
+            'stop_loss': self.stop_loss,
+            'target': self.target,
+            'reason': self.reason,
+            'confidence': self.confidence,
+            'level': self.level,
+            'filtered': self.filtered,
+            'filtered_reason': self.filtered_reason,
+        }
 
 
 class CzscExtension:
@@ -461,21 +489,17 @@ class CzscExtension:
 
     # ==================== 综合分析 ====================
 
-    def analyze_all(self, min_volume_ratio: float = 0.8) -> Dict:
+    def analyze_all(self, min_volume_ratio: float = 0.8,
+                    higher_ext: 'CzscExtension' = None) -> Dict:
         """
         综合分析，生成所有信号
 
         Args:
             min_volume_ratio: 最低成交量比率
+            higher_ext: 更大级别的 CzscExtension 对象（用于多级别共振）
 
         Returns:
-            {
-                'signals': [...],        # 所有信号
-                'best_signal': Signal,   # 最佳信号
-                'zhongshus': [...],      # 中枢列表
-                'special_forms': [...],  # 特殊形态
-                'summary': str,          # 摘要
-            }
+            分析结果字典
         """
         signals = []
 
@@ -493,24 +517,32 @@ class CzscExtension:
         shock_points = self.detect_shock_points()
         signals.extend(shock_points)
 
-        # 4. 成交量过滤
+        # 4. 多级别共振
+        if higher_ext:
+            resonance = self.check_resonance(higher_ext)
+            if resonance:
+                signals.append(resonance)
+
+        # 5. 成交量过滤
         for sig in signals:
             self.filter_by_volume(sig, min_ratio=min_volume_ratio)
 
-        # 5. 特殊形态
+        # 6. 特殊形态
         special_forms = self.detect_special_forms()
 
-        # 6. 选择最佳信号（未过滤的、强度最高的）
+        # 7. 选择最佳信号（未过滤的、强度最高的）
         valid_signals = [s for s in signals if not s.filtered]
         best_signal = max(valid_signals, key=lambda s: s.strength) if valid_signals else None
 
-        # 7. 生成摘要
+        # 8. 生成摘要
         summary = self._generate_summary(signals, best_signal, special_forms)
 
         return {
-            'signals': signals,
-            'best_signal': best_signal,
-            'zhongshus': self.zs_list,
+            'signals': [s.to_dict() for s in signals],
+            'best_signal': best_signal.to_dict() if best_signal else None,
+            'zhongshus': [z.to_dict() for z in self.zs_list],
+            'bi_list': [{'direction': str(bi.direction), 'high': bi.high, 'low': bi.low,
+                         'sdt': str(bi.sdt), 'edt': str(bi.edt)} for bi in self.bi_list],
             'special_forms': special_forms,
             'summary': summary,
             'symbol': self.symbol,
@@ -571,7 +603,7 @@ class CzscExtension:
 # ==================== 便捷函数 ====================
 
 def analyze_symbol(ka, symbol: str = "", timeframe: str = "daily",
-                   min_volume_ratio: float = 0.8) -> Dict:
+                   min_volume_ratio: float = 0.8, higher_ext=None) -> Dict:
     """
     快捷分析函数
 
@@ -580,12 +612,93 @@ def analyze_symbol(ka, symbol: str = "", timeframe: str = "daily",
         symbol: 品种代码
         timeframe: 时间周期
         min_volume_ratio: 最低成交量比率
+        higher_ext: 更大级别的 CzscExtension 对象
 
     Returns:
         分析结果字典
     """
     ext = CzscExtension(ka, symbol=symbol, timeframe=timeframe)
-    return ext.analyze_all(min_volume_ratio=min_volume_ratio)
+    return ext.analyze_all(min_volume_ratio=min_volume_ratio, higher_ext=higher_ext)
+
+
+def analyze_multi_level(bars_dict: Dict[str, list], symbol: str = "",
+                        min_volume_ratio: float = 0.8) -> Dict:
+    """
+    多级别联立分析
+
+    大级别定方向，小级别定入场
+
+    Args:
+        bars_dict: {'daily': bars, '30min': bars, '5min': bars}
+        symbol: 品种代码
+        min_volume_ratio: 最低成交量比率
+
+    Returns:
+        多级别分析结果
+    """
+    from czsc import CZSC
+
+    results = {}
+    extensions = {}
+
+    # 按周期从大到小排序
+    timeframe_order = ['daily', '30min', '5min']
+    sorted_keys = [k for k in timeframe_order if k in bars_dict]
+
+    # 先计算所有级别的基础分析
+    for tf in sorted_keys:
+        bars = bars_dict[tf]
+        if not bars or len(bars) < 10:
+            continue
+        ka = CZSC(bars)
+        ext = CzscExtension(ka, symbol=symbol, timeframe=tf)
+        extensions[tf] = ext
+
+    # 多级别共振分析：大级别作为 higher_ext 传给小级别
+    for i, tf in enumerate(sorted_keys):
+        if tf not in extensions:
+            continue
+
+        # 找更大级别
+        higher_ext = None
+        for j in range(i - 1, -1, -1):
+            if sorted_keys[j] in extensions:
+                higher_ext = extensions[sorted_keys[j]]
+                break
+
+        results[tf] = extensions[tf].analyze_all(
+            min_volume_ratio=min_volume_ratio,
+            higher_ext=higher_ext,
+        )
+
+    # 生成综合摘要
+    summary_parts = [f"品种: {symbol}", "多级别联立分析:"]
+    all_signals = []
+
+    for tf in sorted_keys:
+        if tf in results:
+            r = results[tf]
+            summary_parts.append(f"\n【{tf}】")
+            summary_parts.append(f"  笔数: {len(r.get('bi_list', []))} | 中枢: {len(r.get('zhongshus', []))}")
+            for sig in r.get('signals', []):
+                summary_parts.append(f"  {sig['type']} ({sig['direction']}) 强度={sig['strength']:.2f}")
+                all_signals.append(sig)
+
+    # 汇总最佳信号
+    valid_signals = [s for s in all_signals if not s.get('filtered', False)]
+    best = max(valid_signals, key=lambda s: s['strength']) if valid_signals else None
+
+    if best:
+        summary_parts.append(f"\n最佳信号: {best['type']} ({best['direction']}) 强度={best['strength']:.2f}")
+    else:
+        summary_parts.append("\n无有效信号")
+
+    return {
+        'results': results,
+        'best_signal': best,
+        'summary': '\n'.join(summary_parts),
+        'symbol': symbol,
+    }
 
 
 # ==================== CLI 测试 ====================
@@ -628,9 +741,9 @@ if __name__ == "__main__":
     if result['signals']:
         print(f"\n信号列表:")
         for sig in result['signals']:
-            status = "🔴 过滤" if sig.filtered else "🟢 有效"
-            print(f"  {status} {sig.type} ({sig.direction}) 强度={sig.strength:.2f} 信心={sig.confidence:.2f}")
-            print(f"     {sig.reason}")
+            status = "🔴 过滤" if sig['filtered'] else "🟢 有效"
+            print(f"  {status} {sig['type']} ({sig['direction']}) 强度={sig['strength']:.2f} 信心={sig['confidence']:.2f}")
+            print(f"     {sig['reason']}")
 
     if result['special_forms']:
         print(f"\n特殊形态:")

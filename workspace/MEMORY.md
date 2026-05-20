@@ -178,3 +178,16 @@
 - **使用**: `python3 ChanlunAgent.py -c 分析 -a CRCL`
 
 ### 2026-05-20 - Python Enum 陷阱：类内定义 dict = {...} 会被当作枚举成员而非类属性，需提取为模块级常量
+
+### 2026-05-20 - MVP 核心模块全部完成
+- **czsc_extension.py**: 类二买/中枢震荡买卖点/背驰检测（基于 czsc v0.10.12 API）
+- **risk_engine.py**: 三级风控（技术/时间/资金止损）+ 固定风险比例仓位计算
+- **reflection_engine.py**: 交易后反思/连续亏损深度反思/周度汇总/参数优化建议
+- **ChanlunAgent.py**: 8个交互指令 + 全部模块集成
+- **飞书连接**: 凭证已同步，可发送群消息
+- **Git 记录**: czsc_extension(f33cd390), risk_engine(7609578d), reflection(bb3208af), Agent(3c8c316d), 飞书(cc8a22e3)
+
+### 2026-05-20 - Agent 记忆层架构讨论
+- 五层记忆架构: 短期→长期→知识库→向量库→交易库
+- 打通方案: 共享文档中转 / sessions_send / 统一 MEMORY.md
+- VAN 要求 Top Sailor 学习 Coze 记忆层内容并沉淀
