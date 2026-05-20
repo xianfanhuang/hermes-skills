@@ -9,16 +9,20 @@
   "auto_reflect": true,
   "auto_optimize": true,
   "feishu": {
-    "app_id": "",
-    "app_secret": "",
-    "chat_id": ""
+    "app_id": "cli_a94b9b34aafadbb6",
+    "app_secret": "hf39q4FVKqst4lR7NPSLMfJLlEOUkM0S",
+    "chat_id": "oc_33d478474b841e1f25250090ab3e3835"
   },
   "symbol": {
     "symbol": "CRCL",
     "asset_type": "stock",
     "market": "US",
     "primary_timeframe": "30M",
-    "secondary_timeframes": ["5M", "1H", "4H"],
+    "secondary_timeframes": [
+      "5M",
+      "1H",
+      "4H"
+    ],
     "enable_second_buy": true,
     "enable_shock_buy": true,
     "max_position_pct": 0.5,
