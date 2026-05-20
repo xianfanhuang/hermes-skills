@@ -1,0 +1,33 @@
+{
+  "symbol": "CRCL",
+  "position": {
+    "direction": "long",
+    "entry_price": 112.265,
+    "quantity": 445,
+    "entry_time": "2026-05-21T03:23:27.729087",
+    "stop_loss": 108.89705,
+    "signal_type": "单级别: 日线up | 共振级别: 1",
+    "signal_analysis": {
+      "daily": {
+        "bi_count": 16,
+        "zs_count": 3,
+        "direction": "up"
+      },
+      "30min": {
+        "bi_count": 16,
+        "zs_count": 1,
+        "direction": "neutral"
+      },
+      "5min": {
+        "bi_count": 15,
+        "zs_count": 2,
+        "direction": "down"
+      }
+    }
+  },
+  "trade_history": [],
+  "daily_pnl": 0,
+  "consecutive_losses": 0,
+  "cooldown_until": null,
+  "last_update": "2026-05-21T03:23:27.729182"
+}

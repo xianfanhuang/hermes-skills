@@ -363,3 +363,89 @@
 2026-05-21 03:08:59,015 [INFO] 🔍 开始参数优化: CRCL | 20 个组合
 2026-05-21 03:08:59,858 [INFO]   进度: 10/20
 2026-05-21 03:09:00,797 [INFO]   进度: 20/20
+2026-05-21 03:21:00,664 [INFO] sdk version: 3.5.8
+2026-05-21 03:21:00,951 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 03:21:00,951 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 03:21:32,822 [INFO] sdk version: 3.5.8
+2026-05-21 03:21:33,116 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 03:21:33,116 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 03:21:33,117 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 03:21:33,118 [INFO] 🦞 实时交易模拟初始化完成
+2026-05-21 03:21:33,118 [INFO]   品种: CRCL
+2026-05-21 03:21:33,118 [INFO]   方向: auto
+2026-05-21 03:21:33,118 [INFO]   资金: $100,000.00
+2026-05-21 03:21:33,118 [INFO]   风险: 3.0%/笔
+2026-05-21 03:21:33,118 [INFO]   做空: ✅
+2026-05-21 03:21:33,118 [INFO] ============================================================
+2026-05-21 03:21:33,118 [INFO] 📊 实时扫描 | 2026-05-21 03:21:33 | CRCL
+2026-05-21 03:21:33,118 [INFO]    资金: $100,000.00 | 持仓: 无 | 日盈亏: $0.00
+2026-05-21 03:21:33,118 [WARNING] 无法获取当前价格
+2026-05-21 03:22:01,255 [INFO] sdk version: 3.5.8
+2026-05-21 03:22:01,547 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 03:22:01,547 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 03:22:01,548 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 03:22:01,548 [INFO] 🦞 实时交易模拟初始化完成
+2026-05-21 03:22:01,548 [INFO]   品种: CRCL
+2026-05-21 03:22:01,548 [INFO]   方向: auto
+2026-05-21 03:22:01,548 [INFO]   资金: $100,000.00
+2026-05-21 03:22:01,548 [INFO]   风险: 3.0%/笔
+2026-05-21 03:22:01,548 [INFO]   做空: ✅
+2026-05-21 03:22:01,548 [INFO] ============================================================
+2026-05-21 03:22:01,548 [INFO] 📊 实时扫描 | 2026-05-21 03:22:01 | CRCL
+2026-05-21 03:22:01,548 [INFO]    资金: $100,000.00 | 持仓: 无 | 日盈亏: $0.00
+2026-05-21 03:22:12,558 [INFO] ✅ CRCL via finnhub: $112.27 (11009ms)
+2026-05-21 03:22:12,558 [INFO]    当前价: $112.27
+2026-05-21 03:22:12,682 [WARNING]   daily: 分析失败 - 'builtins.CZSC' object has no attribute 'zs_list'
+2026-05-21 03:22:12,682 [ERROR] 获取K线失败: 'TigerClient' object has no attribute 'get_kline'
+2026-05-21 03:22:12,683 [WARNING]   30min: 数据不足 (0根)
+2026-05-21 03:22:12,683 [ERROR] 获取K线失败: 'TigerClient' object has no attribute 'get_kline'
+2026-05-21 03:22:12,683 [WARNING]   5min: 数据不足 (0根)
+2026-05-21 03:22:12,683 [INFO]    市场震荡，不交易
+2026-05-21 03:22:37,492 [INFO] sdk version: 3.5.8
+2026-05-21 03:22:37,792 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 03:22:37,792 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 03:22:56,119 [INFO] sdk version: 3.5.8
+2026-05-21 03:22:56,410 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 03:22:56,411 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 03:22:56,412 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 03:22:56,412 [INFO] 🦞 实时交易模拟初始化完成
+2026-05-21 03:22:56,412 [INFO]   品种: CRCL
+2026-05-21 03:22:56,412 [INFO]   方向: auto
+2026-05-21 03:22:56,412 [INFO]   资金: $100,000.00
+2026-05-21 03:22:56,412 [INFO]   风险: 3.0%/笔
+2026-05-21 03:22:56,412 [INFO]   做空: ✅
+2026-05-21 03:22:56,412 [INFO] ============================================================
+2026-05-21 03:22:56,412 [INFO] 📊 实时扫描 | 2026-05-21 03:22:56 | CRCL
+2026-05-21 03:22:56,412 [INFO]    资金: $100,000.00 | 持仓: 无 | 日盈亏: $0.00
+2026-05-21 03:22:57,516 [INFO] ✅ CRCL via finnhub: $112.19 (1104ms)
+2026-05-21 03:22:57,517 [INFO]    当前价: $112.19
+2026-05-21 03:22:57,645 [INFO]   daily: 16笔 3中枢
+2026-05-21 03:22:57,727 [ERROR] 获取K线失败: type object 'builtins.Freq' has no attribute 'M5'
+2026-05-21 03:22:57,727 [WARNING]   30min: 数据不足 (0根)
+2026-05-21 03:22:57,803 [ERROR] 获取K线失败: type object 'builtins.Freq' has no attribute 'M5'
+2026-05-21 03:22:57,803 [WARNING]   5min: 数据不足 (0根)
+2026-05-21 03:22:57,803 [INFO]    🔔 共振信号: 单级别: 日线up
+2026-05-21 03:23:17,500 [INFO] sdk version: 3.5.8
+2026-05-21 03:23:17,777 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 03:23:17,778 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 03:23:26,062 [INFO] sdk version: 3.5.8
+2026-05-21 03:23:26,354 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 03:23:26,355 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 03:23:26,356 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 03:23:26,356 [INFO] 🦞 实时交易模拟初始化完成
+2026-05-21 03:23:26,356 [INFO]   品种: CRCL
+2026-05-21 03:23:26,356 [INFO]   方向: auto
+2026-05-21 03:23:26,356 [INFO]   资金: $100,000.00
+2026-05-21 03:23:26,356 [INFO]   风险: 3.0%/笔
+2026-05-21 03:23:26,356 [INFO]   做空: ✅
+2026-05-21 03:23:26,356 [INFO] ============================================================
+2026-05-21 03:23:26,356 [INFO] 📊 实时扫描 | 2026-05-21 03:23:26 | CRCL
+2026-05-21 03:23:26,356 [INFO]    资金: $100,000.00 | 持仓: 无 | 日盈亏: $0.00
+2026-05-21 03:23:27,422 [INFO] ✅ CRCL via finnhub: $112.25 (1065ms)
+2026-05-21 03:23:27,422 [INFO]    当前价: $112.25
+2026-05-21 03:23:27,552 [INFO]   daily: 16笔 3中枢
+2026-05-21 03:23:27,642 [INFO]   30min: 16笔 1中枢
+2026-05-21 03:23:27,728 [INFO]   5min: 15笔 2中枢
+2026-05-21 03:23:27,729 [INFO]    🔔 共振信号: 单级别: 日线up
+2026-05-21 03:23:27,729 [INFO] 🟢 开仓: LONG CRCL @ $112.27 x 445
+2026-05-21 03:23:27,729 [INFO]    止损: $108.90
