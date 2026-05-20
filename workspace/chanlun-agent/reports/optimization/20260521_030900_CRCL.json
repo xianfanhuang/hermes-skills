@@ -1,0 +1,322 @@
+{
+  "symbol": "CRCL",
+  "timestamp": "2026-05-21T03:09:00.891789",
+  "total_tested": 20,
+  "best": {
+    "params": {
+      "divergence_threshold": 0.7,
+      "like_second_buy_zs_tolerance": 0.02,
+      "shock_point_zs_tolerance": 0.02,
+      "volume_filter_ratio": 1.5,
+      "stop_loss_pct": 0.02,
+      "time_stop_bars": 8,
+      "max_single_loss_pct": 0.02,
+      "max_daily_loss_pct": 0.06,
+      "consecutive_loss_limit": 5,
+      "min_signal_strength": 0.3,
+      "resonance_required": 1
+    },
+    "total_trades": 0,
+    "win_rate": 0,
+    "profit_factor": 0,
+    "max_drawdown": 0,
+    "sharpe_ratio": 0,
+    "avg_pnl": 0,
+    "total_pnl": 0,
+    "score": 0.06
+  },
+  "top_10": [
+    {
+      "params": {
+        "divergence_threshold": 0.7,
+        "like_second_buy_zs_tolerance": 0.02,
+        "shock_point_zs_tolerance": 0.02,
+        "volume_filter_ratio": 1.5,
+        "stop_loss_pct": 0.02,
+        "time_stop_bars": 8,
+        "max_single_loss_pct": 0.02,
+        "max_daily_loss_pct": 0.06,
+        "consecutive_loss_limit": 5,
+        "min_signal_strength": 0.3,
+        "resonance_required": 1
+      },
+      "total_trades": 0,
+      "win_rate": 0,
+      "profit_factor": 0,
+      "max_drawdown": 0,
+      "sharpe_ratio": 0,
+      "avg_pnl": 0,
+      "total_pnl": 0,
+      "score": 0.06
+    },
+    {
+      "params": {
+        "divergence_threshold": 0.7,
+        "like_second_buy_zs_tolerance": 0.01,
+        "shock_point_zs_tolerance": 0.02,
+        "volume_filter_ratio": 2.0,
+        "stop_loss_pct": 0.02,
+        "time_stop_bars": 20,
+        "max_single_loss_pct": 0.02,
+        "max_daily_loss_pct": 0.1,
+        "consecutive_loss_limit": 2,
+        "min_signal_strength": 0.3,
+        "resonance_required": 3
+      },
+      "total_trades": 0,
+      "win_rate": 0,
+      "profit_factor": 0,
+      "max_drawdown": 0,
+      "sharpe_ratio": 0,
+      "avg_pnl": 0,
+      "total_pnl": 0,
+      "score": 0.06
+    },
+    {
+      "params": {
+        "divergence_threshold": 0.7,
+        "like_second_buy_zs_tolerance": 0.03,
+        "shock_point_zs_tolerance": 0.05,
+        "volume_filter_ratio": 1.2,
+        "stop_loss_pct": 0.05,
+        "time_stop_bars": 8,
+        "max_single_loss_pct": 0.03,
+        "max_daily_loss_pct": 0.08,
+        "consecutive_loss_limit": 5,
+        "min_signal_strength": 0.3,
+        "resonance_required": 1
+      },
+      "total_trades": 0,
+      "win_rate": 0,
+      "profit_factor": 0,
+      "max_drawdown": 0,
+      "sharpe_ratio": 0,
+      "avg_pnl": 0,
+      "total_pnl": 0,
+      "score": 0.06
+    },
+    {
+      "params": {
+        "divergence_threshold": 0.7,
+        "like_second_buy_zs_tolerance": 0.03,
+        "shock_point_zs_tolerance": 0.03,
+        "volume_filter_ratio": 1.5,
+        "stop_loss_pct": 0.02,
+        "time_stop_bars": 8,
+        "max_single_loss_pct": 0.02,
+        "max_daily_loss_pct": 0.08,
+        "consecutive_loss_limit": 2,
+        "min_signal_strength": 0.5,
+        "resonance_required": 2
+      },
+      "total_trades": 0,
+      "win_rate": 0,
+      "profit_factor": 0,
+      "max_drawdown": 0,
+      "sharpe_ratio": 0,
+      "avg_pnl": 0,
+      "total_pnl": 0,
+      "score": 0.06
+    },
+    {
+      "params": {
+        "divergence_threshold": 0.7,
+        "like_second_buy_zs_tolerance": 0.03,
+        "shock_point_zs_tolerance": 0.02,
+        "volume_filter_ratio": 2.0,
+        "stop_loss_pct": 0.02,
+        "time_stop_bars": 8,
+        "max_single_loss_pct": 0.03,
+        "max_daily_loss_pct": 0.1,
+        "consecutive_loss_limit": 3,
+        "min_signal_strength": 0.3,
+        "resonance_required": 1
+      },
+      "total_trades": 0,
+      "win_rate": 0,
+      "profit_factor": 0,
+      "max_drawdown": 0,
+      "sharpe_ratio": 0,
+      "avg_pnl": 0,
+      "total_pnl": 0,
+      "score": 0.06
+    },
+    {
+      "params": {
+        "divergence_threshold": 0.7,
+        "like_second_buy_zs_tolerance": 0.02,
+        "shock_point_zs_tolerance": 0.03,
+        "volume_filter_ratio": 1.2,
+        "stop_loss_pct": 0.03,
+        "time_stop_bars": 12,
+        "max_single_loss_pct": 0.05,
+        "max_daily_loss_pct": 0.1,
+        "consecutive_loss_limit": 2,
+        "min_signal_strength": 0.3,
+        "resonance_required": 2
+      },
+      "total_trades": 0,
+      "win_rate": 0,
+      "profit_factor": 0,
+      "max_drawdown": 0,
+      "sharpe_ratio": 0,
+      "avg_pnl": 0,
+      "total_pnl": 0,
+      "score": 0.06
+    },
+    {
+      "params": {
+        "divergence_threshold": 0.7,
+        "like_second_buy_zs_tolerance": 0.02,
+        "shock_point_zs_tolerance": 0.02,
+        "volume_filter_ratio": 1.2,
+        "stop_loss_pct": 0.02,
+        "time_stop_bars": 12,
+        "max_single_loss_pct": 0.05,
+        "max_daily_loss_pct": 0.1,
+        "consecutive_loss_limit": 3,
+        "min_signal_strength": 0.3,
+        "resonance_required": 1
+      },
+      "total_trades": 0,
+      "win_rate": 0,
+      "profit_factor": 0,
+      "max_drawdown": 0,
+      "sharpe_ratio": 0,
+      "avg_pnl": 0,
+      "total_pnl": 0,
+      "score": 0.06
+    },
+    {
+      "params": {
+        "divergence_threshold": 0.8,
+        "like_second_buy_zs_tolerance": 0.03,
+        "shock_point_zs_tolerance": 0.03,
+        "volume_filter_ratio": 1.5,
+        "stop_loss_pct": 0.02,
+        "time_stop_bars": 8,
+        "max_single_loss_pct": 0.02,
+        "max_daily_loss_pct": 0.1,
+        "consecutive_loss_limit": 2,
+        "min_signal_strength": 0.5,
+        "resonance_required": 2
+      },
+      "total_trades": 0,
+      "win_rate": 0,
+      "profit_factor": 0,
+      "max_drawdown": 0,
+      "sharpe_ratio": 0,
+      "avg_pnl": 0,
+      "total_pnl": 0,
+      "score": 0.06
+    },
+    {
+      "params": {
+        "divergence_threshold": 0.7,
+        "like_second_buy_zs_tolerance": 0.01,
+        "shock_point_zs_tolerance": 0.05,
+        "volume_filter_ratio": 1.5,
+        "stop_loss_pct": 0.05,
+        "time_stop_bars": 12,
+        "max_single_loss_pct": 0.03,
+        "max_daily_loss_pct": 0.06,
+        "consecutive_loss_limit": 2,
+        "min_signal_strength": 0.3,
+        "resonance_required": 2
+      },
+      "total_trades": 0,
+      "win_rate": 0,
+      "profit_factor": 0,
+      "max_drawdown": 0,
+      "sharpe_ratio": 0,
+      "avg_pnl": 0,
+      "total_pnl": 0,
+      "score": 0.06
+    },
+    {
+      "params": {
+        "divergence_threshold": 0.8,
+        "like_second_buy_zs_tolerance": 0.03,
+        "shock_point_zs_tolerance": 0.05,
+        "volume_filter_ratio": 2.0,
+        "stop_loss_pct": 0.02,
+        "time_stop_bars": 8,
+        "max_single_loss_pct": 0.05,
+        "max_daily_loss_pct": 0.06,
+        "consecutive_loss_limit": 5,
+        "min_signal_strength": 0.5,
+        "resonance_required": 1
+      },
+      "total_trades": 0,
+      "win_rate": 0,
+      "profit_factor": 0,
+      "max_drawdown": 0,
+      "sharpe_ratio": 0,
+      "avg_pnl": 0,
+      "total_pnl": 0,
+      "score": 0.06
+    }
+  ],
+  "param_space": {
+    "divergence_threshold": [
+      0.7,
+      0.8
+    ],
+    "like_second_buy_zs_tolerance": [
+      0.01,
+      0.02,
+      0.03
+    ],
+    "shock_point_zs_tolerance": [
+      0.02,
+      0.03,
+      0.05
+    ],
+    "volume_filter_ratio": [
+      1.2,
+      1.5,
+      2.0
+    ],
+    "stop_loss_pct": [
+      0.02,
+      0.03,
+      0.05
+    ],
+    "time_stop_bars": [
+      8,
+      12,
+      20
+    ],
+    "max_single_loss_pct": [
+      0.02,
+      0.03,
+      0.05
+    ],
+    "max_daily_loss_pct": [
+      0.06,
+      0.08,
+      0.1
+    ],
+    "consecutive_loss_limit": [
+      2,
+      3,
+      5
+    ],
+    "min_signal_strength": [
+      0.3,
+      0.5
+    ],
+    "resonance_required": [
+      1,
+      2,
+      3
+    ]
+  },
+  "statistics": {
+    "avg_score": 0.06,
+    "avg_win_rate": 0.0,
+    "avg_pf": 0.0,
+    "best_score": 0.06,
+    "worst_score": 0.06
+  }
+}
