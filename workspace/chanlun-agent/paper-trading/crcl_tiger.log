@@ -860,3 +860,9 @@ TypeError: Object of type OrderType is not JSON serializable
 2026-05-21 09:22:03,435 [INFO] sdk version: 3.5.8
 2026-05-21 09:22:03,749 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
 2026-05-21 09:22:03,749 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 09:46:30,236 [INFO] sdk version: 3.5.8
+2026-05-21 09:46:30,545 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 09:46:30,545 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 09:52:10,574 [INFO] sdk version: 3.5.8
+2026-05-21 09:52:10,860 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 09:52:10,861 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
