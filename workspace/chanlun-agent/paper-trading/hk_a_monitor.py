@@ -18,9 +18,11 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from crcl_tiger_trader import TigerClient
 
-# 监控品种
-HK_SYMBOLS = ['00700', '03690', '01810', '09999']  # 腾讯、美团、小米、网易
-A_SYMBOLS = ['510050', '510300', '159915']  # 上证50ETF、沪深300ETF、创业板ETF
+# 监控品种 - 港A最多一支，当前最具交易价值标的
+# 根据analyze_best_pick.py分析结果动态选择
+# 2026-05-21: 小米(01810)评分最高(3.4分)，但所有标的趋势向下，暂无买点
+HK_SYMBOLS = ['01810']  # 小米 - 当前最具交易价值
+A_SYMBOLS = []  # A股ETF为T+1品种，暂不监控
 
 
 def get_market_status():

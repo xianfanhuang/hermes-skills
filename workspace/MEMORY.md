@@ -200,3 +200,7 @@
 - **OpenClaw Memory Search:** 索引 chanlun-agent/knowledge + knowledge/，支持语义搜索缠论规则/指南
 - **参数优化:** 网格搜索 + 回测评分（胜率30% + 盈利因子30% + 夏普20% + 回撤20%）
 - **关键修复:** Freq.M5→F5, ZhongShu用high/low非zg/zd, CZSC无zs_list需通过CzscExtension访问
+
+### 2026-05-21 - 用户偏好：A股只交易T+0品种（ETF、可转债、港股通等），避免T+1隔夜风险
+
+### 2026-05-21 - 港A市场最多同时交易一支标的，只选择当前最具交易价值的标的进行交易
