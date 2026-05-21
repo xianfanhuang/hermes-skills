@@ -8,7 +8,7 @@
       "name": "缠论每日模拟交易报告",
       "enabled": true,
       "createdAtMs": 1775870699897,
-      "updatedAtMs": 1779148885179,
+      "updatedAtMs": 1779235258962,
       "schedule": {
         "everyMs": 86400000,
         "kind": "every",
@@ -25,15 +25,15 @@
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1779235204381,
-        "lastRunAtMs": 1779148804381,
+        "nextRunAtMs": 1779321604387,
+        "lastRunAtMs": 1779235204387,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 80798,
+        "lastDurationMs": 54575,
         "lastDelivered": true,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0,
-        "runningAtMs": 1779235204383
+        "runningAtMs": 1779321604389
       }
     },
     {
