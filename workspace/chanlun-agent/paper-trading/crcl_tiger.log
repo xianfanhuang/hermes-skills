@@ -802,3 +802,61 @@ TypeError: Object of type OrderType is not JSON serializable
 2026-05-21 05:11:19,360 [INFO] 📊 费率数据库加载: 2笔交易, 1个品种
 2026-05-21 05:11:19,360 [INFO] Trade 7 already recorded, skipping
 2026-05-21 05:11:19,431 [INFO] Trade 4 already recorded, skipping
+2026-05-21 09:14:21,999 [INFO] sdk version: 3.5.8
+2026-05-21 09:14:22,284 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 09:14:22,284 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 09:15:58,280 [INFO] sdk version: 3.5.8
+2026-05-21 09:15:58,545 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 09:15:58,546 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 09:16:24,181 [INFO] sdk version: 3.5.8
+2026-05-21 09:16:24,488 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 09:16:24,488 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 09:16:24,489 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:16:27,919 [INFO] ✅ 00700 via finnhub: $0.00 (3430ms)
+2026-05-21 09:16:27,920 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:16:29,456 [INFO] ✅ 03690 via finnhub: $0.00 (1536ms)
+2026-05-21 09:16:29,456 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:16:32,434 [INFO] ✅ 01810 via finnhub: $0.00 (2977ms)
+2026-05-21 09:16:32,435 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:16:34,850 [INFO] ✅ 09999 via finnhub: $0.00 (2415ms)
+2026-05-21 09:16:34,851 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:16:36,570 [INFO] ✅ 510050 via finnhub: $0.00 (1719ms)
+2026-05-21 09:16:36,570 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:16:38,355 [INFO] ✅ 510300 via finnhub: $0.00 (1785ms)
+2026-05-21 09:16:38,356 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:16:40,664 [INFO] ✅ 159915 via finnhub: $0.00 (2308ms)
+2026-05-21 09:17:41,932 [INFO] sdk version: 3.5.8
+2026-05-21 09:17:42,208 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 09:17:42,208 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 09:17:42,209 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:17:44,104 [INFO] ✅ 00700 via finnhub: $0.00 (1895ms)
+2026-05-21 09:17:44,104 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:17:45,239 [INFO] ✅ 03690 via finnhub: $0.00 (1134ms)
+2026-05-21 09:17:45,239 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:17:46,392 [INFO] ✅ 01810 via finnhub: $0.00 (1153ms)
+2026-05-21 09:17:46,393 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:17:48,019 [INFO] ✅ 09999 via finnhub: $0.00 (1626ms)
+2026-05-21 09:17:48,019 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:17:49,523 [INFO] ✅ 510050 via finnhub: $0.00 (1504ms)
+2026-05-21 09:17:49,524 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:17:51,268 [INFO] ✅ 510300 via finnhub: $0.00 (1744ms)
+2026-05-21 09:17:51,269 [INFO] Loaded secrets: ['FINNHUB_KEY_1', 'FINNHUB_KEY_2', 'FINNHUB_KEY_3', 'FINNHUB_KEY_4', 'FINNHUB_KEY_5', 'ITICK_API_KEY', 'TIGER_ID', 'TIGER_SIM_ACCOUNT', 'TIGER_LIVE_ACCOUNT', 'TIGER_PRIVATE_KEY']
+2026-05-21 09:17:52,812 [INFO] ✅ 159915 via finnhub: $0.00 (1544ms)
+2026-05-21 09:18:18,176 [INFO] sdk version: 3.5.8
+2026-05-21 09:18:18,490 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 09:18:18,490 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 09:19:05,397 [INFO] sdk version: 3.5.8
+2026-05-21 09:19:05,701 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 09:19:05,701 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 09:20:04,718 [INFO] sdk version: 3.5.8
+2026-05-21 09:20:05,007 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 09:20:05,007 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 09:20:21,298 [INFO] sdk version: 3.5.8
+2026-05-21 09:20:21,599 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 09:20:21,600 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 09:20:41,776 [INFO] sdk version: 3.5.8
+2026-05-21 09:20:42,111 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 09:20:42,111 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
+2026-05-21 09:22:03,435 [INFO] sdk version: 3.5.8
+2026-05-21 09:22:03,749 [INFO] Grab quote permission. Permissions:[{'name': 'hkStockQuoteLv2', 'expire_at': -1}, {'name': 'aStockQuoteLv1', 'expire_at': -1}]
+2026-05-21 09:22:03,749 [INFO] 🐯 Tiger 客户端初始化成功 - 账户: 21409378833585169
