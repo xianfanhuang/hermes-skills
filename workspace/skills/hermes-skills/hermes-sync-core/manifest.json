@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "created_at": "2026-05-22",
+  "updated_at": "2026-05-22T09:46:48+08:00",
+  "description": "Hermes Sync Hub - 跨平台 Agent 同步系统（含Session全量归档）",
+  "components": {
+    "core": ["SOUL.md", "IDENTITY.md", "USER.md"],
+    "memory": ["MEMORY.md"],
+    "sessions": {
+      "index": ["session_index.json", "active/", "completed/"],
+      "raw": "分块存储原始对话",
+      "summaries": "会话摘要"
+    },
+    "tasks": ["pending/", "completed/"],
+    "workers": ["session_manager.ts"]
+  },
+  "features": [
+    "核心文件同步",
+    "Session分块归档",
+    "连续性校验",
+    "上下文恢复",
+    "跨平台会话归并"
+  ],
+  "platforms": ["Coze OpenClaw", "MiMo", "Flare"],
+  "status": "ready"
+}
