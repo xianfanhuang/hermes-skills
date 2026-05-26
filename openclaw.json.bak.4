@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-05-26T19:05:18.973Z"
+    "lastTouchedAt": "2026-05-26T19:15:58.848Z"
   },
   "wizard": {
     "lastRunAt": "2026-02-05T16:16:05.545Z",
@@ -309,12 +309,17 @@
       "workspace": "/workspace/projects/workspace",
       "memorySearch": {
         "enabled": true,
+        "sources": [
+          "memory",
+          "sessions"
+        ],
         "extraPaths": [
           "/workspace/projects/workspace/chanlun-agent/knowledge",
           "/workspace/projects/workspace/knowledge",
           "/workspace/projects/workspace/memory/sessions/raw"
         ],
         "provider": "ollama",
+        "model": "nomic-embed-text",
         "cache": {
           "enabled": true
         }

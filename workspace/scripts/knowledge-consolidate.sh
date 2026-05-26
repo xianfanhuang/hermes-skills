@@ -128,6 +128,12 @@ consolidate_file() {
         return
     fi
 
+    # 跳过INDEX.md和其他非知识文件
+    if echo "$filename" | grep -qP '^(INDEX|README|\.extracted|\.consolidated)\.' ; then
+        mark_consolidated "$rel_path" "$src_hash"
+        return
+    fi
+
     # 检查目标文件是否已存在（同名文件）
     local dest="${dest_dir}/${filename}"
     if [[ -f "$dest" ]]; then
@@ -207,6 +213,10 @@ main() {
 
         while IFS= read -r -d '' file; do
             [[ -f "$file" ]] || continue
+            local filename=$(basename "$file")
+            # 跳过隐藏文件和索引文件
+            echo "$filename" | grep -qP '^\.' && continue
+            echo "$filename" | grep -qP '^INDEX\.md$' && continue
             total=$((total + 1))
 
             local rel_path="${file#${WORKSPACE_DIR}/}"

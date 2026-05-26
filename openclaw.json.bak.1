@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-05-26T19:21:14.188Z"
+    "lastTouchedAt": "2026-05-26T19:21:43.371Z"
   },
   "wizard": {
     "lastRunAt": "2026-02-05T16:16:05.545Z",
@@ -343,7 +343,11 @@
           "/workspace/projects/workspace/memory/sessions/raw"
         ],
         "provider": "ollama",
-        "model": "ollama/nomic-embed-text",
+        "remote": {
+          "baseUrl": "http://127.0.0.1:11434",
+          "apiKey": "ollama-local"
+        },
+        "model": "nomic-embed-text",
         "cache": {
           "enabled": true
         }

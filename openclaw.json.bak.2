@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-05-26T19:18:46.169Z"
+    "lastTouchedAt": "2026-05-26T19:21:14.188Z"
   },
   "wizard": {
     "lastRunAt": "2026-02-05T16:16:05.545Z",
@@ -289,9 +289,9 @@
         ]
       },
       "ollama": {
-        "baseUrl": "http://127.0.0.1:11434",
+        "baseUrl": "http://127.0.0.1:11434/v1",
         "apiKey": "ollama-local",
-        "api": "ollama",
+        "api": "openai-completions",
         "models": [
           {
             "id": "nomic-embed-text",
@@ -343,7 +343,7 @@
           "/workspace/projects/workspace/memory/sessions/raw"
         ],
         "provider": "ollama",
-        "model": "nomic-embed-text",
+        "model": "ollama/nomic-embed-text",
         "cache": {
           "enabled": true
         }
