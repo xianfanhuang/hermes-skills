@@ -205,6 +205,101 @@ class ChanlunEngine:
             'last_bi': None
         }
 
+    def analyze_with_czsc(self, symbol: str, market: str, quote: Quote, df_daily=None, df_30m=None, df_5m=None) -> Dict:
+        """使用czsc库进行完整分析"""
+        try:
+            import sys
+            sys.path.insert(0, str(AGENT_DIR))
+            from czsc import CZSC, Freq, format_standard_kline
+            from czsc_extension import CzscExtension, StructureState
+            import pandas as pd
+
+            result = {
+                'symbol': symbol,
+                'market': market,
+                'price': quote.price,
+                'trend': 'unknown',
+                'trend_direction': None,
+                'trend_strength': 0,
+                'structure_state': 'unknown',
+                'bi_count': 0,
+                'zs_count': 0,
+                'last_zs': None,
+                'divergence': None,
+                'buy_sell_points': [],
+                'trend_fluency': {},
+                'zs_movement': None,
+                'last_bi': None,
+                'daily': None,
+                'min30': None,
+                'min5': None,
+                'resonance_level': 0,
+                'direction': 'neutral',
+                'strategy': 'unknown',
+                'entry_plan': {},
+                'exit_plan': {}
+            }
+
+            # 分析日线
+            if df_daily is not None and len(df_daily) > 0:
+                df = df_daily.copy()
+                df['dt'] = df['time'].apply(lambda x: datetime.fromtimestamp(x / 1000))
+                df['symbol'] = symbol
+                df['vol'] = df['volume']
+                df['amount'] = df.get('amount', df['vol'] * df['close'])
+                bars = format_standard_kline(df, freq=Freq.D)
+                ka = CZSC(bars)
+                ext = CzscExtension(ka, symbol=symbol, timeframe='daily')
+                daily_result = ext.full_analysis()
+                if daily_result:
+                    result['daily'] = daily_result
+                    result['trend'] = daily_result.get('trend', 'unknown')
+                    result['trend_direction'] = daily_result.get('trend_direction')
+                    result['trend_strength'] = daily_result.get('trend_strength', 0)
+                    result['structure_state'] = daily_result.get('structure_state', 'unknown')
+                    result['bi_count'] = daily_result.get('bi_count', 0)
+                    result['zs_count'] = daily_result.get('zs_count', 0)
+                    result['last_zs'] = daily_result.get('last_zs')
+                    result['divergence'] = daily_result.get('divergence')
+                    result['buy_sell_points'] = daily_result.get('buy_sell_points', [])
+                    result['trend_fluency'] = daily_result.get('trend_fluency', {})
+                    result['zs_movement'] = daily_result.get('zs_movement')
+                    result['last_bi'] = daily_result.get('last_bi')
+
+            # 分析30分钟
+            if df_30m is not None and len(df_30m) > 0:
+                df = df_30m.copy()
+                df['dt'] = df['time'].apply(lambda x: datetime.fromtimestamp(x / 1000))
+                df['symbol'] = symbol
+                df['vol'] = df['volume']
+                df['amount'] = df.get('amount', df['vol'] * df['close'])
+                bars = format_standard_kline(df, freq=Freq.F30)
+                ka = CZSC(bars)
+                ext = CzscExtension(ka, symbol=symbol, timeframe='30min')
+                min30_result = ext.full_analysis()
+                if min30_result:
+                    result['min30'] = min30_result
+
+            # 分析5分钟
+            if df_5m is not None and len(df_5m) > 0:
+                df = df_5m.copy()
+                df['dt'] = df['time'].apply(lambda x: datetime.fromtimestamp(x / 1000))
+                df['symbol'] = symbol
+                df['vol'] = df['volume']
+                df['amount'] = df.get('amount', df['vol'] * df['close'])
+                bars = format_standard_kline(df, freq=Freq.F5)
+                ka = CZSC(bars)
+                ext = CzscExtension(ka, symbol=symbol, timeframe='5min')
+                min5_result = ext.full_analysis()
+                if min5_result:
+                    result['min5'] = min5_result
+
+            return result
+
+        except Exception as e:
+            logger.error(f"czsc分析失败 {symbol}: {e}")
+            return self.analyze(symbol, market, quote)
+
 # ============ 风控引擎 ============
 
 class RiskEngine:
@@ -328,9 +423,89 @@ class TradingEngine:
         if not quote:
             return None
 
-        analysis = self.chanlun.analyze(symbol, market, quote)
+        # 获取K线数据
+        df_daily = self._fetch_bars(symbol, market, 'day', 180)
+        df_30m = self._fetch_bars(symbol, market, '30min', 15)
+        df_5m = self._fetch_bars(symbol, market, '5min', 5)
+
+        # 使用czsc分析
+        analysis = self.chanlun.analyze_with_czsc(symbol, market, quote, df_daily, df_30m, df_5m)
         analysis['quote'] = quote
+
+        # 计算共振
+        daily = analysis.get('daily', {})
+        min30 = analysis.get('min30')
+        min5 = analysis.get('min5')
+        resonance, resonance_level, direction = self._check_resonance(daily, min30, min5)
+        analysis['resonance'] = resonance
+        analysis['resonance_level'] = resonance_level
+        analysis['direction'] = direction
+
+        # 确定策略
+        strategy = self._determine_strategy(daily)
+        analysis['strategy'] = strategy
+
+        # 构建进出场预案
+        entry_plan = self._build_entry_plan(daily, min30, min5, strategy, direction)
+        analysis['entry_plan'] = entry_plan
+
+        exit_plan = self._build_exit_plan(daily, min30, direction)
+        analysis['exit_plan'] = exit_plan
+
         return analysis
+
+    def _fetch_bars(self, symbol: str, market: str, period: str, days: int = 60):
+        """获取K线数据"""
+        try:
+            import pandas as pd
+            from datetime import datetime, timedelta
+
+            end_time = datetime.now()
+            begin_time = end_time - timedelta(days=days)
+
+            if market == 'HK':
+                # 使用Tiger获取港股K线
+                from tigeropen.quote.quote_client import QuoteClient
+                from tigeropen.tiger_open_config import TigerOpenClientConfig
+                from tigeropen.common.consts import Language
+
+                config = TigerOpenClientConfig(sandbox_debug=False)
+                config.tiger_id = "20159412"
+                config.private_key = """MIICXAIBAAKBgQCQsk07H1czwJy5Gfm9GH2iahHEX3Hhej6y8FW7Hvd9X9jTqxoxFi45aMPFXU7nAx9Ki/gYQlYeXjpCu5RMUHboaz29iBlXmq0gFd6/CdB1LEPbua5V5/kUP53ETbKo0RFjm+fWHxYE6QMpMyW6amP2ASyygSs23aAxYnLZboq5vwIDAQABAoGAXr0/r/w/PlVYyCFn0RXd/J9ybp8Hk1hVARg3KcOGzAIbl8up5IXfUht0Qx9q7/qtXEP09v1IIa4Ue2kSGj18/IhEDla3+EMs24pQ9xnRPgwnzsQkfwNTerGwnxvrM+iHl/IH0AKL0kBPs56JsIIP5VZMd3xNK4xiVTzZIRcRVRECQQDGdrrM6qkomFPw8YRjIO7DuM1IG7ec2PVHX/zYMgCkfYBCsz+DjsopKLjEGms3IqHlSwzB5GLq/z1iHBf8IM/tAkEAuqUn91dmOgSsUJIbuAVN/FtoGcIKe0SYybX3BDsPE6295XR70XMhnrTjx0wIsiANzgC1JZC8PdxB1pxUyx0C2wJBALeao9prxa8OramcZlOm5f0f/JoXOljaxqAPh0UjjUCf8obCeaHl+dT2HWke382UNp6APf8qoPCyzUD0qKPSX0kCQE7WJ/V/wzxKcQZvUKoAA5rOeUA4B/ldVjQNWlM9Jvcm8gkTlKE5wj+pJHUwFpQ2md4jymAdrIVsnZqq2d4ZWPUCQFesxYFPfPv2xnonihe7zqsFAz0pD3E5Ks/F3sdUZk4s/A9Zf1rzxS2XsQtqHgl08L0u340m+YbtTlz/Lyq0mLI=="""
+                config.language = Language.zh_CN
+
+                quote_client = QuoteClient(config)
+                df = quote_client.get_bars(
+                    [symbol], period=period,
+                    begin_time=begin_time.strftime('%Y-%m-%d'),
+                    end_time=end_time.strftime('%Y-%m-%d')
+                )
+                if df is None or df.empty:
+                    return None
+                return df
+
+            elif market == 'US':
+                # 使用Finnhub获取美股K线
+                import requests
+                resolution = 'D' if period == 'day' else '5' if period == '5min' else 'W'
+                url = f"https://finnhub.io/api/v1/stock/candle?symbol={symbol}&resolution={resolution}&from={int(begin_time.timestamp())}&to={int(end_time.timestamp())}&token={FINNHUB_KEY}"
+                resp = requests.get(url, timeout=30)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    if data.get('s') == 'ok':
+                        df = pd.DataFrame({
+                            'time': data['t'],
+                            'open': data['o'],
+                            'high': data['h'],
+                            'low': data['l'],
+                            'close': data['c'],
+                            'volume': data['v']
+                        })
+                        return df
+            return None
+        except Exception as e:
+            logger.error(f"获取{period}数据失败 {symbol}: {e}")
+            return None
 
     def _determine_strategy(self, daily: Dict) -> str:
         """
@@ -342,6 +517,9 @@ class TradingEngine:
         - ranging → range_wait（盘整等待）
         - turning → reversal_ready（转折准备）
         """
+        if not daily:
+            return 'unknown'
+
         state = daily.get('structure_state', 'unknown')
         trend_dir = daily.get('trend_direction')
 
@@ -358,6 +536,39 @@ class TradingEngine:
             return 'reversal_observe'
 
         return 'unknown'
+
+    def _check_resonance(self, daily: Dict, min30: Optional[Dict], min5: Optional[Dict]) -> tuple:
+        """
+        多级别共振检查
+
+        共振级别：
+        - 3级：日线+30分钟+5分钟 同方向 → 强信号
+        - 2级：日线+30分钟 同方向 → 中等信号
+        - 1级：仅日线方向明确 → 弱信号
+        - 0级：无共振 → 不交易
+        """
+        if not daily:
+            return False, 0, 'neutral'
+
+        daily_dir = daily.get('trend_direction')
+        if not daily_dir:
+            return False, 0, 'neutral'
+
+        level = 1  # 日线有方向 = 1级
+        direction = 'long' if daily_dir == 'up' else 'short'
+
+        if min30:
+            min30_dir = min30.get('trend_direction')
+            if min30_dir == daily_dir:
+                level = 2
+
+                if min5:
+                    min5_dir = min5.get('trend_direction')
+                    if min5_dir == daily_dir:
+                        level = 3
+
+        resonance = level >= 2
+        return resonance, level, direction
 
     def _build_entry_plan(self, daily: Dict, min30: Optional[Dict],
                           min5: Optional[Dict], strategy: str, direction: str) -> Dict:
@@ -377,6 +588,10 @@ class TradingEngine:
             'position_pct': 0,
             'note': ''
         }
+
+        if not daily:
+            plan['note'] = '无日线数据'
+            return plan
 
         if strategy == 'range_wait':
             plan['note'] = '盘整中，不交易'
@@ -449,6 +664,10 @@ class TradingEngine:
             'exit_conditions': [],
             'note': ''
         }
+
+        if not daily:
+            plan['note'] = '无日线数据'
+            return plan
 
         last_zs = daily.get('last_zs')
         if not last_zs:
@@ -814,6 +1033,27 @@ class TradingEngine:
             if not analysis:
                 continue
 
+            # 输出分析结果
+            quote = analysis.get('quote')
+            trend_dir = analysis.get('trend_direction', '?')
+            trend_label = '⬇️下跌趋势' if trend_dir == 'down' else '⬆️上升趋势' if trend_dir == 'up' else '➡️盘整'
+            strategy = analysis.get('strategy', 'unknown')
+            resonance_level = analysis.get('resonance_level', 0)
+            direction = analysis.get('direction', 'neutral')
+
+            logger.info(f"\n{'='*60}")
+            logger.info(f"📊 {symbol} 缠论分析")
+            logger.info(f"⏰ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            logger.info(f"{'='*60}")
+            logger.info(f"💰 价格: ${quote.price:.2f}")
+            logger.info(f"📈 日线: {trend_label} 结构:{analysis.get('structure_state', 'N/A')} 强度{analysis.get('trend_strength', 0):.0%}")
+            logger.info(f"🎯 策略:{strategy} 方向:{direction} 共振:{resonance_level}级")
+
+            if analysis.get('min30'):
+                logger.info(f"📊 30m: {analysis['min30'].get('structure_state', 'N/A')}")
+            if analysis.get('min5'):
+                logger.info(f"📊 5m: {analysis['min5'].get('structure_state', 'N/A')}")
+
             # 检查平仓
             exit_info = self._check_position_exit(symbol, analysis)
             if exit_info:
@@ -824,6 +1064,8 @@ class TradingEngine:
             signal = self.generate_signal(symbol, analysis)
             if signal:
                 self.execute_trade(signal)
+            else:
+                logger.info(f"⏳ 无交易信号")
 
 # ============ 主入口 ============
 
