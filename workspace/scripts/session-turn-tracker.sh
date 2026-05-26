@@ -46,6 +46,19 @@ check_reminder() {
     source "$CONFIG_FILE" 2>/dev/null || true
     local max_turns=${MAX_TURNS:-50}
     local threshold=${CONTEXT_THRESHOLD:-70}
+    local time_limit=${TIME_LIMIT_MINUTES:-45}
+    
+    # 检查时间
+    if [ -f "$TURN_FILE" ]; then
+        local first_turn=$(head -1 "$TURN_FILE")
+        local current_time=$(date +%s)
+        local elapsed=$(( (current_time - first_turn) / 60 ))
+        
+        if [ "$elapsed" -ge "$time_limit" ]; then
+            echo "⚠️ 已对话 ${elapsed}分钟/${time_limit}分钟，建议开启新会话"
+            return 1
+        fi
+    fi
     
     # 检查轮次
     if [ "$count" -ge "$max_turns" ]; then
@@ -60,7 +73,7 @@ check_reminder() {
         return 1
     fi
     
-    echo "轮次: $count/$max_turns | Context: ${context_pct}%/${threshold}%"
+    echo "轮次: $count/$max_turns | 时间: ${elapsed}分钟/${time_limit}分钟 | Context: ${context_pct}%/${threshold}%"
     return 0
 }
 
