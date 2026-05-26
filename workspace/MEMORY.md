@@ -158,6 +158,23 @@
 - **使用**: `python3 restore.py auto`
 - **集成**: AGENTS.md Every Session 流程
 
+### 2026-05-27 - 知识库自动提取系统
+- **核心问题**: 知识库三处散落，内容单薄（5条），没有从session自动提取
+- **解决方案**: Session → 知识库自动提取系统
+- **知识库增长**: 5条 → 69条（B-practices 26, G-guides 14, R-rules 29）
+- **数据流**: Session JSONL → session-to-md.sh → knowledge-extract.sh → knowledge/{B,G,R}/
+- **脚本**: knowledge-extract.sh / knowledge-consolidate.sh / knowledge-index.sh
+- **测试**: FTS搜索全部通过（止损/中枢/缠论/背驰/风控）
+- **幂等性**: 重复运行不产生重复内容
+
+### 2026-05-27 - 一键恢复系统
+- **目标**: 从任何平台一行命令恢复整个系统
+- **脚本**: full-restore.sh（完整恢复）+ cron-restore.sh（cron恢复）
+- **CLI工具**: memory-cli.sh（统一记忆管理，纯bash，平台无关）
+- **恢复流程**: git clone → bash full-restore.sh → 系统自动重建
+- **平台无关**: 只需bash + grep + git，无需Node.js/Python/OpenClaw
+- **已备份到GitHub**: RESTORE.md + memory-cli.sh + scripts/full-restore.sh
+
 ### 2026-05-19 - 新增数据源
 - **Finnhub**: 5个API Key，60次/分钟，支持美股/外汇/加密，测试通过
 - **Tiger Broker**: Python SDK 新加坡区，连接成功
