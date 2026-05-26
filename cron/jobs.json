@@ -8,7 +8,7 @@
       "name": "auto-memory-hourly",
       "enabled": true,
       "createdAtMs": 1779739610897,
-      "updatedAtMs": 1779807712066,
+      "updatedAtMs": 1779811334307,
       "schedule": {
         "expr": "0 * * * *",
         "kind": "cron",
@@ -22,11 +22,11 @@
         "text": "执行自动记忆更新：运行 bash /workspace/projects/workspace/scripts/auto-memory.sh，然后检查今日对话是否有重要信息需要补充到 memory/今天.md。如果有，直接写入。"
       },
       "state": {
-        "nextRunAtMs": 1779811214207,
-        "lastRunAtMs": 1779807614212,
+        "nextRunAtMs": 1779814814207,
+        "lastRunAtMs": 1779811214211,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 97854,
+        "lastDurationMs": 120096,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }
@@ -61,7 +61,7 @@
       "name": "session-archive-check",
       "enabled": true,
       "createdAtMs": 1779739610921,
-      "updatedAtMs": 1779804413078,
+      "updatedAtMs": 1779811611822,
       "schedule": {
         "expr": "0 */2 * * *",
         "kind": "cron",
@@ -75,11 +75,11 @@
         "text": "Session 归档检查：查看 memory/sessions/ 目录状态，检查当前飞书 session 是否需要归档。如果今日有活跃对话但未归档，执行 session-archive.sh archive feishu <session_id> 并生成摘要。"
       },
       "state": {
-        "nextRunAtMs": 1779811466258,
-        "lastRunAtMs": 1779804266263,
+        "nextRunAtMs": 1779818666258,
+        "lastRunAtMs": 1779811491695,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 146815,
+        "lastDurationMs": 120127,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }
@@ -91,7 +91,7 @@
       "name": "backup-sync",
       "enabled": true,
       "createdAtMs": 1779746729536,
-      "updatedAtMs": 1779789817112,
+      "updatedAtMs": 1779811489686,
       "schedule": {
         "expr": "0 */6 * * *",
         "kind": "cron",
@@ -105,11 +105,11 @@
         "text": "执行自动备份同步：运行 bash /workspace/projects/workspace/scripts/sync-to-backup.sh，将本地记忆/代码/配置同步到 ai-trading-sync GitHub 仓库。完成后简要汇报结果。"
       },
       "state": {
-        "nextRunAtMs": 1779811398665,
-        "lastRunAtMs": 1779789798671,
+        "nextRunAtMs": 1779832998665,
+        "lastRunAtMs": 1779811398670,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 18441,
+        "lastDurationMs": 91016,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }

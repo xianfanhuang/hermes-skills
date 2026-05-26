@@ -8,7 +8,7 @@
       "name": "auto-memory-hourly",
       "enabled": true,
       "createdAtMs": 1779739610897,
-      "updatedAtMs": 1779804028679,
+      "updatedAtMs": 1779811334307,
       "schedule": {
         "expr": "0 * * * *",
         "kind": "cron",
@@ -22,14 +22,13 @@
         "text": "执行自动记忆更新：运行 bash /workspace/projects/workspace/scripts/auto-memory.sh，然后检查今日对话是否有重要信息需要补充到 memory/今天.md。如果有，直接写入。"
       },
       "state": {
-        "nextRunAtMs": 1779807614207,
-        "lastRunAtMs": 1779804014212,
+        "nextRunAtMs": 1779814814207,
+        "lastRunAtMs": 1779811214211,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 14467,
+        "lastDurationMs": 120096,
         "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 0,
-        "runningAtMs": 1779807614208
+        "consecutiveErrors": 0
       }
     },
     {
@@ -82,7 +81,8 @@
         "lastStatus": "ok",
         "lastDurationMs": 146815,
         "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 0
+        "consecutiveErrors": 0,
+        "runningAtMs": 1779811491693
       }
     },
     {
@@ -92,7 +92,7 @@
       "name": "backup-sync",
       "enabled": true,
       "createdAtMs": 1779746729536,
-      "updatedAtMs": 1779789817112,
+      "updatedAtMs": 1779811489686,
       "schedule": {
         "expr": "0 */6 * * *",
         "kind": "cron",
@@ -106,11 +106,11 @@
         "text": "执行自动备份同步：运行 bash /workspace/projects/workspace/scripts/sync-to-backup.sh，将本地记忆/代码/配置同步到 ai-trading-sync GitHub 仓库。完成后简要汇报结果。"
       },
       "state": {
-        "nextRunAtMs": 1779811398665,
-        "lastRunAtMs": 1779789798671,
+        "nextRunAtMs": 1779832998665,
+        "lastRunAtMs": 1779811398670,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 18441,
+        "lastDurationMs": 91016,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }
