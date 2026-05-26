@@ -8,7 +8,7 @@
       "name": "auto-memory-hourly",
       "enabled": true,
       "createdAtMs": 1779739610897,
-      "updatedAtMs": 1779782545529,
+      "updatedAtMs": 1779804028679,
       "schedule": {
         "expr": "0 * * * *",
         "kind": "cron",
@@ -22,11 +22,11 @@
         "text": "执行自动记忆更新：运行 bash /workspace/projects/workspace/scripts/auto-memory.sh，然后检查今日对话是否有重要信息需要补充到 memory/今天.md。如果有，直接写入。"
       },
       "state": {
-        "nextRunAtMs": 1779786014207,
-        "lastRunAtMs": 1779782414210,
+        "nextRunAtMs": 1779807614207,
+        "lastRunAtMs": 1779804014212,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 131319,
+        "lastDurationMs": 14467,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }
@@ -61,7 +61,7 @@
       "name": "session-archive-check",
       "enabled": true,
       "createdAtMs": 1779739610921,
-      "updatedAtMs": 1779775522374,
+      "updatedAtMs": 1779797457827,
       "schedule": {
         "expr": "0 */2 * * *",
         "kind": "cron",
@@ -75,13 +75,14 @@
         "text": "Session 归档检查：查看 memory/sessions/ 目录状态，检查当前飞书 session 是否需要归档。如果今日有活跃对话但未归档，执行 session-archive.sh archive feishu <session_id> 并生成摘要。"
       },
       "state": {
-        "nextRunAtMs": 1779782666258,
-        "lastRunAtMs": 1779775466264,
+        "nextRunAtMs": 1779804266258,
+        "lastRunAtMs": 1779797416227,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 56110,
+        "lastDurationMs": 41600,
         "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 0
+        "consecutiveErrors": 0,
+        "runningAtMs": 1779804266259
       }
     },
     {
@@ -91,7 +92,7 @@
       "name": "backup-sync",
       "enabled": true,
       "createdAtMs": 1779746729536,
-      "updatedAtMs": 1779768380886,
+      "updatedAtMs": 1779789817112,
       "schedule": {
         "expr": "0 */6 * * *",
         "kind": "cron",
@@ -105,11 +106,11 @@
         "text": "执行自动备份同步：运行 bash /workspace/projects/workspace/scripts/sync-to-backup.sh，将本地记忆/代码/配置同步到 ai-trading-sync GitHub 仓库。完成后简要汇报结果。"
       },
       "state": {
-        "nextRunAtMs": 1779789798665,
-        "lastRunAtMs": 1779768198670,
+        "nextRunAtMs": 1779811398665,
+        "lastRunAtMs": 1779789798671,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 182216,
+        "lastDurationMs": 18441,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }

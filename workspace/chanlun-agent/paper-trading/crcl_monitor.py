@@ -10,11 +10,37 @@ CRCL 缠论实时模拟交易监控
 import sys
 import json
 import time
+import requests
 from datetime import datetime
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / 'skills' / 'tiger-broker'))
 from chanlun_perception import ChanlunPerception
+from tiger_client import place_order_limit, place_order_market
+
+# Finnhub API Key
+FINNHUB_KEY = "d85kn4hr01qitd92g090d85kn4hr01qitd92g09g"
+
+def get_realtime_quote(symbol: str) -> dict:
+    """从Finnhub获取实时行情"""
+    try:
+        url = f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={FINNHUB_KEY}"
+        resp = requests.get(url, timeout=10)
+        if resp.status_code == 200:
+            data = resp.json()
+            return {
+                'price': data.get('c', 0),
+                'change': data.get('d', 0),
+                'change_pct': data.get('dp', 0),
+                'high': data.get('h', 0),
+                'low': data.get('l', 0),
+                'open': data.get('o', 0),
+                'prev_close': data.get('pc', 0),
+            }
+    except Exception as e:
+        print(f"Finnhub行情获取失败: {e}")
+    return {'price': 0, 'change': 0, 'change_pct': 0}
 
 PORTFOLIO_PATH = Path(__file__).parent / "crcl_portfolio.json"
 
@@ -28,7 +54,7 @@ def save_portfolio(portfolio):
 
 def analyze_crcl(perception):
     """分析 CRCL 缠论结构"""
-    quote = perception.get_quote('CRCL', 'US')
+    quote = get_realtime_quote('CRCL')
     structures = perception.analyze_symbol('CRCL', 'US', ['日线', '30分钟', '5分钟'])
     
     result = {

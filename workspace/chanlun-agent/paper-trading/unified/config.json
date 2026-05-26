@@ -1,0 +1,37 @@
+{
+  "symbols": {
+    "01810": {
+      "name": "小米集团",
+      "market": "HK",
+      "enabled": true,
+      "strategy": "trend_follow",
+      "position_pct": 0.2,
+      "interval": 300
+    },
+    "CRCL": {
+      "name": "Circle",
+      "market": "US",
+      "enabled": true,
+      "strategy": "trend_follow",
+      "position_pct": 0.2,
+      "interval": 300
+    }
+  },
+  "risk": {
+    "max_single_loss_pct": 0.02,
+    "max_daily_loss_pct": 0.06,
+    "consecutive_loss_limit": 3,
+    "trailing_stop_trigger_pct": 0.02
+  },
+  "data_sources": {
+    "hk_realtime": "tiger",
+    "us_realtime": "finnhub",
+    "hk_kline": "tiger",
+    "us_kline": "finnhub"
+  },
+  "trading": {
+    "enabled": true,
+    "mode": "paper",
+    "broker": "tiger"
+  }
+}
