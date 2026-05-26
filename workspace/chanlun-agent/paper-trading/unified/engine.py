@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 """
-统一交易引擎
+统一交易引擎 v2.0
 
 一套系统，多标的。配置驱动，不改代码。
-
-核心模块：
-- 数据获取：Finnhub(美股) / Tiger(港股)
-- 缠论分析：笔/中枢/背驰/买卖点
-- 信号生成：多级别共振
-- 风控管理：三层止损
-- 下单执行：老虎模拟盘
+继承小米交易系统的全部逻辑：
+- 三层止损（入场止损/结构止损/移动止损）
+- 顺势策略（下跌找卖点，上升找买点）
+- 多级别共振
+- 实时价格获取
+- 历史信号不触加入场
 """
 
 import sys
@@ -106,7 +105,6 @@ class DataFetcher:
         try:
             from tiger_client import get_stock_brief
             result = get_stock_brief(symbol)
-            # 解析Tiger返回的字符串
             if isinstance(result, str) and '最新价' in result:
                 lines = result.split('\n')
                 price = 0
@@ -126,7 +124,6 @@ class DataFetcher:
                     elif '涨跌' in line and '%' in line:
                         try:
                             parts = line.split('：')[1].strip()
-                            # 格式: "-0.24 (-0.80%)"
                             change_str = parts.split('(')[0].strip()
                             change = float(change_str)
                         except:
@@ -195,12 +192,17 @@ class ChanlunEngine:
             'market': market,
             'price': quote.price,
             'trend': 'unknown',
+            'trend_direction': None,
+            'trend_strength': 0,
+            'structure_state': 'unknown',
             'bi_count': 0,
             'zs_count': 0,
             'last_zs': None,
             'divergence': None,
             'buy_sell_points': [],
-            'structure_state': 'unknown'
+            'trend_fluency': {},
+            'zs_movement': None,
+            'last_bi': None
         }
 
 # ============ 风控引擎 ============
@@ -212,16 +214,33 @@ class RiskEngine:
         self.config = config
         self.daily_pnl = 0
         self.consecutive_losses = 0
+        self.cooldown_until = None
 
-    def check_position_size(self, price: float, quantity: int, account_value: float) -> bool:
-        """检查仓位大小"""
-        position_value = price * quantity
-        max_position = account_value * 0.5  # 最大50%仓位
-        return position_value <= max_position
+    def check_risk_limits(self, account_value: float) -> bool:
+        """检查风控限制"""
+        now = datetime.now()
 
-    def check_daily_loss(self, pnl: float) -> bool:
-        """检查日亏损限制"""
-        return abs(self.daily_pnl + pnl) <= self.config.get('max_daily_loss_pct', 0.06) * 1000000
+        if self.cooldown_until:
+            cooldown = datetime.fromisoformat(self.cooldown_until)
+            if now < cooldown:
+                logger.info(f"⏸️ 熔断中，冷却至 {cooldown.strftime('%H:%M')}")
+                return False
+            else:
+                self.cooldown_until = None
+                self.consecutive_losses = 0
+                logger.info("✅ 熔断解除")
+
+        if self.daily_pnl < -account_value * self.config.get('max_daily_loss_pct', 0.06):
+            logger.warning(f"🚫 日亏损超限: ${self.daily_pnl:.2f}")
+            return False
+
+        if self.consecutive_losses >= self.config.get('consecutive_loss_limit', 3):
+            cooldown_time = now.timestamp() + 3600  # 1小时冷却
+            self.cooldown_until = datetime.fromtimestamp(cooldown_time).isoformat()
+            logger.warning(f"🚫 连亏{self.consecutive_losses}笔，熔断1小时")
+            return False
+
+        return True
 
     def update_pnl(self, pnl: float):
         """更新盈亏"""
@@ -234,7 +253,7 @@ class RiskEngine:
 # ============ 交易引擎 ============
 
 class TradingEngine:
-    """统一交易引擎"""
+    """统一交易引擎 v2.0"""
 
     def __init__(self, config_path: str = None):
         self.config_path = config_path or str(UNIFIED_DIR / 'config.json')
@@ -313,15 +332,400 @@ class TradingEngine:
         analysis['quote'] = quote
         return analysis
 
-    def generate_signal(self, symbol: str, analysis: Dict) -> Optional[TradeSignal]:
-        """生成交易信号"""
-        # 这里实现信号生成逻辑
-        # 基于缠论分析结果
+    def _determine_strategy(self, daily: Dict) -> str:
+        """
+        确定交易策略（基于智能级别 v2.0 + 顺势原则）
+
+        核心：先判趋势方向，再找顺势机会
+        - trending down → trend_follow_short（顺势做空）
+        - trending up → trend_follow_long（顺势做多）
+        - ranging → range_wait（盘整等待）
+        - turning → reversal_ready（转折准备）
+        """
+        state = daily.get('structure_state', 'unknown')
+        trend_dir = daily.get('trend_direction')
+
+        if state == 'trending':
+            if trend_dir == 'down':
+                return 'trend_follow_short'
+            elif trend_dir == 'up':
+                return 'trend_follow_long'
+        elif state == 'ranging' or daily.get('should_wait_breakout'):
+            return 'range_wait'
+        elif state == 'turning' and daily.get('should_catch_reversal'):
+            return 'reversal_ready'
+        elif state == 'turning':
+            return 'reversal_observe'
+
+        return 'unknown'
+
+    def _build_entry_plan(self, daily: Dict, min30: Optional[Dict],
+                          min5: Optional[Dict], strategy: str, direction: str) -> Dict:
+        """
+        构建进场预案（顺势原则）
+
+        核心逻辑：
+        - 下跌趋势 → 找卖点做空（反弹到中枢上沿+顶背驰）
+        - 上升趋势 → 找买点做多（回调到中枢下沿+底背驰）
+        - 盘整 → 不交易
+        """
+        plan = {
+            'strategy': strategy,
+            'direction': direction,
+            'conditions': [],
+            'trigger_price': None,
+            'position_pct': 0,
+            'note': ''
+        }
+
+        if strategy == 'range_wait':
+            plan['note'] = '盘整中，不交易'
+            return plan
+
+        # ---- 顺势做空（下跌趋势） ----
+        if strategy == 'trend_follow_short':
+            if min30:
+                bsp = min30.get('buy_sell_points', [])
+                sell_points = [b for b in bsp if 'sell' in b.get('type', '')]
+                if sell_points:
+                    best = max(sell_points, key=lambda x: x.get('confidence', 0))
+                    plan['trigger_price'] = best.get('price')
+                    plan['conditions'].append(f"30m卖点: {best['type']} @ {best['price']:.2f}")
+                    plan['position_pct'] = 0.3
+                    plan['note'] = f"顺势做空: 30分钟{best['type']}确认"
+                else:
+                    plan['note'] = '下跌趋势中，等待30分钟卖点'
+                    plan['position_pct'] = 0.2
+            else:
+                plan['note'] = '下跌趋势中，无30分钟数据'
+                plan['position_pct'] = 0.2
+
+            plan['conditions'].append(f"日线结构: {daily['structure_state']}")
+            plan['conditions'].append(f"趋势方向: {daily.get('trend_direction')}")
+            plan['conditions'].append(f"趋势强度: {daily.get('trend_strength', 0):.0%}")
+
+        # ---- 顺势做多（上升趋势） ----
+        elif strategy == 'trend_follow_long':
+            if min30:
+                bsp = min30.get('buy_sell_points', [])
+                buy_points = [b for b in bsp if 'buy' in b.get('type', '')]
+                if buy_points:
+                    best = max(buy_points, key=lambda x: x.get('confidence', 0))
+                    plan['trigger_price'] = best.get('price')
+                    plan['conditions'].append(f"30m买点: {best['type']} @ {best['price']:.2f}")
+                    plan['position_pct'] = 0.3
+                    plan['note'] = f"顺势做多: 30分钟{best['type']}确认"
+
+            plan['conditions'].append(f"日线结构: {daily['structure_state']}")
+            plan['conditions'].append(f"趋势方向: {daily.get('trend_direction')}")
+
+        # ---- 转折准备 ----
+        elif strategy in ('reversal_ready', 'reversal_observe'):
+            plan['conditions'].append(f"日线背驰: {daily.get('divergence', {})}")
+            plan['note'] = '转折观察中，等待确认信号'
+            plan['position_pct'] = 0
+
+        return plan
+
+    def _build_exit_plan(self, daily: Dict, min30: Optional[Dict], direction: str) -> Dict:
+        """
+        构建出场预案（逻辑驱动止损止盈）
+
+        核心原则（VAN教导）：
+        - 止损 = 入场逻辑已破坏的止损
+        - 止盈 = 持仓逻辑破坏的止损
+        - 移动止损 = 结构演变的止损
+
+        三层止损：
+        1. 入场止损：价格突破入场逻辑破坏点
+        2. 结构止损：小级别出现反向信号
+        3. 移动止损：盈利后保护利润
+        """
+        plan = {
+            'stop_loss': None,
+            'take_profit': None,
+            'trailing_stop': None,
+            'structural_stop': None,
+            'exit_conditions': [],
+            'note': ''
+        }
+
+        last_zs = daily.get('last_zs')
+        if not last_zs:
+            plan['note'] = '无中枢数据'
+            return plan
+
+        zs_zg = last_zs.get('zg', 0)
+        zs_zd = last_zs.get('zd', 0)
+
+        if direction == 'long':
+            plan['stop_loss'] = {
+                'price': zs_zd * 0.995,
+                'logic_price': zs_zd,
+                'type': 'entry_invalidation',
+                'reason': f'uptrend可能终结: 价格跌破中枢下沿{zs_zd:.2f}'
+            }
+            plan['take_profit'] = {
+                'price': zs_zg,
+                'type': 'holding_invalidation',
+                'reason': f'上升趋势结束: 价格回到{zs_zg:.2f}'
+            }
+            plan['trailing_stop'] = {
+                'trigger_pct': 0.02,
+                'action': 'move_to_entry',
+                'reason': '盈利2%后保护利润'
+            }
+            plan['structural_stop'] = {
+                'condition': '30min_sell_signal',
+                'reason': '小级别结构破坏'
+            }
+            plan['exit_conditions'] = [
+                f"入场止损: 价格跌破 {zs_zd:.2f} (买点被否定)",
+                f"持仓止盈: 价格回到 {zs_zg:.2f} (上升趋势结束)",
+                "移动止损: 盈利2%后止损移到入场价",
+                "结构止损: 30分钟出现卖点"
+            ]
+
+        else:
+            plan['stop_loss'] = {
+                'price': zs_zg * 1.005,
+                'logic_price': zs_zg,
+                'type': 'entry_invalidation',
+                'reason': f'downtrend可能终结: 价格突破中枢上沿{zs_zg:.2f}'
+            }
+            plan['take_profit'] = {
+                'price': zs_zd,
+                'type': 'holding_invalidation',
+                'reason': f'下跌趋势结束: 价格回到{zs_zd:.2f}'
+            }
+            plan['trailing_stop'] = {
+                'trigger_pct': 0.02,
+                'action': 'move_to_entry',
+                'reason': '盈利2%后保护利润'
+            }
+            plan['structural_stop'] = {
+                'condition': '30min_buy_signal',
+                'reason': '小级别结构破坏'
+            }
+            plan['exit_conditions'] = [
+                f"入场止损: 价格突破 {zs_zg:.2f} (shock_sell被否定)",
+                f"持仓止盈: 价格回到 {zs_zd:.2f} (下跌趋势结束)",
+                "移动止损: 盈利2%后止损移到入场价",
+                "结构止损: 30分钟出现买点"
+            ]
+
+        return plan
+
+    def _check_position_exit(self, symbol: str, analysis: Dict) -> Optional[Dict]:
+        """
+        检查持仓是否需要平仓
+
+        三层检查：
+        1. 入场止损：价格突破入场逻辑破坏点
+        2. 持仓止盈：价格回到持仓逻辑破坏点
+        3. 结构止损：小级别出现反向信号
+        """
+        pos = self.portfolio.get('positions', {}).get(symbol, {})
+        if not pos or pos.get('position', 0) == 0:
+            return None
+
+        current_price = analysis.get('quote', Quote('', 0, 0, 0, 0, 0, 0, 0, '')).price
+        entry_price = pos.get('avg_cost', 0)
+        direction = pos.get('direction', 'short')
+        exit_plan = analysis.get('exit_plan', {})
+
+        if not exit_plan:
+            return None
+
+        # 1. 入场止损检查
+        stop_loss = exit_plan.get('stop_loss', {})
+        if stop_loss and stop_loss.get('price'):
+            sl_price = stop_loss['price']
+            if direction == 'short' and current_price >= sl_price:
+                return {
+                    'reason': '入场止损',
+                    'detail': stop_loss.get('reason', ''),
+                    'price': current_price,
+                    'stop_price': sl_price
+                }
+            elif direction == 'long' and current_price <= sl_price:
+                return {
+                    'reason': '入场止损',
+                    'detail': stop_loss.get('reason', ''),
+                    'price': current_price,
+                    'stop_price': sl_price
+                }
+
+        # 2. 持仓止盈检查
+        take_profit = exit_plan.get('take_profit', {})
+        if take_profit and take_profit.get('price'):
+            tp_price = take_profit['price']
+            if direction == 'short' and current_price <= tp_price:
+                return {
+                    'reason': '持仓止盈',
+                    'detail': take_profit.get('reason', ''),
+                    'price': current_price,
+                    'stop_price': tp_price
+                }
+            elif direction == 'long' and current_price >= tp_price:
+                return {
+                    'reason': '持仓止盈',
+                    'detail': take_profit.get('reason', ''),
+                    'price': current_price,
+                    'stop_price': tp_price
+                }
+
+        # 3. 结构止损检查（30分钟反向信号）
+        structural_stop = exit_plan.get('structural_stop', {})
+        if structural_stop and analysis.get('min30'):
+            min30_bsp = analysis['min30'].get('buy_sell_points', [])
+            condition = structural_stop.get('condition', '')
+
+            if condition == '30min_buy_signal':
+                buy_signals = [b for b in min30_bsp if 'buy' in b.get('type', '')]
+                if buy_signals:
+                    best = max(buy_signals, key=lambda x: x.get('confidence', 0))
+                    return {
+                        'reason': '结构止损',
+                        'detail': f"30分钟买点: {best['type']} @ {best['price']:.2f}",
+                        'price': current_price,
+                        'stop_price': best['price']
+                    }
+            elif condition == '30min_sell_signal':
+                sell_signals = [b for b in min30_bsp if 'sell' in b.get('type', '')]
+                if sell_signals:
+                    best = max(sell_signals, key=lambda x: x.get('confidence', 0))
+                    return {
+                        'reason': '结构止损',
+                        'detail': f"30分钟卖点: {best['type']} @ {best['price']:.2f}",
+                        'price': current_price,
+                        'stop_price': best['price']
+                    }
+
+        # 4. 移动止损检查
+        trailing = exit_plan.get('trailing_stop', {})
+        if trailing and entry_price > 0:
+            trigger_pct = trailing.get('trigger_pct', 0.02)
+            if direction == 'short':
+                profit_pct = (entry_price - current_price) / entry_price
+                if profit_pct >= trigger_pct:
+                    if current_price >= entry_price:
+                        return {
+                            'reason': '移动止损',
+                            'detail': f"盈利{profit_pct:.1%}后价格回到入场价",
+                            'price': current_price,
+                            'stop_price': entry_price
+                        }
+            elif direction == 'long':
+                profit_pct = (current_price - entry_price) / entry_price
+                if profit_pct >= trigger_pct:
+                    if current_price <= entry_price:
+                        return {
+                            'reason': '移动止损',
+                            'detail': f"盈利{profit_pct:.1%}后价格回到入场价",
+                            'price': current_price,
+                            'stop_price': entry_price
+                        }
+
         return None
 
+    def generate_signal(self, symbol: str, analysis: Dict) -> Optional[TradeSignal]:
+        """
+        生成交易信号（顺势原则）
+
+        核心逻辑：
+        - 下跌趋势 → 找卖点做空
+        - 上升趋势 → 找买点做多
+        - 盘整/转折 → 不交易
+        """
+        # 不满足共振条件
+        resonance_level = analysis.get('resonance_level', 0)
+        if resonance_level < 2:
+            return None
+
+        # 盘整不交易
+        strategy = analysis.get('strategy', 'unknown')
+        if strategy == 'range_wait':
+            return None
+
+        direction = analysis.get('direction', 'neutral')
+        daily_bsp = analysis.get('daily', {}).get('buy_sell_points', [])
+        min30_bsp = analysis.get('min30', {}).get('buy_sell_points', []) if analysis.get('min30') else []
+
+        best_point = None
+        source = ''
+        action = ''
+
+        # ---- 下跌趋势：找卖点做空 ----
+        if direction == 'short' and strategy == 'trend_follow_short':
+            sell_points_30 = [b for b in min30_bsp if 'sell' in b.get('type', '')]
+            if sell_points_30:
+                best_point = max(sell_points_30, key=lambda x: x.get('confidence', 0))
+                source = '30min'
+            action = 'SELL'
+
+        # ---- 上升趋势：找买点做多 ----
+        elif direction == 'long' and strategy == 'trend_follow_long':
+            buy_points_30 = [b for b in min30_bsp if 'buy' in b.get('type', '')]
+            if buy_points_30:
+                best_point = max(buy_points_30, key=lambda x: x.get('confidence', 0))
+                source = '30min'
+            action = 'BUY'
+
+        if not best_point:
+            return None
+
+        # 仓位计算 — 使用实时价格
+        quote = analysis.get('quote')
+        current_price = quote.price if quote else 0
+        if current_price <= 0:
+            return None
+
+        account_value = 1000000  # 默认100万
+        entry_pct = analysis.get('entry_plan', {}).get('position_pct', 0.2)
+        position_value = account_value * entry_pct
+        quantity = int(position_value / current_price / 100) * 100
+
+        if quantity <= 0:
+            return None
+
+        # 出场参数 — 基于实时价格计算
+        exit_plan = analysis.get('exit_plan', {})
+        sl = exit_plan.get('stop_loss', {})
+        tp = exit_plan.get('take_profit', {})
+        stop_loss = sl.get('price', current_price * 0.97) if isinstance(sl, dict) else current_price * 0.97
+        take_profit = tp.get('price', current_price * 1.05) if isinstance(tp, dict) else current_price * 1.05
+
+        return TradeSignal(
+            symbol=symbol,
+            action=action,
+            direction=direction,
+            signal_type=best_point['type'],
+            price=current_price,
+            stop_loss=stop_loss,
+            take_profit=take_profit,
+            quantity=quantity,
+            confidence=best_point.get('confidence', 0.6),
+            resonance_level=resonance_level,
+            detail=f"{source} {best_point['type']} | 共振{resonance_level}级 | {strategy} | {direction}",
+            strategy=strategy
+        )
+
     def execute_trade(self, signal: TradeSignal) -> bool:
-        """执行交易"""
+        """执行交易 — 对接老虎模拟盘下单"""
         try:
+            logger.info(f"\n{'='*50}")
+            logger.info(f"💰 执行交易: {signal.action} {signal.direction}")
+            logger.info(f"   标的: {signal.symbol}")
+            logger.info(f"   类型: {signal.signal_type}")
+            logger.info(f"   价格: ${signal.price:.2f}")
+            logger.info(f"   数量: {signal.quantity}")
+            logger.info(f"   止损: ${signal.stop_loss:.2f}")
+            logger.info(f"   止盈: ${signal.take_profit:.2f}")
+            logger.info(f"   共振: {signal.resonance_level}级")
+            logger.info(f"{'='*50}")
+
+            # 老虎模拟盘下单
             action = 'BUY' if signal.action == 'BUY' else 'SELL'
             result = place_order_limit(
                 symbol=signal.symbol,
@@ -329,7 +733,6 @@ class TradingEngine:
                 quantity=signal.quantity,
                 action=action
             )
-            logger.info(f"✅ 交易执行: {signal.symbol} {signal.action} {signal.quantity}股 @ ${signal.price:.2f}")
             logger.info(f"   老虎下单结果: {result}")
 
             # 更新持仓
@@ -355,40 +758,8 @@ class TradingEngine:
             logger.error(f"交易执行失败: {e}")
             return False
 
-    def check_exit(self, symbol: str, analysis: Dict) -> Optional[Dict]:
-        """检查是否需要平仓"""
-        pos = self.portfolio.get('positions', {}).get(symbol, {})
-        if not pos or pos.get('position', 0) == 0:
-            return None
-
-        # 这里实现止损止盈检查逻辑
-        return None
-
-    def run_cycle(self):
-        """运行一个分析周期"""
-        symbols = self.config.get('symbols', {})
-        for symbol, config in symbols.items():
-            if not config.get('enabled', False):
-                continue
-
-            market = config.get('market', 'HK')
-            analysis = self.analyze_symbol(symbol, market)
-            if not analysis:
-                continue
-
-            # 检查平仓
-            exit_info = self.check_exit(symbol, analysis)
-            if exit_info:
-                self.execute_exit(symbol, exit_info)
-                continue
-
-            # 检查入场
-            signal = self.generate_signal(symbol, analysis)
-            if signal:
-                self.execute_trade(signal)
-
     def execute_exit(self, symbol: str, exit_info: Dict) -> bool:
-        """执行平仓"""
+        """执行平仓 — 对接老虎模拟盘"""
         try:
             pos = self.portfolio.get('positions', {}).get(symbol, {})
             if not pos:
@@ -413,6 +784,7 @@ class TradingEngine:
                 quantity=quantity,
                 action=close_action
             )
+            logger.info(f"   老虎平仓结果: {result}")
 
             # 更新持仓
             self.portfolio['positions'][symbol] = {}
@@ -429,6 +801,29 @@ class TradingEngine:
         except Exception as e:
             logger.error(f"平仓失败: {e}")
             return False
+
+    def run_cycle(self):
+        """运行一个分析周期"""
+        symbols = self.config.get('symbols', {})
+        for symbol, config in symbols.items():
+            if not config.get('enabled', False):
+                continue
+
+            market = config.get('market', 'HK')
+            analysis = self.analyze_symbol(symbol, market)
+            if not analysis:
+                continue
+
+            # 检查平仓
+            exit_info = self._check_position_exit(symbol, analysis)
+            if exit_info:
+                self.execute_exit(symbol, exit_info)
+                continue
+
+            # 检查入场
+            signal = self.generate_signal(symbol, analysis)
+            if signal:
+                self.execute_trade(signal)
 
 # ============ 主入口 ============
 
@@ -460,7 +855,6 @@ def main():
             status = "✅" if config.get('enabled') else "❌"
             print(f"  {status} {symbol} ({config.get('name')}) - {config.get('market')}")
     elif args.analyze:
-        # 从配置中获取市场
         symbol_config = engine.config.get('symbols', {}).get(args.analyze, {})
         market = symbol_config.get('market', 'US')
         analysis = engine.analyze_symbol(args.analyze, market)

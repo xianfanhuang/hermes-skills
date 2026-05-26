@@ -61,7 +61,7 @@
       "name": "session-archive-check",
       "enabled": true,
       "createdAtMs": 1779739610921,
-      "updatedAtMs": 1779797457827,
+      "updatedAtMs": 1779804413078,
       "schedule": {
         "expr": "0 */2 * * *",
         "kind": "cron",
@@ -75,14 +75,13 @@
         "text": "Session 归档检查：查看 memory/sessions/ 目录状态，检查当前飞书 session 是否需要归档。如果今日有活跃对话但未归档，执行 session-archive.sh archive feishu <session_id> 并生成摘要。"
       },
       "state": {
-        "nextRunAtMs": 1779804266258,
-        "lastRunAtMs": 1779797416227,
+        "nextRunAtMs": 1779811466258,
+        "lastRunAtMs": 1779804266263,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 41600,
+        "lastDurationMs": 146815,
         "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 0,
-        "runningAtMs": 1779804266259
+        "consecutiveErrors": 0
       }
     },
     {
