@@ -2,71 +2,116 @@
   "version": 1,
   "jobs": [
     {
-      "id": "683a06f0-e238-432d-a3fc-147771750811",
+      "id": "9a9818bf-2187-4837-a018-5d61d1aed863",
       "agentId": "main",
       "sessionKey": "agent:main:main",
-      "name": "缠论每日模拟交易报告",
+      "name": "auto-memory-hourly",
       "enabled": true,
-      "createdAtMs": 1775870699897,
-      "updatedAtMs": 1779235258962,
+      "createdAtMs": 1779739610897,
+      "updatedAtMs": 1779775234871,
       "schedule": {
-        "everyMs": 86400000,
-        "kind": "every",
-        "anchorMs": 1744329600000
+        "expr": "0 * * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai",
+        "staggerMs": 300000
       },
-      "sessionTarget": "isolated",
+      "sessionTarget": "main",
       "wakeMode": "now",
       "payload": {
-        "kind": "agentTurn",
-        "message": "你是李小军，缠论交易顾问。请执行以下任务：\n\n1. 读取 /workspace/projects/workspace/paper-trading/portfolio.json 获取当前持仓\n2. 读取 /workspace/projects/workspace/signals/ 中的最新信号文件\n3. 以缠论视角生成每日模拟交易报告，输出到 /workspace/projects/workspace/reports/daily/YYYY-MM-DD.md\n4. 报告要求：\n   - 简洁全面，500字以内\n   - 包含：持仓状态、缠论结构分析（多级别）、操作建议、风险提示\n   - 格式用Markdown\n5. 完成后用message工具发送到飞书用户 ou_1a64d3ea99c24cac146f8ec1b670f683（频道feishu）\n\n分析当前可用的市场数据（crypto 24/7；A股/美股根据日期判断是否开盘）。\n如果当日是周六/周日且无法获取实时数据，则基于最近收盘数据分析。",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "announce"
+        "kind": "systemEvent",
+        "text": "执行自动记忆更新：运行 bash /workspace/projects/workspace/scripts/auto-memory.sh，然后检查今日对话是否有重要信息需要补充到 memory/今天.md。如果有，直接写入。"
       },
       "state": {
-        "nextRunAtMs": 1779321604387,
-        "lastRunAtMs": 1779235204387,
+        "nextRunAtMs": 1779778814207,
+        "lastRunAtMs": 1779775214211,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 54575,
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered",
-        "consecutiveErrors": 0,
-        "runningAtMs": 1779321604389
+        "lastDurationMs": 20660,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0
       }
     },
     {
-      "id": "34e64e00-4a31-4589-a9c7-4cdd9b7944bf",
+      "id": "cb8317c3-ce13-427f-832b-2ab441070b42",
       "agentId": "main",
       "sessionKey": "agent:main:main",
-      "name": "CRCL 1:00 AM 准时报价",
-      "enabled": false,
-      "deleteAfterRun": true,
-      "createdAtMs": 1779121819082,
-      "updatedAtMs": 1779124027721,
+      "name": "memory-archive-daily",
+      "enabled": true,
+      "createdAtMs": 1779739610911,
+      "updatedAtMs": 1779739610911,
       "schedule": {
-        "kind": "at",
-        "at": "2026-05-18T17:00:00.000Z"
+        "expr": "0 2 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
       },
-      "sessionTarget": "isolated",
+      "sessionTarget": "main",
       "wakeMode": "now",
       "payload": {
-        "kind": "agentTurn",
-        "message": "对 CRCL (Circle) 进行准时报价测试。分别调用所有可用数据提供商（Polygon、iTick）获取实时行情，记录每个数据源的价格、时间戳、成交量。对比各数据源差异，确认是否为实时数据。结果通知 VAN。"
-      },
-      "delivery": {
-        "mode": "announce"
+        "kind": "systemEvent",
+        "text": "执行每日记忆归档：运行 bash /workspace/projects/workspace/scripts/memory-archive.sh 压缩超过30天的记忆文件。然后运行 bash /workspace/projects/workspace/scripts/session-archive.sh cleanup 清理旧session归档。完成后汇报结果。"
       },
       "state": {
-        "lastRunAtMs": 1779123600005,
-        "lastRunStatus": "error",
-        "lastStatus": "error",
-        "lastDurationMs": 427716,
-        "lastError": "⚠️ ✉️ Message failed",
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered",
-        "consecutiveErrors": 1
+        "nextRunAtMs": 1779818400000
+      }
+    },
+    {
+      "id": "16bf9536-7ab3-4fa5-bb01-baacee4296da",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "session-archive-check",
+      "enabled": true,
+      "createdAtMs": 1779739610921,
+      "updatedAtMs": 1779775522374,
+      "schedule": {
+        "expr": "0 */2 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai",
+        "staggerMs": 300000
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "Session 归档检查：查看 memory/sessions/ 目录状态，检查当前飞书 session 是否需要归档。如果今日有活跃对话但未归档，执行 session-archive.sh archive feishu <session_id> 并生成摘要。"
+      },
+      "state": {
+        "nextRunAtMs": 1779782666258,
+        "lastRunAtMs": 1779775466264,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 56110,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "8485293c-0845-44ae-bde9-f9985618b30b",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "backup-sync",
+      "enabled": true,
+      "createdAtMs": 1779746729536,
+      "updatedAtMs": 1779768380886,
+      "schedule": {
+        "expr": "0 */6 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai",
+        "staggerMs": 300000
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "执行自动备份同步：运行 bash /workspace/projects/workspace/scripts/sync-to-backup.sh，将本地记忆/代码/配置同步到 ai-trading-sync GitHub 仓库。完成后简要汇报结果。"
+      },
+      "state": {
+        "nextRunAtMs": 1779789798665,
+        "lastRunAtMs": 1779768198670,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 182216,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0
       }
     }
   ]

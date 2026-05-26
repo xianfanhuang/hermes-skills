@@ -191,99 +191,195 @@ class LivePaperTrader:
 
         return results
 
-    def determine_trading_direction(self, analysis: dict) -> str:
+    def determine_trading_direction(self, analysis: dict) -> dict:
         """
-        智能确定交易方向
+        智能级别确立 — 结构状态驱动
 
-        规则：
-        1. 日线趋势向上 + 30分钟/5分钟向上共振 → 做多
-        2. 日线趋势向下 + 30分钟/5分钟向下共振 → 做空
-        3. 日线震荡 → 看30分钟方向
-        4. 都震荡 → 不交易
-        """
-        daily = analysis.get('daily', {})
-        m30 = analysis.get('30min', {})
-        m5 = analysis.get('5min', {})
-
-        # 日线中枢方向
-        daily_dir = daily.get('direction', 'unknown')
-        m30_dir = m30.get('direction', 'unknown')
-        m5_dir = m5.get('direction', 'unknown')
-
-        # 检查信号方向
-        daily_sigs = daily.get('signals', [])
-        m30_sigs = m30.get('signals', [])
-        m5_sigs = m5.get('signals', [])
-
-        # 统计多空信号
-        long_signals = sum(1 for s in daily_sigs + m30_sigs + m5_sigs
-                          if s.get('direction') == 'LONG' and not s.get('filtered'))
-        short_signals = sum(1 for s in daily_sigs + m30_sigs + m5_sigs
-                           if s.get('direction') == 'SHORT' and not s.get('filtered'))
-
-        # 日线趋势判断
-        if daily_dir == 'up':
-            if m30_dir in ('up', 'unknown') and m5_dir in ('up', 'unknown'):
-                return 'long'
-            if short_signals >= 2:
-                return 'short'
-            return 'long'
-
-        elif daily_dir == 'down':
-            if m30_dir in ('down', 'unknown') and m5_dir in ('down', 'unknown'):
-                return 'short'
-            if long_signals >= 2:
-                return 'long'
-            return 'short'
-
-        else:  # 日线震荡
-            if long_signals > short_signals and long_signals >= 2:
-                return 'long'
-            elif short_signals > long_signals and short_signals >= 2:
-                return 'short'
-            elif m30_dir == 'up':
-                return 'long'
-            elif m30_dir == 'down':
-                return 'short'
-
-        return 'none'  # 不交易
-
-    def check_resonance(self, analysis: dict, direction: str) -> Tuple[bool, int, str]:
-        """
-        检查多级别共振
+        核心逻辑：
+        1. 趋势中 → 锁定当前级别，不放大，跟着趋势走
+        2. 盘整中 → 放大级别看方向，或不交易
+        3. 转折中 → 缩小级别精确入场
 
         Returns:
-            (is_resonance, resonance_level, reason)
+            {
+                'direction': 'long'/'short'/'none',
+                'strategy': 'follow_trend'/'wait_breakout'/'catch_reversal',
+                'primary_tf': 'daily'/'30min'/'5min',  # 主级别
+                'reason': str,
+                'structure': {tf: StructureState}
+            }
         """
         daily = analysis.get('daily', {})
         m30 = analysis.get('30min', {})
         m5 = analysis.get('5min', {})
 
-        # 各级别方向
+        # 获取各级别结构状态
+        daily_state = daily.get('ext', None)
+        m30_state = m30.get('ext', None)
+        m5_state = m5.get('ext', None)
+
+        daily_struct = daily_state.get_structure_state() if daily_state else None
+        m30_struct = m30_state.get_structure_state() if m30_state else None
+        m5_struct = m5_state.get_structure_state() if m5_state else None
+
+        # 数据不足时的降级处理
+        if not daily_struct:
+            return {'direction': 'none', 'strategy': 'none', 'primary_tf': None,
+                    'reason': '数据不足', 'structure': {}}
+
+        structure_info = {}
+        for tf, s in [('daily', daily_struct), ('30min', m30_struct), ('5min', m5_struct)]:
+            if s:
+                structure_info[tf] = {
+                    'state': s.state,
+                    'direction': s.trend_direction,
+                    'strength': s.strength,
+                    'detail': s.detail
+                }
+
+        # ===== 策略选择 =====
+
+        # 策略1: 日线趋势中 → 锁死级别，跟趋势
+        if daily_struct.should_follow_trend():
+            direction = 'long' if daily_struct.trend_direction == 'up' else 'short'
+
+            # 检查小级别是否有同向确认（不要求必须，但加分）
+            m5_confirms = False
+            if m5_struct and m5_struct.trend_direction == daily_struct.trend_direction:
+                m5_confirms = True
+
+            reason = f"趋势跟随: 日线{daily_struct.detail}"
+            if m5_confirms:
+                reason += f" + 5分钟确认"
+
+            return {
+                'direction': direction,
+                'strategy': 'follow_trend',
+                'primary_tf': '5min',  # 趋势中用小级别精确入场
+                'reason': reason,
+                'structure': structure_info,
+                'resonance_level': 3 if m5_confirms else 2,
+            }
+
+        # 策略2: 日线转折中 → 缩小级别精确入场
+        if daily_struct.should_catch_reversal():
+            div = daily_struct.divergence
+            if div.get('type') == 'bottom':
+                direction = 'long'
+            elif div.get('type') == 'top':
+                direction = 'short'
+            else:
+                direction = 'none'
+
+            if direction != 'none':
+                return {
+                    'direction': direction,
+                    'strategy': 'catch_reversal',
+                    'primary_tf': '30min',  # 转折用中级别确认
+                    'reason': f"反转捕捉: {div.get('detail', '')}",
+                    'structure': structure_info,
+                    'resonance_level': 1,
+                }
+
+        # 策略3: 日线盘整 → 看30分钟方向
+        if daily_struct.should_wait_breakout():
+            if m30_struct and m30_struct.is_trending():
+                direction = 'long' if m30_struct.trend_direction == 'up' else 'short'
+                return {
+                    'direction': direction,
+                    'strategy': 'range_breakout',
+                    'primary_tf': '30min',
+                    'reason': f"盘整突破: 30分钟{m30_struct.detail}",
+                    'structure': structure_info,
+                    'resonance_level': 1,
+                }
+
+            # 30分钟也盘整 → 看5分钟
+            if m5_struct and m5_struct.is_trending():
+                direction = 'long' if m5_struct.trend_direction == 'up' else 'short'
+                return {
+                    'direction': direction,
+                    'strategy': 'range_scalp',
+                    'primary_tf': '5min',
+                    'reason': f"盘整内短线: 5分钟{m5_struct.detail}",
+                    'structure': structure_info,
+                    'resonance_level': 1,
+                }
+
+            # 都盘整 → 不交易
+            return {
+                'direction': 'none',
+                'strategy': 'wait',
+                'primary_tf': None,
+                'reason': f"日线盘整，30分钟/5分钟无方向，等待",
+                'structure': structure_info,
+                'resonance_level': 0,
+            }
+
+        # 降级：用信号数量判断
+        all_sigs = daily.get('signals', []) + m30.get('signals', []) + m5.get('signals', [])
+        long_sigs = sum(1 for s in all_sigs if s.get('direction') == 'LONG' and not s.get('filtered'))
+        short_sigs = sum(1 for s in all_sigs if s.get('direction') == 'SHORT' and not s.get('filtered'))
+
+        if long_sigs >= 2 and long_sigs > short_sigs:
+            return {'direction': 'long', 'strategy': 'signal_fallback', 'primary_tf': '30min',
+                    'reason': f"信号降级: {long_sigs}个多头信号", 'structure': structure_info, 'resonance_level': 1}
+        elif short_sigs >= 2 and short_sigs > long_sigs:
+            return {'direction': 'short', 'strategy': 'signal_fallback', 'primary_tf': '30min',
+                    'reason': f"信号降级: {short_sigs}个空头信号", 'structure': structure_info, 'resonance_level': 1}
+
+        return {'direction': 'none', 'strategy': 'none', 'primary_tf': None,
+                'reason': '无明确方向', 'structure': structure_info, 'resonance_level': 0}
+
+    def check_resonance(self, analysis: dict, direction: str, strategy_result: dict = None) -> Tuple[bool, int, str]:
+        """
+        结构感知的共振检查
+
+        跟随趋势策略 → 要求多级别同向
+        反转捕捉策略 → 只需背驰确认
+        盘整突破策略 → 只需突破方向确认
+        """
+        if strategy_result:
+            resonance_level = strategy_result.get('resonance_level', 0)
+            strategy = strategy_result.get('strategy', 'none')
+            reason = strategy_result.get('reason', '')
+
+            if strategy == 'follow_trend':
+                # 趋势跟随：需要至少2级共振
+                if resonance_level >= 2:
+                    return True, resonance_level, f"趋势共振: {reason}"
+                return False, resonance_level, f"趋势共振不足: {reason}"
+
+            elif strategy == 'catch_reversal':
+                # 反转捕捉：有背驰就行
+                return True, 1, f"反转信号: {reason}"
+
+            elif strategy in ('range_breakout', 'range_scalp'):
+                # 盘整突破/短线：单级别确认即可
+                return True, 1, f"盘整信号: {reason}"
+
+            elif strategy == 'signal_fallback':
+                return True, 1, f"信号降级: {reason}"
+
+        # 降级到旧逻辑
+        daily = analysis.get('daily', {})
+        m30 = analysis.get('30min', {})
+        m5 = analysis.get('5min', {})
         daily_dir = daily.get('direction', 'unknown')
         m30_dir = m30.get('direction', 'unknown')
         m5_dir = m5.get('direction', 'unknown')
-
-        # 方向映射
         dir_map = {'up': 'long', 'down': 'short', 'unknown': 'none'}
-        target = direction  # long or short
 
-        # 三级共振
-        if dir_map.get(daily_dir) == target and dir_map.get(m30_dir) == target and dir_map.get(m5_dir) == target:
-            return True, 3, f"三级共振: 日线{daily_dir} + 30分钟{m30_dir} + 5分钟{m5_dir}"
-
-        # 两级共振
-        if dir_map.get(daily_dir) == target and dir_map.get(m30_dir) == target:
-            return True, 2, f"两级共振: 日线{daily_dir} + 30分钟{m30_dir}"
-
-        if dir_map.get(m30_dir) == target and dir_map.get(m5_dir) == target:
-            return True, 2, f"两级共振: 30分钟{m30_dir} + 5分钟{m5_dir}"
-
-        # 单级别信号
-        if dir_map.get(daily_dir) == target:
+        if dir_map.get(daily_dir) == direction and dir_map.get(m30_dir) == direction and dir_map.get(m5_dir) == direction:
+            return True, 3, f"三级共振: 日线{daily_dir}+30分{m30_dir}+5分{m5_dir}"
+        if dir_map.get(daily_dir) == direction and dir_map.get(m30_dir) == direction:
+            return True, 2, f"两级共振: 日线{daily_dir}+30分{m30_dir}"
+        if dir_map.get(m30_dir) == direction and dir_map.get(m5_dir) == direction:
+            return True, 2, f"两级共振: 30分{m30_dir}+5分{m5_dir}"
+        if dir_map.get(daily_dir) == direction:
             return True, 1, f"单级别: 日线{daily_dir}"
 
-        return False, 0, f"无共振: 日线{daily_dir} 30分钟{m30_dir} 5分钟{m5_dir}"
+        return False, 0, f"无共振"
 
     def check_cooldown(self) -> bool:
         """检查是否在冷却期"""
@@ -312,8 +408,15 @@ class LivePaperTrader:
 
         return min(quantity, max_quantity)
 
-    def generate_signal(self, analysis: dict, direction: str) -> dict:
-        """生成交易信号"""
+    def generate_signal(self, analysis: dict, direction: str, strategy_result: dict = None) -> dict:
+        """
+        生成交易信号 — 结构感知止损
+
+        止损逻辑根据策略不同：
+        - 趋势跟随 → 止损在当前级别中枢外沿（宽止损，让利润跑）
+        - 反转捕捉 → 止损在背驰极值（精确止损）
+        - 盘整突破 → 止损在中枢内沿（紧止损，快速验证）
+        """
         daily = analysis.get('daily', {})
         m30 = analysis.get('30min', {})
         m5 = analysis.get('5min', {})
@@ -328,23 +431,79 @@ class LivePaperTrader:
         if not current_price:
             return None
 
-        # 计算止损
+        strategy = strategy_result.get('strategy', 'signal_fallback') if strategy_result else 'signal_fallback'
+        primary_tf = strategy_result.get('primary_tf', '5min') if strategy_result else '5min'
+
+        # ===== 结构感知止损 =====
+        stop_loss = None
+
+        if strategy == 'follow_trend':
+            # 趋势跟随：止损在5分钟中枢下沿（用小级别，大利润空间）
+            m5_ext = m5.get('ext', None)
+            if m5_ext and hasattr(m5_ext, 'calc_zs_list'):
+                m5_zs = m5_ext.calc_zs_list()
+                if m5_zs:
+                    if direction == 'long':
+                        stop_loss = m5_zs[-1].zd
+                    else:
+                        stop_loss = m5_zs[-1].zg
+
+            # 兜底：日线中枢
+            if stop_loss is None:
+                daily_ext = daily.get('ext', None)
+                if daily_ext and hasattr(daily_ext, 'calc_zs_list'):
+                    daily_zs = daily_ext.calc_zs_list()
+                    if daily_zs:
+                        stop_loss = daily_zs[-1].zd if direction == 'long' else daily_zs[-1].zg
+
+        elif strategy == 'catch_reversal':
+            # 反转捕捉：止损在背驰极值（最精确）
+            daily_struct = daily.get('ext', None)
+            if daily_struct:
+                state = daily_struct.get_structure_state() if hasattr(daily_struct, 'get_structure_state') else None
+                if state and state.divergence.get('detected'):
+                    # 底背驰止损在最低点下方，顶背驰在最高点上方
+                    if direction == 'long':
+                        # 找最近的向下笔低点
+                        bi_list = daily_struct.bi_list
+                        if bi_list:
+                            stop_loss = min(b.low for b in bi_list[-3:] if b.direction == 'down')
+                            stop_loss = stop_loss * 0.98  # 给2%缓冲
+                    else:
+                        bi_list = daily_struct.bi_list
+                        if bi_list:
+                            stop_loss = max(b.high for b in bi_list[-3:] if b.direction == 'up')
+                            stop_loss = stop_loss * 1.02
+
+        elif strategy in ('range_breakout', 'range_scalp'):
+            # 盘整突破：止损在中枢内沿（紧止损）
+            if primary_tf == '30min':
+                m30_ext = m30.get('ext', None)
+                if m30_ext and hasattr(m30_ext, 'calc_zs_list'):
+                    m30_zs = m30_ext.calc_zs_list()
+                    if m30_zs:
+                        if direction == 'long':
+                            stop_loss = m30_zs[-1].zd  # 中枢下沿
+                        else:
+                            stop_loss = m30_zs[-1].zg  # 中枢上沿
+            else:
+                m5_ext = m5.get('ext', None)
+                if m5_ext and hasattr(m5_ext, 'calc_zs_list'):
+                    m5_zs = m5_ext.calc_zs_list()
+                    if m5_zs:
+                        stop_loss = m5_zs[-1].zd if direction == 'long' else m5_zs[-1].zg
+
+        # 兜底止损
+        if stop_loss is None:
+            stop_loss = current_price * (1 - self.config['stop_loss_pct']) if direction == 'long' \
+                else current_price * (1 + self.config['stop_loss_pct'])
+
+        # 止损不能超过最大止损比例
+        max_stop_pct = self.config['stop_loss_pct'] * 1.5  # 最多1.5倍默认止损
         if direction == 'long':
-            # 做多止损：日线中枢下沿
-            daily_zs = daily.get('ext', None)
-            if daily_zs and hasattr(daily_zs, 'zs_list') and daily_zs.zs_list:
-                stop_loss = daily_zs.zs_list[-1].low
-            else:
-                stop_loss = current_price * (1 - self.config['stop_loss_pct'])
-            stop_loss = max(stop_loss, current_price * (1 - self.config['stop_loss_pct']))
+            stop_loss = max(stop_loss, current_price * (1 - max_stop_pct))
         else:
-            # 做空止损：日线中枢上沿
-            daily_zs = daily.get('ext', None)
-            if daily_zs and hasattr(daily_zs, 'zs_list') and daily_zs.zs_list:
-                stop_loss = daily_zs.zs_list[-1].high
-            else:
-                stop_loss = current_price * (1 + self.config['stop_loss_pct'])
-            stop_loss = min(stop_loss, current_price * (1 + self.config['stop_loss_pct']))
+            stop_loss = min(stop_loss, current_price * (1 + max_stop_pct))
 
         # 计算仓位
         quantity = self.calculate_position_size(current_price, stop_loss)
@@ -357,11 +516,15 @@ class LivePaperTrader:
             'price': current_price,
             'stop_loss': stop_loss,
             'quantity': quantity,
-            'reason': f"{direction.upper()} 信号",
+            'strategy': strategy,
+            'primary_tf': primary_tf,
+            'reason': strategy_result.get('reason', '') if strategy_result else '',
+            'stop_loss_pct': abs(current_price - stop_loss) / current_price * 100,
             'analysis': {tf: {
                 'bi_count': analysis[tf].get('bi_count', 0),
                 'zs_count': analysis[tf].get('zs_count', 0),
                 'direction': analysis[tf].get('direction', 'unknown'),
+                'structure': strategy_result.get('structure', {}).get(tf, {}).get('state', '') if strategy_result else '',
             } for tf in analysis},
         }
 
@@ -542,12 +705,13 @@ class LivePaperTrader:
 
             # 多周期分析（检查反转信号）
             analysis = self.analyze_all_timeframes()
-            new_direction = self.determine_trading_direction(analysis)
+            strategy_result = self.determine_trading_direction(analysis)
+            new_direction = strategy_result['direction']
 
             # 方向反转 → 平仓
             if (direction == 'long' and new_direction == 'short') or \
                (direction == 'short' and new_direction == 'long'):
-                self.close_position(current_price, f"方向反转: {direction}→{new_direction}")
+                self.close_position(current_price, f"方向反转: {direction}→{new_direction} | {strategy_result['reason']}")
             else:
                 logger.info(f"   持仓方向 {direction} 与市场方向 {new_direction} 一致，继续持有")
                 return
@@ -555,10 +719,20 @@ class LivePaperTrader:
         # 无持仓，寻找入场机会
         analysis = self.analyze_all_timeframes()
 
-        # 智能确定方向
-        direction = self.determine_trading_direction(analysis)
+        # 智能级别确立
+        strategy_result = self.determine_trading_direction(analysis)
+        direction = strategy_result['direction']
+        strategy = strategy_result['strategy']
+
+        logger.info(f"   🧠 结构分析: {strategy_result['reason']}")
+        logger.info(f"   📊 策略: {strategy} | 主级别: {strategy_result.get('primary_tf', 'N/A')}")
+
+        # 输出各级别结构状态
+        for tf, info in strategy_result.get('structure', {}).items():
+            logger.info(f"      {tf}: {info['state']} {info.get('direction', '')} 强度{info.get('strength', 0):.0%} | {info.get('detail', '')}")
+
         if direction == 'none':
-            logger.info("   市场震荡，不交易")
+            logger.info(f"   不交易: {strategy_result['reason']}")
             return
 
         # 配置限制
@@ -574,21 +748,25 @@ class LivePaperTrader:
             logger.info("   做空未启用，跳过")
             return
 
-        # 检查共振
-        is_resonance, level, reason = self.check_resonance(analysis, direction)
+        # 检查共振（结构感知）
+        is_resonance, level, reason = self.check_resonance(analysis, direction, strategy_result)
         if not is_resonance:
             logger.info(f"   无共振: {reason}")
             return
 
-        logger.info(f"   🔔 共振信号: {reason}")
+        logger.info(f"   🔔 共振信号: {reason} (级别{level})")
 
-        # 生成信号
-        signal = self.generate_signal(analysis, direction)
+        # 生成信号（结构感知止损）
+        signal = self.generate_signal(analysis, direction, strategy_result)
         if not signal:
             logger.info("   信号生成失败")
             return
 
-        signal['reason'] = f"{reason} | 共振级别: {level}"
+        signal['reason'] = f"{reason} | 策略:{strategy} | 止损:{signal['stop_loss_pct']:.1f}%"
+
+        logger.info(f"   📈 信号: {signal['type']} @ ${signal['price']:.2f}")
+        logger.info(f"      止损: ${signal['stop_loss']:.2f} ({signal['stop_loss_pct']:.1f}%)")
+        logger.info(f"      数量: {signal['quantity']}股")
 
         # 执行
         self.execute_signal(signal)

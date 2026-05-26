@@ -98,6 +98,14 @@ def get_last_session_id() -> str:
     last_id_file = BASE_DIR / ".last_session_id"
     if last_id_file.exists():
         return last_id_file.read_text().strip()
+    
+    # 回退：从 memory/sessions/ 找最新文件
+    memory_sessions = Path("/workspace/projects/workspace/memory/sessions")
+    if memory_sessions.exists():
+        files = sorted(memory_sessions.glob("*.md"), key=lambda f: f.stat().st_mtime, reverse=True)
+        if files:
+            # 从文件名提取 session id
+            return files[0].stem
     return ""
 
 
@@ -157,28 +165,54 @@ def compress_messages(messages: list, strategy: str = "keep_decisions") -> list:
 
 
 def restore_auto(config: dict = None) -> dict:
-    """自动恢复上一个会话（调用 session_manager）"""
+    """自动恢复上一个会话"""
     if config is None:
         config = load_config()
     
     # 优先使用 session_manager
     mgr_path = Path(__file__).parent.parent / "hermes-sync-core" / "session_manager.py"
     if mgr_path.exists():
-        import importlib.util
+        import importlib.util, io, contextlib
         spec = importlib.util.spec_from_file_location("session_manager", mgr_path)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
         mgr = mod.SessionManager()
-        return mgr.resume(config["last_n_messages"])
+        # 抑制 session_manager 的 stdout 输出
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            result = mgr.resume(config["last_n_messages"])
+        if result:
+            return result
     
-    # 回退到本地逻辑
-    session_id = get_last_session_id()
-    if not session_id:
-        print("📭 没有上一个会话记录")
-        return {}
+    # 回退：从 memory/sessions/ 读最新归档
+    memory_sessions = Path("/workspace/projects/workspace/memory/sessions")
+    if memory_sessions.exists():
+        files = sorted(memory_sessions.glob("*.md"), key=lambda f: f.stat().st_mtime, reverse=True)
+        if files:
+            latest = files[0]
+            content = latest.read_text(encoding='utf-8')
+            result = {
+                "session_id": latest.stem,
+                "platform": "feishu",
+                "summary": content[:500],
+                "messages": [],
+                "restored_at": datetime.now().isoformat(),
+                "source_file": str(latest)
+            }
+            print(f"🔄 恢复最近归档: {latest.name}")
+            print(f"   路径: {latest}")
+            print(f"   大小: {latest.stat().st_size} bytes")
+            print()
+            for line in content.split('\n')[:10]:
+                if line.strip():
+                    print(f"   {line.strip()}")
+            print()
+            print("✅ 恢复完成")
+            record_restore(latest.stem, "auto-memory-fallback")
+            return result
     
-    clear_last_session_id()
-    return restore_session(session_id, config["last_n_messages"], config)
+    print("📭 没有上一个会话记录")
+    return {}
 
 
 def restore_session(session_id: str, last_n: int = 30, config: dict = None) -> dict:

@@ -44,6 +44,16 @@ ${todos}
 EOF
 
     echo "[archive] 已归档: ${archive_file}"
+
+    # 写入 .last_session_id 标记（供 context-restore 读取）
+    local restore_sessions="${WORKSPACE_DIR}/skills/hermes-skills/hermes-sync-core/sessions"
+    mkdir -p "${restore_sessions}"
+    echo "${session_id}" > "${restore_sessions}/.last_session_id"
+
+    # 自动同步到备份仓库
+    if [ -f "${WORKSPACE_DIR}/scripts/sync-to-backup.sh" ]; then
+        bash "${WORKSPACE_DIR}/scripts/sync-to-backup.sh" "archive: session ${session_id}" 2>&1 | tail -1
+    fi
 }
 
 # 清理旧归档（保留30天以上的摘要）

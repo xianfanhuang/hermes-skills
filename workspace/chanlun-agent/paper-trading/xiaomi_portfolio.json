@@ -1,0 +1,14 @@
+{
+  "symbol": "01810",
+  "position": 0,
+  "avg_cost": 0,
+  "total_pnl": 986400.0000000001,
+  "consecutive_losses": 0,
+  "daily_pnl": 986400.0000000001,
+  "last_trade_date": null,
+  "cooldown_until": null,
+  "current_strategy": "trend_follow_short",
+  "current_level": 2,
+  "current_direction": null,
+  "entry_time": "2026-05-26T14:26:59.781506"
+}
