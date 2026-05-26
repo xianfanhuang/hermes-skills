@@ -199,6 +199,20 @@ def get_today_orders():
     except Exception as e:
         return f"【错误】{str(e)}"
 
+def get_order_records(limit=10):
+    """获取订单记录 - 极简格式"""
+    try:
+        orders = trade_client.get_orders(account=TIGER_SIM_ACCOUNT)
+        records = []
+        for o in orders[:limit]:
+            s = o.contract.symbol if o.contract else '?'
+            status = str(o.status).replace('OrderStatus.', '')
+            price = o.limit_price if o.limit_price else 'MKT'
+            records.append(f'{s} {o.action} {o.quantity}@{price} {status}')
+        return records
+    except Exception as e:
+        return [f'错误: {e}']
+
 # ===================== 快速测试 =====================
 if __name__ == "__main__":
     print("\n" + "=" * 50)
