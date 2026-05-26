@@ -124,6 +124,13 @@
 
 *此文件会随着与 Captain 的互动不断更新。*
 
+### 2026-05-27 - Memory Search 配置状态
+- **OpenClaw Memory Search**: 已启用，Provider=none，FTS=ready，0/44文件索引
+- **支持的embedding provider**: OpenAI / Gemini / Voyage / Mistral / Ollama / local
+- **MiMo provider**: 聊天模型，不支持embedding，不能用于memory search
+- **待配置**: embedding provider + API key → 启用语义搜索
+- **当前搜索**: memory-search.sh (zgrep + 自动解压 .md.gz)
+
 ### 2026-05-19 - 新增数据源
 - **Finnhub**: 5个API Key，60次/分钟，支持美股/外汇/加密，测试通过
 - **Tiger Broker**: Python SDK 新加坡区，连接成功

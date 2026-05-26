@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-05-20T18:59:17.188Z"
+    "lastTouchedAt": "2026-05-26T20:42:05.911Z"
   },
   "wizard": {
     "lastRunAt": "2026-02-05T16:16:05.545Z",
@@ -287,6 +287,30 @@
             "maxTokens": 8192
           }
         ]
+      },
+      "ollama": {
+        "baseUrl": "http://127.0.0.1:11434/v1",
+        "apiKey": "ollama-local",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "nomic-embed-text",
+            "name": "Nomic Embed Text",
+            "api": "ollama",
+            "reasoning": false,
+            "input": [
+              "text"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 8192,
+            "maxTokens": 8192
+          }
+        ]
       }
     }
   },
@@ -309,12 +333,44 @@
       "workspace": "/workspace/projects/workspace",
       "memorySearch": {
         "enabled": true,
-        "extraPaths": [
-          "/workspace/projects/workspace/chanlun-agent/knowledge",
-          "/workspace/projects/workspace/knowledge"
+        "sources": [
+          "memory",
+          "sessions"
         ],
+        "extraPaths": [
+          "/workspace/projects/workspace/memory/sessions/raw"
+        ],
+        "experimental": {
+          "sessionMemory": true
+        },
+        "provider": "ollama",
+        "remote": {
+          "baseUrl": "http://127.0.0.1:11434",
+          "apiKey": "ollama-local"
+        },
+        "model": "nomic-embed-text:latest",
+        "sync": {
+          "watch": true
+        },
+        "query": {
+          "hybrid": {
+            "enabled": true,
+            "vectorWeight": 0.7,
+            "textWeight": 0.3,
+            "candidateMultiplier": 4,
+            "mmr": {
+              "enabled": true,
+              "lambda": 0.7
+            },
+            "temporalDecay": {
+              "enabled": true,
+              "halfLifeDays": 30
+            }
+          }
+        },
         "cache": {
-          "enabled": true
+          "enabled": true,
+          "maxEntries": 50000
         }
       },
       "compaction": {

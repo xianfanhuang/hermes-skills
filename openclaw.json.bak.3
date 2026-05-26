@@ -1,7 +1,7 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-05-20T02:53:40.419Z"
+    "lastTouchedAt": "2026-05-26T19:15:58.848Z"
   },
   "wizard": {
     "lastRunAt": "2026-02-05T16:16:05.545Z",
@@ -176,8 +176,8 @@
         ]
       },
       "xiaomimimo": {
-        "baseUrl": "https://token-plan-cn.xiaomimimo.com/v1",
-        "apiKey": "tp-cyh07jfp1ae4yzitjcotkhuy8c1dyettvv4qngvoegepfc5n",
+        "baseUrl": "https://token-plan-sgp.xiaomimimo.com/v1",
+        "apiKey": "tp-s9kgtyatutyjxnyvbzpargiifza925q5cnjtwcf1gzzwn7cf",
         "api": "openai-completions",
         "models": [
           {
@@ -296,24 +296,36 @@
         "primary": "xiaomimimo/mimo-v2.5-pro",
         "fallbacks": [
           "xiaomimimo/mimo-v2.5",
-          "xiaomimimo/mimo-v2-pro",
-          "xiaomimimo/mimo-v2-omni",
-          "coze/kimi-k2-5-260127",
-          "coze/deepseek-v3-2-251201",
-          "coze/doubao-seed-2-0-pro-260215"
+          "xiaomimimo/mimo-v2-pro"
         ]
       },
       "imageModel": {
         "primary": "xiaomimimo/mimo-v2.5-pro",
         "fallbacks": [
           "xiaomimimo/mimo-v2.5",
-          "xiaomimimo/mimo-v2-omni",
-          "coze/doubao-seed-1-8-251228"
+          "xiaomimimo/mimo-v2-omni"
         ]
       },
       "workspace": "/workspace/projects/workspace",
+      "memorySearch": {
+        "enabled": true,
+        "sources": [
+          "memory",
+          "sessions"
+        ],
+        "extraPaths": [
+          "/workspace/projects/workspace/chanlun-agent/knowledge",
+          "/workspace/projects/workspace/knowledge",
+          "/workspace/projects/workspace/memory/sessions/raw"
+        ],
+        "provider": "ollama",
+        "model": "nomic-embed-text",
+        "cache": {
+          "enabled": true
+        }
+      },
       "compaction": {
-        "mode": "safeguard"
+        "mode": "default"
       },
       "heartbeat": {
         "every": "4h"
@@ -531,11 +543,16 @@
           }
         }
       },
-      "openclaw-kimi-bridge-connector": {
-        "enabled": false
-      },
       "kimi-claw": {
-        "enabled": true
+        "enabled": true,
+        "config": {
+          "bridge": {
+            "url": "wss://www.kimi.com/api-claw/bots/agent-ws",
+            "token": "sk-ZIHENYF7HUXYNJPKHC2NF2MLJT",
+            "kimiapiHost": "https://www.kimi.com/api-claw",
+            "promptTimeoutMs": 1800000
+          }
+        }
       }
     },
     "installs": {
