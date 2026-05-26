@@ -8,7 +8,7 @@
       "name": "auto-memory-hourly",
       "enabled": true,
       "createdAtMs": 1779739610897,
-      "updatedAtMs": 1779814862161,
+      "updatedAtMs": 1779818487472,
       "schedule": {
         "expr": "0 * * * *",
         "kind": "cron",
@@ -22,11 +22,11 @@
         "text": "执行自动记忆更新：运行 bash /workspace/projects/workspace/scripts/auto-memory.sh，然后检查今日对话是否有重要信息需要补充到 memory/今天.md。如果有，直接写入。"
       },
       "state": {
-        "nextRunAtMs": 1779818414207,
-        "lastRunAtMs": 1779814814211,
+        "nextRunAtMs": 1779822014207,
+        "lastRunAtMs": 1779818434340,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 47950,
+        "lastDurationMs": 53132,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }
@@ -87,7 +87,8 @@
         "lastStatus": "ok",
         "lastDurationMs": 120127,
         "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 0
+        "consecutiveErrors": 0,
+        "runningAtMs": 1779818666259
       }
     },
     {

@@ -8,7 +8,7 @@
       "name": "auto-memory-hourly",
       "enabled": true,
       "createdAtMs": 1779739610897,
-      "updatedAtMs": 1779814862161,
+      "updatedAtMs": 1779818487472,
       "schedule": {
         "expr": "0 * * * *",
         "kind": "cron",
@@ -22,14 +22,13 @@
         "text": "执行自动记忆更新：运行 bash /workspace/projects/workspace/scripts/auto-memory.sh，然后检查今日对话是否有重要信息需要补充到 memory/今天.md。如果有，直接写入。"
       },
       "state": {
-        "nextRunAtMs": 1779818414207,
-        "lastRunAtMs": 1779814814211,
+        "nextRunAtMs": 1779822014207,
+        "lastRunAtMs": 1779818434340,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 47950,
+        "lastDurationMs": 53132,
         "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 0,
-        "runningAtMs": 1779818434336
+        "consecutiveErrors": 0
       }
     },
     {
@@ -68,7 +67,7 @@
       "name": "session-archive-check",
       "enabled": true,
       "createdAtMs": 1779739610921,
-      "updatedAtMs": 1779811611822,
+      "updatedAtMs": 1779818698097,
       "schedule": {
         "expr": "0 */2 * * *",
         "kind": "cron",
@@ -82,11 +81,11 @@
         "text": "Session 归档检查：查看 memory/sessions/ 目录状态，检查当前飞书 session 是否需要归档。如果今日有活跃对话但未归档，执行 session-archive.sh archive feishu <session_id> 并生成摘要。"
       },
       "state": {
-        "nextRunAtMs": 1779818666258,
-        "lastRunAtMs": 1779811491695,
+        "nextRunAtMs": 1779825866258,
+        "lastRunAtMs": 1779818666263,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 120127,
+        "lastDurationMs": 31834,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }
