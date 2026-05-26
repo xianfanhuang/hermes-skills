@@ -219,12 +219,18 @@ def get_order_records(limit=10):
                 time_str = d.strftime('%H:%M:%S')
             # 市场+名称
             market = o.contract.currency if o.contract else '?'
+            market_label = 'US' if market == 'USD' else 'HK' if market == 'HKD' else market
+            # 股票名称
             name = ''
-            if market == 'USD':
-                name = 'US'
-            elif market == 'HKD':
-                name = 'HK'
-            records.append(f'{s} {action} {o.quantity} {date_str} {name} {price} {time_str}')
+            if s == 'NIO':
+                name = '蔚来'
+            elif s == 'CRCL':
+                name = 'Circle'
+            elif s == '01810':
+                name = '小米'
+            elif s == '01024':
+                name = '快手'
+            records.append(f'{s} {action} {o.quantity} {date_str} {market_label} {name} {price} {time_str}')
         return records
     except Exception as e:
         return [f'错误: {e}']
