@@ -1,0 +1,44 @@
+{
+  "date": "2026-05-26",
+  "symbols": {
+    "01810": {
+      "name": "小米集团",
+      "market": "HK",
+      "close_price": 29.76,
+      "change_pct": -0.80,
+      "trend": "down",
+      "trend_strength": 0.76,
+      "strategy": "trend_follow_short",
+      "position": 0,
+      "signals": 0,
+      "trades": 0,
+      "pnl": 0
+    },
+    "CRCL": {
+      "name": "Circle",
+      "market": "US",
+      "close_price": 107.62,
+      "change_pct": -4.86,
+      "trend": "down",
+      "trend_strength": 0,
+      "strategy": "trend_follow_short",
+      "position": 0,
+      "signals": 0,
+      "trades": 0,
+      "pnl": 0
+    }
+  },
+  "total_pnl": 0,
+  "total_trades": 0,
+  "win_rate": 0,
+  "system_events": [
+    "三层止损体系上线",
+    "实时价格修复",
+    "历史信号入场bug修复",
+    "老虎模拟盘下单对接",
+    "美股监控启动",
+    "统一交易系统架构",
+    "老虎下单bug修复",
+    "统一系统对齐小米逻辑"
+  ]
+}
