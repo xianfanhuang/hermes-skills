@@ -26,6 +26,8 @@ declare -a CRON_JOBS=(
     "session-archive-check|0 */2 * * *|Session 归档检查：查看 memory/sessions/ 目录状态，检查当前飞书 session 是否需要归档。如果今日有活跃对话但未归档，执行 session-archive.sh archive feishu <session_id> 并生成摘要。|main"
     "backup-sync|0 */6 * * *|执行自动备份同步：运行 bash /workspace/projects/workspace/scripts/sync-to-backup.sh，将本地记忆/代码/配置同步到 ai-trading-sync GitHub 仓库。完成后简要汇报结果。|main"
     "memory-archive-daily|0 2 * * *|执行每日记忆归档：运行 bash /workspace/projects/workspace/scripts/memory-archive.sh 压缩超过30天的记忆文件。然后运行 bash /workspace/projects/workspace/scripts/session-archive.sh cleanup 清理旧session归档。完成后汇报结果。|main"
+    "session-turn-check|*/30 * * * *|Session轮次检查：运行 bash /workspace/projects/workspace/scripts/session-turn-tracker.sh check，如果时间超过45分钟、轮次达到50或context超过70%，提醒Captain开启新会话。归档照常自动进行。|main"
+    "maintenance-check|0 3 * * *|定时维护检查：运行 bash /workspace/projects/workspace/scripts/maintenance-check.sh check，检查本地workspace和GitHub仓库的一致性、完整性。如有问题，记录到维护日志并提醒Captain。注意：版本控制保护，不可逆操作需确认。|main"
 )
 
 echo ""

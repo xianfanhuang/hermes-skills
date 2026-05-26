@@ -104,6 +104,7 @@ bash memory-cli.sh sync
 | backup-sync | 每6小时 | 增量同步到GitHub |
 | memory-archive | 每天02:00 | 记忆压缩归档 |
 | session-turn-check | 每30分钟 | 轮次/时间检查 |
+| maintenance-check | 每天03:00 | 维护检查（本地+仓库） |
 
 ## 跨平台进化
 
@@ -123,6 +124,18 @@ OpenClaw → 拉取 → 归档 → 知识提取 → 同步GitHub
 ## 更新日志
 
 ### 2026-05-27
+
+#### 定时维护检查系统
+- maintenance-check.sh: 检查本地workspace和GitHub仓库的一致性、完整性
+- 维护日志: memory/maintenance.log
+- 版本控制保护: 不可逆操作需确认
+- Cron: 每天03:00自动运行
+
+#### Session轮次追踪
+- session-turn-tracker.sh: 追踪轮次和时间
+- 配置: 45分钟/50轮/70%context
+- 自动提醒 + 自动归档
+- 通用提示词: SESSION-TIMER-PROMPT.md
 
 #### 知识库自动提取系统
 - 知识库从5条增长到69条（B-practices 26, G-guides 14, R-rules 29）
