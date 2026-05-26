@@ -17,6 +17,22 @@
       "interval": 300
     }
   },
+  "test_symbols": {
+    "01024": {
+      "name": "快手-W",
+      "market": "HK",
+      "enabled": true,
+      "purpose": "下单测试",
+      "note": "低价$45.8，高流动性，港股测试专用"
+    },
+    "NIO": {
+      "name": "蔚来",
+      "market": "US",
+      "enabled": true,
+      "purpose": "下单测试",
+      "note": "低价$5.24，高流动性，美股测试专用"
+    }
+  },
   "risk": {
     "max_single_loss_pct": 0.02,
     "max_daily_loss_pct": 0.06,
