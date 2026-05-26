@@ -207,8 +207,10 @@ def get_order_records(limit=10):
         for o in orders[:limit]:
             s = o.contract.symbol if o.contract else '?'
             action = '买入' if o.action == 'BUY' else '卖出'
-            # 价格：有成交价用成交价，否则用限价
+            # 价格：有成交价用成交价，否则用限价，保留两位
             price = o.avg_fill_price if o.avg_fill_price and o.avg_fill_price > 0 else o.limit_price
+            if price:
+                price = round(price, 2)
             # 获取时间
             dt = o.order_time if hasattr(o, 'order_time') and o.order_time else ''
             date_str = ''
