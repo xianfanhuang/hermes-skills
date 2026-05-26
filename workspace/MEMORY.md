@@ -125,11 +125,38 @@
 *此文件会随着与 Captain 的互动不断更新。*
 
 ### 2026-05-27 - Memory Search 配置状态
-- **OpenClaw Memory Search**: 已启用，Provider=none，FTS=ready，0/44文件索引
+- **OpenClaw Memory Search**: 已启用，Provider=ollama，FTS=ready，0/119文件索引
 - **支持的embedding provider**: OpenAI / Gemini / Voyage / Mistral / Ollama / local
 - **MiMo provider**: 聊天模型，不支持embedding，不能用于memory search
-- **待配置**: embedding provider + API key → 启用语义搜索
+- **Ollama Cloud**: 免费版无embedding模型，不可用
+- **Ollama本地**: nomic-embed-text可用但极慢(44-75秒/次)，且index进程不写DB（疑似bug）
+- **FTS全文搜索**: ✅ 已在工作，score 0.42-0.47，日常够用
+- **向量索引**: ❌ 不可用，需Gemini/OpenAI API key修复
 - **当前搜索**: memory-search.sh (zgrep + 自动解压 .md.gz)
+
+### 2026-05-27 - Auto-Memory v2 幂等修复
+- **问题**: auto-memory.sh 每小时追加相同section，memory文件膨胀77KB
+- **修复**: v2版本使用session filename作为marker，幂等性检查
+- **去重**: 2026-05-26.md 77KB→26KB (-68%)，2026-05-27.md 17KB→11KB (-39%)
+- **验证**: 幂等性正常，第二次运行跳过已存在的sections
+
+### 2026-05-27 - MiMo contextWindow 修复
+- **问题**: 配置里 MiMo 所有模型 contextWindow 写死为 131072 (128k)
+- **实际**: MiMo V2.5 Pro 支持 1M (1,048,576) tokens 上下文
+- **修复**: `openclaw.json` 中 xiaomimimo 全系列 contextWindow 从 128k → 1M
+- **来源**: 官方文档确认
+
+### 2026-05-27 - 交易SOP自动化
+- **文件**: `chanlun-agent/paper-trading/unified/sop.py`
+- **功能**: 盘前检查 + 盘中监控 + 盘后总结
+- **使用**: `python3 sop.py --pre-scan` / `--monitor` / `--post-summary`
+- **集成**: 统一引擎 + config.json 配置
+
+### 2026-05-27 - Context-Restore 自动恢复
+- **脚本**: `skills/hermes-skills/context-restore/restore.py`
+- **功能**: 每次session启动时自动恢复上下文（读取MEMORY.md + 今日记忆 + 最近session归档）
+- **使用**: `python3 restore.py auto`
+- **集成**: AGENTS.md Every Session 流程
 
 ### 2026-05-19 - 新增数据源
 - **Finnhub**: 5个API Key，60次/分钟，支持美股/外汇/加密，测试通过
