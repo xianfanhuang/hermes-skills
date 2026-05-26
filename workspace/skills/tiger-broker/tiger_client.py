@@ -209,7 +209,12 @@ def get_order_records(limit=10):
             action = '买入' if o.action == 'BUY' else '卖出'
             price = o.limit_price if o.limit_price else 'MKT'
             status = str(o.status).replace('OrderStatus.', '')
-            records.append(f'{s} {action} {o.quantity} {price} {status}')
+            # 获取时间
+            dt = o.order_time if hasattr(o, 'order_time') and o.order_time else ''
+            if dt:
+                from datetime import datetime
+                dt = datetime.fromtimestamp(dt/1000).strftime('%Y-%m-%d %H:%M:%S')
+            records.append(f'{s} {action} {o.quantity} {price} {dt} {status}')
         return records
     except Exception as e:
         return [f'错误: {e}']
