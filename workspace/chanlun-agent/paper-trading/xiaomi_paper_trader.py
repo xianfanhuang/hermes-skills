@@ -46,6 +46,11 @@ from tigeropen.trade.trade_client import TradeClient
 from tigeropen.tiger_open_config import TigerOpenClientConfig
 from tigeropen.common.consts import Language, OrderType
 
+# 老虎下单函数
+_tiger_path = Path(__file__).resolve().parent.parent.parent / 'skills' / 'tiger-broker'
+sys.path.insert(0, str(_tiger_path))
+from tiger_client import place_order_limit, place_order_market
+
 # 缠论扩展 v2.0
 from czsc import CZSC, Freq, format_standard_kline
 from czsc_extension import CzscExtension, StructureState
@@ -836,7 +841,7 @@ class XiaomiPaperTrader:
         return True
 
     def execute_trade(self, signal: TradeSignal) -> bool:
-        """执行交易"""
+        """执行交易 — 对接老虎模拟盘下单"""
         try:
             logger.info(f"\n{'='*50}")
             logger.info(f"💰 执行交易: {signal.action} {signal.direction}")
@@ -848,7 +853,17 @@ class XiaomiPaperTrader:
             logger.info(f"   共振: {signal.resonance_level}级")
             logger.info(f"{'='*50}")
 
-            # 模拟执行（不实际下单）
+            # 老虎模拟盘下单
+            action = 'BUY' if signal.action == 'BUY' else 'SELL'
+            result = place_order_limit(
+                symbol=self.symbol,
+                price=signal.price,
+                quantity=signal.quantity,
+                action=action
+            )
+            logger.info(f"   老虎下单结果: {result}")
+
+            # 记录交易
             trade = {
                 'time': datetime.now().isoformat(),
                 'action': signal.action,
@@ -860,7 +875,8 @@ class XiaomiPaperTrader:
                 'take_profit': signal.take_profit,
                 'resonance_level': signal.resonance_level,
                 'confidence': signal.confidence,
-                'detail': signal.detail
+                'detail': signal.detail,
+                'tiger_result': result
             }
             self.trades.append(trade)
             self._save_trades()
@@ -879,7 +895,7 @@ class XiaomiPaperTrader:
                 self.portfolio['entry_time'] = datetime.now().isoformat()
 
             self._save_portfolio()
-            logger.info("✅ 交易执行完成（模拟）")
+            logger.info("✅ 交易执行完成（老虎模拟盘）")
             return True
 
         except Exception as e:
@@ -887,7 +903,7 @@ class XiaomiPaperTrader:
             return False
 
     def execute_exit(self, exit_info: Dict) -> bool:
-        """执行平仓"""
+        """执行平仓 — 对接老虎模拟盘"""
         try:
             position = self.portfolio.get('position', 0)
             entry_price = self.portfolio.get('avg_cost', 0)
@@ -909,6 +925,16 @@ class XiaomiPaperTrader:
             logger.info(f"   数量: {position}")
             logger.info(f"   盈亏: ${pnl:.2f}")
             logger.info(f"{'='*50}")
+
+            # 老虎模拟盘平仓
+            close_action = 'BUY' if direction == 'short' else 'SELL'
+            result = place_order_limit(
+                symbol=self.symbol,
+                price=exit_price,
+                quantity=position,
+                action=close_action
+            )
+            logger.info(f"   老虎平仓结果: {result}")
 
             # 更新portfolio
             self.portfolio['total_pnl'] += pnl
@@ -933,13 +959,14 @@ class XiaomiPaperTrader:
                 'entry_price': entry_price,
                 'exit_price': exit_price,
                 'quantity': position,
-                'pnl': pnl
+                'pnl': pnl,
+                'tiger_result': result
             }
             self.trades.append(trade)
             self._save_trades()
             self._save_portfolio()
 
-            logger.info("✅ 平仓完成（模拟）")
+            logger.info("✅ 平仓完成（老虎模拟盘）")
             return True
 
         except Exception as e:
