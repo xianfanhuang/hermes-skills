@@ -14,6 +14,18 @@ MSG="${1:-auto-sync: $(date '+%Y-%m-%d %H:%M')}"
 git clone -q "$REMOTE" "$BACKUP_DIR"
 cd "$BACKUP_DIR"
 
+# 同步顶层文件
+cp "$WORKSPACE"/README.md . 2>/dev/null || true
+cp "$WORKSPACE"/RESTORE.md . 2>/dev/null || true
+cp "$WORKSPACE"/RESTORE-3LAYER.md . 2>/dev/null || true
+cp "$WORKSPACE"/SESSION-TIMER-PROMPT.md . 2>/dev/null || true
+cp "$WORKSPACE"/MEMORY.md . 2>/dev/null || true
+cp "$WORKSPACE"/USER.md . 2>/dev/null || true
+cp "$WORKSPACE"/IDENTITY.md . 2>/dev/null || true
+cp "$WORKSPACE"/SOUL.md . 2>/dev/null || true
+cp "$WORKSPACE"/AGENTS.md . 2>/dev/null || true
+cp "$WORKSPACE"/TOOLS.md . 2>/dev/null || true
+
 # 同步记忆
 cp "$WORKSPACE"/memory/*.md memory/ 2>/dev/null || true
 cp "$WORKSPACE"/memory/sessions/*.md memory/sessions/ 2>/dev/null || true
@@ -43,6 +55,9 @@ cp "$WORKSPACE"/paper-trading/*.md paper-trading/ 2>/dev/null || true
 
 # 同步知识库
 cp "$WORKSPACE"/knowledge/*.md knowledge/ 2>/dev/null || true
+cp "$WORKSPACE"/knowledge/B-practices/*.md knowledge/B-practices/ 2>/dev/null || true
+cp "$WORKSPACE"/knowledge/G-guides/*.md knowledge/G-guides/ 2>/dev/null || true
+cp "$WORKSPACE"/knowledge/R-rules/*.md knowledge/R-rules/ 2>/dev/null || true
 
 # 检查是否有变更
 if git diff --quiet && git diff --cached --quiet; then
