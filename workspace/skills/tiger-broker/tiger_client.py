@@ -129,9 +129,10 @@ def place_order_limit(symbol: str, price: float, quantity: int, action: str = "B
     :param action: BUY / SELL
     """
     try:
+        contract = trade_client.get_contract(symbol)
         order = trade_client.create_order(
-            account=trade_client.account,
-            symbol=symbol,
+            account=TIGER_SIM_ACCOUNT,
+            contract=contract,
             action=action,
             order_type="LMT",
             quantity=quantity,
@@ -150,9 +151,10 @@ def place_order_market(symbol: str, quantity: int, action: str = "BUY"):
     :param action: BUY / SELL
     """
     try:
+        contract = trade_client.get_contract(symbol)
         order = trade_client.create_order(
-            account=trade_client.account,
-            symbol=symbol,
+            account=TIGER_SIM_ACCOUNT,
+            contract=contract,
             action=action,
             order_type="MKT",
             quantity=quantity
@@ -170,7 +172,8 @@ def get_open_orders():
             return "模拟盘无未成交订单"
         text = "【未成交订单】\n"
         for o in orders:
-            text += f"ID:{o.id} | {o.action} {o.symbol} | {o.status} | 价格：{o.limit_price} | 数量：{o.quantity}\n"
+            symbol = o.contract.symbol if o.contract else 'N/A'
+            text += f"ID:{o.id} | {o.action} {symbol} | {o.status} | 价格：{o.limit_price} | 数量：{o.quantity}\n"
         return text
     except Exception as e:
         return f"【错误】{str(e)}"
@@ -178,7 +181,7 @@ def get_open_orders():
 def cancel_order(order_id: str):
     """撤单"""
     try:
-        trade_client.cancel_order(order_id)
+        trade_client.cancel_order(TIGER_SIM_ACCOUNT, order_id)
         return f"【模拟盘撤单成功】订单{order_id}已撤销"
     except Exception as e:
         return f"【撤单失败】{str(e)}"
