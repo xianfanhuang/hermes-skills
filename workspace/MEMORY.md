@@ -268,3 +268,10 @@
 - **使用方式**: python3 engine.py --list/--analyze/--add/--remove/--run
 - **数据源**: Finnhub(美股) + Tiger(港股)
 - **VAN期望**: 主动做好基础设施，不要等提醒
+
+### 2026-05-26 - 老虎下单bug修复
+- **问题**: `trade_client.account` 不存在，需用 `TIGER_SIM_ACCOUNT` 常量
+- **问题**: `create_order()` 需要 `contract` 参数，不是 `symbol`
+- **问题**: `cancel_order()` 需要 `account` 和 `order_id` 两个参数
+- **测试结果**: 下单/查询/撤单全流程畅通
+- **VAN教导**: 测试应该现在就做，不要等开盘
