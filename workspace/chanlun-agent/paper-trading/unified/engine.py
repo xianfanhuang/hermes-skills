@@ -354,6 +354,7 @@ class TradingEngine:
         self.config_path = config_path or str(UNIFIED_DIR / 'config.json')
         self.config = self._load_config()
         self.portfolio = self._load_portfolio()
+        self.trades = self._load_trades()
         self.risk_engine = RiskEngine(self.config.get('risk', {}))
         self.chanlun = ChanlunEngine()
         self.data = DataFetcher()
@@ -386,6 +387,26 @@ class TradingEngine:
                 json.dump(self.portfolio, f, indent=2, ensure_ascii=False)
         except Exception as e:
             logger.error(f"持仓保存失败: {e}")
+
+    def _load_trades(self) -> list:
+        """加载交易记录"""
+        trades_path = UNIFIED_DIR / 'trades.json'
+        try:
+            if trades_path.exists():
+                with open(trades_path, 'r') as f:
+                    return json.load(f)
+        except Exception as e:
+            logger.error(f"交易记录加载失败: {e}")
+        return []
+
+    def _save_trades(self):
+        """保存交易记录"""
+        trades_path = UNIFIED_DIR / 'trades.json'
+        try:
+            with open(trades_path, 'w') as f:
+                json.dump(self.trades, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            logger.error(f"交易记录保存失败: {e}")
 
     def add_symbol(self, symbol: str, name: str, market: str, strategy: str = 'trend_follow'):
         """添加标的"""
@@ -954,6 +975,24 @@ class TradingEngine:
             )
             logger.info(f"   老虎下单结果: {result}")
 
+            # 记录交易
+            trade = {
+                'time': datetime.now().isoformat(),
+                'action': signal.action,
+                'direction': signal.direction,
+                'type': signal.signal_type,
+                'price': signal.price,
+                'quantity': signal.quantity,
+                'stop_loss': signal.stop_loss,
+                'take_profit': signal.take_profit,
+                'resonance_level': signal.resonance_level,
+                'confidence': signal.confidence,
+                'detail': signal.detail,
+                'tiger_result': result
+            }
+            self.trades.append(trade)
+            self._save_trades()
+
             # 更新持仓
             if signal.symbol not in self.portfolio['positions']:
                 self.portfolio['positions'][signal.symbol] = {}
@@ -971,6 +1010,21 @@ class TradingEngine:
                 pos['entry_time'] = datetime.now().isoformat()
 
             self._save_portfolio()
+
+            # 返回交易记录格式
+            logger.info(f"📋 交易记录:")
+            logger.info(f"   时间: {trade['time']}")
+            logger.info(f"   动作: {trade['action']} {trade['direction']}")
+            logger.info(f"   类型: {trade['type']}")
+            logger.info(f"   价格: ${trade['price']:.2f}")
+            logger.info(f"   数量: {trade['quantity']}")
+            logger.info(f"   止损: ${trade['stop_loss']:.2f}")
+            logger.info(f"   止盈: ${trade['take_profit']:.2f}")
+            logger.info(f"   共振: {trade['resonance_level']}级")
+            logger.info(f"   信心: {trade['confidence']:.0%}")
+            logger.info(f"   详情: {trade['detail']}")
+            logger.info(f"   老虎结果: {trade['tiger_result']}")
+
             return True
 
         except Exception as e:
@@ -1005,6 +1059,22 @@ class TradingEngine:
             )
             logger.info(f"   老虎平仓结果: {result}")
 
+            # 记录交易
+            trade = {
+                'time': datetime.now().isoformat(),
+                'action': 'EXIT',
+                'direction': direction,
+                'reason': exit_info.get('reason', ''),
+                'detail': exit_info.get('detail', ''),
+                'entry_price': entry_price,
+                'exit_price': exit_price,
+                'quantity': quantity,
+                'pnl': pnl,
+                'tiger_result': result
+            }
+            self.trades.append(trade)
+            self._save_trades()
+
             # 更新持仓
             self.portfolio['positions'][symbol] = {}
             self.portfolio['total_pnl'] += pnl
@@ -1014,7 +1084,17 @@ class TradingEngine:
             # 更新风控
             self.risk_engine.update_pnl(pnl)
 
-            logger.info(f"✅ 平仓: {symbol} {direction} @ ${exit_price:.2f} → ${pnl:.2f}")
+            # 返回交易记录格式
+            logger.info(f"📋 平仓记录:")
+            logger.info(f"   时间: {trade['time']}")
+            logger.info(f"   动作: EXIT {direction}")
+            logger.info(f"   原因: {trade['reason']}")
+            logger.info(f"   入场价: ${entry_price:.2f}")
+            logger.info(f"   出场价: ${exit_price:.2f}")
+            logger.info(f"   数量: {quantity}")
+            logger.info(f"   盈亏: ${pnl:.2f}")
+            logger.info(f"   老虎结果: {trade['tiger_result']}")
+
             return True
 
         except Exception as e:
