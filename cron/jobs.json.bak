@@ -8,7 +8,7 @@
       "name": "auto-memory-hourly",
       "enabled": true,
       "createdAtMs": 1779739610897,
-      "updatedAtMs": 1779832858984,
+      "updatedAtMs": 1779836445094,
       "schedule": {
         "expr": "0 * * * *",
         "kind": "cron",
@@ -22,11 +22,11 @@
         "text": "执行自动记忆更新：运行 bash /workspace/projects/workspace/scripts/auto-memory.sh，然后检查今日对话是否有重要信息需要补充到 memory/今天.md。如果有，直接写入。"
       },
       "state": {
-        "nextRunAtMs": 1779836414207,
-        "lastRunAtMs": 1779832814217,
+        "nextRunAtMs": 1779840014207,
+        "lastRunAtMs": 1779836414216,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 44767,
+        "lastDurationMs": 30878,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }
@@ -67,7 +67,7 @@
       "name": "session-archive-check",
       "enabled": true,
       "createdAtMs": 1779739610921,
-      "updatedAtMs": 1779825866612,
+      "updatedAtMs": 1779833143428,
       "schedule": {
         "expr": "0 */2 * * *",
         "kind": "cron",
@@ -81,14 +81,13 @@
         "text": "Session 归档检查：查看 memory/sessions/ 目录状态，检查当前飞书 session 是否需要归档。如果今日有活跃对话但未归档，执行 session-archive.sh archive feishu <session_id> 并生成摘要。"
       },
       "state": {
-        "nextRunAtMs": 1779833066258,
-        "lastRunAtMs": 1779825866265,
+        "nextRunAtMs": 1779840266258,
+        "lastRunAtMs": 1779833066266,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 347,
+        "lastDurationMs": 77162,
         "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 0,
-        "runningAtMs": 1779833066260
+        "consecutiveErrors": 0
       }
     },
     {
@@ -119,6 +118,29 @@
         "lastDurationMs": 27217,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "b78c3cea-767d-48dc-b2db-502fee332bd1",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "session-turn-check",
+      "enabled": true,
+      "createdAtMs": 1779836752488,
+      "updatedAtMs": 1779836752488,
+      "schedule": {
+        "expr": "*/30 * * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "Session轮次检查：运行 bash /workspace/projects/workspace/scripts/session-turn-tracker.sh check，如果轮次达到50或context超过70%，提醒Captain开启新会话并自动归档当前session。"
+      },
+      "state": {
+        "nextRunAtMs": 1779838200000
       }
     }
   ]

@@ -2,7 +2,7 @@
   "lockVersion": 2,
   "pid": 291935,
   "acquiredAt": "2026-05-26T20:12:40.679Z",
-  "heartbeatAt": "2026-05-26T22:50:45.789Z",
+  "heartbeatAt": "2026-05-26T23:28:01.066Z",
   "key": "a2b35f0234754e9df18cc2a3",
   "bridgeUrl": "wss://www.kimi.com/api-claw/bots/agent-ws",
   "instanceId": "connector-291935-a11c4c35-7219-46dd-b696-d3f56b6b06a7",
