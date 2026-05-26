@@ -231,7 +231,7 @@ def get_order_records(limit=10):
                 name = '小米'
             elif s == '01024':
                 name = '快手'
-            records.append(f'{s} {action} {o.quantity} {date_str} {market_label} {name} {price} {time_str}')
+            records.append(f'{s} {action} {o.quantity} {date_str}\n{market_label} {name} {price} {time_str}')
         return records
     except Exception as e:
         return [f'错误: {e}']
