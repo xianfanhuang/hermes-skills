@@ -28,7 +28,8 @@
         "lastStatus": "ok",
         "lastDurationMs": 47950,
         "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 0
+        "consecutiveErrors": 0,
+        "runningAtMs": 1779818434336
       }
     },
     {
@@ -38,7 +39,7 @@
       "name": "memory-archive-daily",
       "enabled": true,
       "createdAtMs": 1779739610911,
-      "updatedAtMs": 1779739610911,
+      "updatedAtMs": 1779818432326,
       "schedule": {
         "expr": "0 2 * * *",
         "kind": "cron",
@@ -51,7 +52,13 @@
         "text": "执行每日记忆归档：运行 bash /workspace/projects/workspace/scripts/memory-archive.sh 压缩超过30天的记忆文件。然后运行 bash /workspace/projects/workspace/scripts/session-archive.sh cleanup 清理旧session归档。完成后汇报结果。"
       },
       "state": {
-        "nextRunAtMs": 1779818400000
+        "nextRunAtMs": 1779904800000,
+        "lastRunAtMs": 1779818400004,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 32322,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0
       }
     },
     {
