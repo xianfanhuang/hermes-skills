@@ -98,9 +98,11 @@ Captain
 5. 读取 `memory/MEMORY.md` — 长期记忆
 6. **恢复上一个会话上下文:**
    ```bash
-   cd /workspace/projects/workspace/skills/hermes-skills/context-restore
-   python3 restore.py auto
+   # 找到最新有实质内容的session归档并直接读取
+   latest=$(ls -t /workspace/projects/workspace/memory/sessions/*.md 2>/dev/null | head -1)
+   cat "$latest"
    ```
+   如果 `cat` 输出少于15行，尝试下一个文件（跳过空壳归档）。
 7. 如有核心交易 skill 需要激活，读取对应 SKILL.md
 
 ---

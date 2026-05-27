@@ -18,8 +18,8 @@ import hashlib
 from datetime import datetime
 from pathlib import Path
 
-# 配置路径
-BASE_DIR = Path(__file__).parent.parent / "hermes-sync-core" / "sessions"
+# 配置路径 — 归档实际存储在 memory/sessions/，不在 hermes-sync-core/sessions/
+BASE_DIR = Path("/workspace/projects/workspace/memory/sessions")
 CONFIG_FILE = Path(__file__).parent / "config.json"
 HISTORY_FILE = Path(__file__).parent / ".restore_history"
 
@@ -77,10 +77,15 @@ def record_restore(session_id: str, source: str = "auto"):
 
 def load_index() -> dict:
     """加载会话索引"""
-    index_file = BASE_DIR / "index" / "session_index.json"
-    if index_file.exists():
-        with open(index_file, 'r', encoding='utf-8') as f:
-            return json.load(f)
+    # 搜索路径：新位置 + 旧位置
+    index_candidates = [
+        BASE_DIR / "index" / "session_index.json",
+        Path(__file__).parent.parent / "hermes-sync-core" / "sessions" / "index" / "session_index.json"
+    ]
+    for index_file in index_candidates:
+        if index_file.exists():
+            with open(index_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
     return {"sessions": [], "keywords_index": {}}
 
 
@@ -95,25 +100,33 @@ def get_session(session_id: str) -> dict:
 
 def get_last_session_id() -> str:
     """读取上一个会话ID"""
+    # 优先从 memory/sessions/.last_session_id 读取
     last_id_file = BASE_DIR / ".last_session_id"
     if last_id_file.exists():
         return last_id_file.read_text().strip()
-    
-    # 回退：从 memory/sessions/ 找最新文件
-    memory_sessions = Path("/workspace/projects/workspace/memory/sessions")
-    if memory_sessions.exists():
-        files = sorted(memory_sessions.glob("*.md"), key=lambda f: f.stat().st_mtime, reverse=True)
-        if files:
-            # 从文件名提取 session id
-            return files[0].stem
+
+    # 回退：从 memory/sessions/ 找最新有实质内容的文件（过滤空壳）
+    if BASE_DIR.exists():
+        files = sorted(BASE_DIR.glob("*.md"), key=lambda f: f.stat().st_mtime, reverse=True)
+        for f in files:
+            content = f.read_text(encoding='utf-8')
+            # 跳过空壳归档（少于15行非空行视为无实质内容）
+            lines = [l for l in content.split('\n') if l.strip()]
+            if len(lines) < 15:
+                continue
+            return f.stem
     return ""
 
 
 def clear_last_session_id():
     """清除标记"""
-    last_id_file = BASE_DIR / ".last_session_id"
-    if last_id_file.exists():
-        last_id_file.unlink()
+    # 清除新旧两个位置的标记
+    for path in [
+        BASE_DIR / ".last_session_id",
+        Path(__file__).parent.parent / "hermes-sync-core" / "sessions" / ".last_session_id"
+    ]:
+        if path.exists():
+            path.unlink()
 
 
 def load_chunks(session_id: str, last_n: int = 30) -> list:
@@ -121,16 +134,22 @@ def load_chunks(session_id: str, last_n: int = 30) -> list:
     session = get_session(session_id)
     if not session:
         return []
-    
+
+    # 搜索路径：BASE_DIR + 旧路径 hermes-sync-core/sessions/
+    search_dirs = [BASE_DIR, Path(__file__).parent.parent / "hermes-sync-core" / "sessions"]
+
     all_messages = []
     for chunk_id in session.get("chunks", []):
-        # 搜索chunk文件
-        for chunk_file in BASE_DIR.rglob(f"{chunk_id}.json"):
-            with open(chunk_file, 'r', encoding='utf-8') as f:
-                chunk = json.load(f)
-            all_messages.extend(chunk.get("messages", []))
+        for search_dir in search_dirs:
+            for chunk_file in search_dir.rglob(f"{chunk_id}.json"):
+                with open(chunk_file, 'r', encoding='utf-8') as f:
+                    chunk = json.load(f)
+                all_messages.extend(chunk.get("messages", []))
+                break
+            else:
+                continue
             break
-    
+
     # 返回最后N条
     if len(all_messages) > last_n:
         return all_messages[-last_n:]
@@ -139,9 +158,11 @@ def load_chunks(session_id: str, last_n: int = 30) -> list:
 
 def load_summary(session_id: str) -> str:
     """加载会话摘要"""
-    for summary_file in BASE_DIR.rglob(f"{session_id}_summary.md"):
-        with open(summary_file, 'r', encoding='utf-8') as f:
-            return f.read()
+    search_dirs = [BASE_DIR, Path(__file__).parent.parent / "hermes-sync-core" / "sessions"]
+    for search_dir in search_dirs:
+        for summary_file in search_dir.rglob(f"{session_id}_summary.md"):
+            with open(summary_file, 'r', encoding='utf-8') as f:
+                return f.read()
     return ""
 
 
@@ -184,28 +205,29 @@ def restore_auto(config: dict = None) -> dict:
         if result:
             return result
     
-    # 回退：从 memory/sessions/ 读最新归档
-    memory_sessions = Path("/workspace/projects/workspace/memory/sessions")
-    if memory_sessions.exists():
-        files = sorted(memory_sessions.glob("*.md"), key=lambda f: f.stat().st_mtime, reverse=True)
-        if files:
-            latest = files[0]
+    # 回退：从 memory/sessions/ 读最新有实质内容的归档
+    if BASE_DIR.exists():
+        files = sorted(BASE_DIR.glob("*.md"), key=lambda f: f.stat().st_mtime, reverse=True)
+        for latest in files:
             content = latest.read_text(encoding='utf-8')
+            # 跳过空壳归档（少于15行非空行）
+            lines = [l for l in content.split('\n') if l.strip()]
+            if len(lines) < 15:
+                continue
             result = {
                 "session_id": latest.stem,
                 "platform": "feishu",
-                "summary": content[:500],
+                "summary": content,
                 "messages": [],
                 "restored_at": datetime.now().isoformat(),
-                "source_file": str(latest)
+                "source_file": str(latest),
+                "line_count": len(lines)
             }
             print(f"🔄 恢复最近归档: {latest.name}")
             print(f"   路径: {latest}")
-            print(f"   大小: {latest.stat().st_size} bytes")
+            print(f"   大小: {latest.stat().st_size} bytes, {len(lines)} 行")
             print()
-            for line in content.split('\n')[:10]:
-                if line.strip():
-                    print(f"   {line.strip()}")
+            print(content)
             print()
             print("✅ 恢复完成")
             record_restore(latest.stem, "auto-memory-fallback")
