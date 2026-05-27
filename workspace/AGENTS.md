@@ -91,6 +91,10 @@ Captain
 
 新会话开始时，按顺序执行：
 
+0. **重置session计时器:**
+   ```bash
+   bash /workspace/projects/workspace/scripts/session-turn-tracker.sh reset
+   ```
 1. 读取 `SOUL.md` — 安全规则
 2. 读取 `USER.md` — Captain 偏好
 3. 读取 `IDENTITY.md` — 身份定位
