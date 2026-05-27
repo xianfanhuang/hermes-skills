@@ -1,6 +1,0 @@
-2026/05/20-00:12:58.234 6b2 Reusing MANIFEST /workspace/projects/browser/openclaw/user-data/Default/Local Storage/leveldb/MANIFEST-000001
-2026/05/20-00:12:58.239 6b2 Recovering log #830
-2026/05/20-00:12:58.247 6b2 Reusing old log /workspace/projects/browser/openclaw/user-data/Default/Local Storage/leveldb/000830.log 
-2026/05/20-00:13:58.260 6b2 Level-0 table #834: started
-2026/05/20-00:13:58.266 6b2 Level-0 table #834: 378148 bytes OK
-2026/05/20-00:13:58.268 6b2 Delete type=0 #830

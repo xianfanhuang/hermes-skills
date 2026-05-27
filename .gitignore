@@ -26,3 +26,5 @@ subagents/
 
 # Memory files (synced to ai-trading-sync via sync-to-backup.sh)
 memory/
+# Browser user data (OpenClaw browser cache, should not be tracked)
+browser/
