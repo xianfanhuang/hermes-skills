@@ -21,6 +21,12 @@ archive_session() {
     local decisions="$4"
     local todos="$5"
 
+    # 跳过空壳归档 — 无实质内容时不写文件
+    if [[ "${summary}" == "无摘要" ]] && [[ "${decisions}" == "无" ]] && [[ "${todos}" == "无" ]]; then
+        echo "[archive] 跳过空壳归档 (channel=${channel}, session=${session_id})"
+        return
+    fi
+
     local archive_file="${SESSIONS_DIR}/${TODAY}-${channel}-${session_id}.md"
 
     cat > "${archive_file}" << EOF
@@ -46,7 +52,7 @@ EOF
     echo "[archive] 已归档: ${archive_file}"
 
     # 写入 .last_session_id 标记（供 context-restore 读取）
-    local restore_sessions="${WORKSPACE_DIR}/skills/hermes-skills/hermes-sync-core/sessions"
+    local restore_sessions="${WORKSPACE_DIR}/memory/sessions"
     mkdir -p "${restore_sessions}"
     echo "${session_id}" > "${restore_sessions}/.last_session_id"
 

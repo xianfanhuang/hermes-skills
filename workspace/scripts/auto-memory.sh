@@ -206,7 +206,6 @@ main() {
 
 # 知识提取集成（每6小时执行一次）
 run_knowledge_pipeline() {
-    local hour=$(date +%H)
     local marker="${KNOWLEDGE_DIR:-/workspace/projects/workspace/knowledge}/.last_extract_hour"
     mkdir -p "$(dirname "$marker")"
 
@@ -214,8 +213,9 @@ run_knowledge_pipeline() {
     [[ -f "$marker" ]] && last_hour=$(cat "$marker")
 
     # 每6小时执行一次（00, 06, 12, 18）
+    # 注意: 10# 前缀强制十进制，避免 08/09 被 bash 当八进制解析
     local current_hour=$(date +%H)
-    if [[ "$current_hour" != "$last_hour" ]] && [[ $((current_hour % 6)) -eq 0 ]]; then
+    if [[ "$current_hour" != "$last_hour" ]] && [[ $((10#$current_hour % 6)) -eq 0 ]]; then
         log_info "执行知识提取流水线..."
         bash "${WORKSPACE_DIR}/scripts/session-to-md.sh" 2>&1 | tail -1
         bash "${WORKSPACE_DIR}/scripts/knowledge-extract.sh" 2>&1 | tail -3

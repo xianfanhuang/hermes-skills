@@ -35,6 +35,9 @@ cp "$WORKSPACE"/chanlun-agent/*.py chanlun-agent/ 2>/dev/null || true
 cp "$WORKSPACE"/chanlun-agent/*.md chanlun-agent/ 2>/dev/null || true
 cp "$WORKSPACE"/chanlun-agent/paper-trading/*.py chanlun-agent/paper-trading/ 2>/dev/null || true
 cp "$WORKSPACE"/chanlun-agent/paper-trading/*.json chanlun-agent/paper-trading/ 2>/dev/null || true
+mkdir -p chanlun-agent/paper-trading/unified
+cp "$WORKSPACE"/chanlun-agent/paper-trading/unified/*.py chanlun-agent/paper-trading/unified/ 2>/dev/null || true
+cp "$WORKSPACE"/chanlun-agent/paper-trading/unified/*.json chanlun-agent/paper-trading/unified/ 2>/dev/null || true
 
 # 同步脚本
 cp "$WORKSPACE"/scripts/*.sh scripts/ 2>/dev/null || true
@@ -54,6 +57,7 @@ cp "$WORKSPACE"/paper-trading/*.json paper-trading/ 2>/dev/null || true
 cp "$WORKSPACE"/paper-trading/*.md paper-trading/ 2>/dev/null || true
 
 # 同步知识库
+mkdir -p knowledge/B-practices knowledge/G-guides knowledge/R-rules
 cp "$WORKSPACE"/knowledge/*.md knowledge/ 2>/dev/null || true
 cp "$WORKSPACE"/knowledge/B-practices/*.md knowledge/B-practices/ 2>/dev/null || true
 cp "$WORKSPACE"/knowledge/G-guides/*.md knowledge/G-guides/ 2>/dev/null || true

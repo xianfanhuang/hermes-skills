@@ -16,4 +16,13 @@ media/
 identity/
 devices/
 agents/
+
+# OpenClaw internal state (synced by OpenClaw itself, not by git)
+cron/
+feishu/
+logs/
+plugins/
+subagents/
+
+# Memory files (synced to ai-trading-sync via sync-to-backup.sh)
 memory/
