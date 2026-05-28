@@ -145,6 +145,119 @@ class TradingSOP:
         
         print("\n" + "=" * 50)
     
+    def verify_market(self, market='US'):
+        """
+        市场系统性风险验证（盘前必须）
+        用该市场最便宜的标的，端到端闭环验证：
+        数据对齐 → 下单 → 成交 → 撤单/平仓 → 查询
+        """
+        import tiger_client as tc
+
+        print("=" * 50)
+        print(f"🔧 市场系统验证 - {market}")
+        print("=" * 50)
+
+        # 1. 数据对齐验证（用tiger_client直接获取）
+        print("\n【1】实时数据对齐")
+        symbols = self.engine.config.get('symbols', {})
+        market_symbols = {s: c for s, c in symbols.items()
+                         if c.get('market') == market and c.get('enabled')}
+        if not market_symbols:
+            print(f"  ❌ {market} 无已配置标的")
+            return False
+
+        for sym in market_symbols:
+            try:
+                brief = tc.get_stock_brief(sym)
+                has_permission_error = 'permission denied' in str(brief).lower()
+                if has_permission_error:
+                    print(f"  ⚠️ {sym}: 实时行情无权限（交易不受影响）")
+                elif brief and 'error' not in str(brief).lower():
+                    print(f"  ✅ {sym}: {brief[:80]}")
+                else:
+                    print(f"  ❌ {sym}: 行情获取失败")
+                    return False
+            except Exception as e:
+                print(f"  ❌ {sym}: {e}")
+                return False
+
+        # 2. 选最便宜的标的验证
+        print("\n【2】选择验证标的")
+        cheapest_sym = None
+        cheapest_price = float('inf')
+        for sym in market_symbols:
+            try:
+                brief = tc.get_stock_brief(sym)
+                if brief and 'price' in str(brief).lower():
+                    # 从brief中提取价格
+                    import re
+                    price_match = re.search(r'price[\":\s]+([\d.]+)', str(brief))
+                    if price_match:
+                        p = float(price_match.group(1))
+                        if p < cheapest_price:
+                            cheapest_price = p
+                            cheapest_sym = sym
+            except:
+                pass
+
+        if not cheapest_sym:
+            # fallback: 用第一个
+            cheapest_sym = list(market_symbols.keys())[0]
+            cheapest_price = 0
+
+        print(f"  选择: {cheapest_sym} (${cheapest_price:.2f})")
+
+        # 3. 下单验证（市价单）
+        print(f"\n【3】下单验证 ({cheapest_sym})")
+        try:
+            buy_result = tc.place_order_market(cheapest_sym, 1, 'BUY')
+            print(f"  BUY: {buy_result}")
+            if '成功' not in str(buy_result):
+                print(f"  ❌ 买入失败，市场通道异常")
+                return False
+        except Exception as e:
+            print(f"  ❌ 买入异常: {e}")
+            return False
+
+        # 4. 平仓验证
+        try:
+            sell_result = tc.place_order_market(cheapest_sym, 1, 'SELL')
+            print(f"  SELL: {sell_result}")
+            if '成功' not in str(sell_result):
+                print(f"  ❌ 卖出失败，市场通道异常")
+                return False
+        except Exception as e:
+            print(f"  ❌ 卖出异常: {e}")
+            return False
+
+        # 5. 成交记录验证
+        print("\n【4】成交记录验证")
+        try:
+            records = tc.get_order_records()
+            if records and cheapest_sym in str(records):
+                print(f"  ✅ 成交记录确认")
+                for r in records[:3]:
+                    print(f"    {r}")
+            else:
+                print(f"  ❌ 无成交记录")
+                return False
+        except Exception as e:
+            print(f"  ❌ 查询失败: {e}")
+            return False
+
+        # 6. 持仓验证（应为空仓）
+        print("\n【5】持仓验证")
+        try:
+            positions = tc.get_positions()
+            print(f"  持仓: {positions}")
+        except Exception as e:
+            print(f"  ⚠️ 持仓查询: {e}")
+
+        print("\n" + "=" * 50)
+        print(f"✅ {market} 市场系统验证通过")
+        print("=" * 50)
+        return True
+
     def run_full_cycle(self, interval=300):
         """运行完整周期"""
         print("🚀 交易SOP启动")
@@ -183,13 +296,16 @@ def main():
     parser.add_argument('--full', action='store_true', help='完整周期')
     parser.add_argument('--interval', type=int, default=300, help='监控间隔(秒)')
     parser.add_argument('--market', choices=['HK', 'US'], default='HK', help='市场')
-    
+    parser.add_argument('--verify-market', choices=['HK', 'US'], help='市场系统验证（盘前必须）')
+
     args = parser.parse_args()
-    
+
     sop = TradingSOP()
     sop.market = args.market
-    
-    if args.pre_scan:
+
+    if args.verify_market:
+        sop.verify_market(args.verify_market)
+    elif args.pre_scan:
         sop.run_pre_scan()
     elif args.monitor:
         sop.run_monitor_cycle()

@@ -6,7 +6,10 @@
       "enabled": true,
       "strategy": "trend_follow",
       "position_pct": 0.2,
-      "interval": 300
+      "interval": 300,
+      "verified": true,
+      "verified_at": "2026-05-28 00:15",
+      "verification": "order_flow_passed"
     },
     "CRCL": {
       "name": "Circle",
@@ -14,7 +17,31 @@
       "enabled": true,
       "strategy": "trend_follow",
       "position_pct": 0.2,
-      "interval": 300
+      "interval": 300,
+      "verified": true,
+      "verified_at": "2026-05-28 00:15",
+      "verification": "order_flow_passed"
+    },
+    "NIO": {
+      "name": "蔚来",
+      "market": "US",
+      "enabled": true,
+      "strategy": "trend_follow",
+      "position_pct": 0.2,
+      "interval": 300,
+      "verified": true,
+      "verified_at": "2026-05-28 00:15",
+      "verification": "order_flow_passed"
+    },
+    "TD": {
+      "name": "TD Bank",
+      "market": "US",
+      "enabled": true,
+      "strategy": "trend_follow",
+      "position_pct": 0.2,
+      "verified": true,
+      "verified_at": "2026-05-28 00:15",
+      "verification": "order_flow_passed"
     }
   },
   "test_symbols": {

@@ -1,12 +1,12 @@
 # 📚 知识库索引
 
 > **自动生成:** 2026-05-27  
-> **总计:** 69 个文件  
-> **分类:** B-practices(26) | G-guides(14) | R-rules(29)
+> **总计:** 71 个文件  
+> **分类:** B-practices(27) | G-guides(14) | R-rules(30)
 
 ---
 
-## 🔴 R-rules — 交易规则 (29)
+## 🔴 R-rules — 交易规则 (30)
 
 硬性规则、风控条件、技术约束。违反即止损。
 
@@ -38,6 +38,7 @@
 - **[session_dfc0290a_91f4fe31](session_dfc0290a_91f4fe31.md)** (303B) — *自动提取 by knowledge-extract.sh*
 - **[session_e2012024_94eae0e0](session_e2012024_94eae0e0.md)** (1KB) — *自动提取 by knowledge-extract.sh*
 - **[session_ebfce744_2556f2b1](session_ebfce744_2556f2b1.md)** (1KB) — *自动提取 by knowledge-extract.sh*
+- **[session_test-new_2d01a773](session_test-new_2d01a773.md)** (350B) — *自动提取 by knowledge-extract.sh*
 - **[zs_rules](zs_rules.md)** (1KB) — **中枢 (ZS)**：至少三笔重叠区间形成的盘整区域。
 
 ---
@@ -93,6 +94,7 @@
 - **[session_eee31133_5fd6c4c4](session_eee31133_5fd6c4c4.md)** (598B) — | 品种 | 方向 | 当前价 | PnL | 止损距离 |
 - **[session_f864c970_09794a12](session_f864c970_09794a12.md)** (405B) — *自动提取 by knowledge-extract.sh*
 - **[session_fce3dd9a_8fa4fbe8](session_fce3dd9a_8fa4fbe8.md)** (1KB) — | **USO原油** | 已止损(3/23) | 当前$101 vs 昨日$115 | 观望，不追空 |
+- **[session_test-new_db6981c6](session_test-new_db6981c6.md)** (302B) — *自动提取 by knowledge-extract.sh*
 
 ---
 
