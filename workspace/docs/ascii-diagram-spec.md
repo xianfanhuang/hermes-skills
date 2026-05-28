@@ -8,14 +8,20 @@
 
 ## 工作流
 
+**方案A（首选）：** 飞书文档渲染
 ```
 我写Mermaid代码 → 创建飞书文档 → 发链接 → Captain看渲染图
+```
+
+**方案B（备用）：** 直接发图
+```
+生成PNG到workspace路径 → message(filePath=...) → Captain看内联图
 ```
 
 **禁止：**
 - 不调用kroki.io/mermaid.ink等外部API
 - 不下载PNG再发送（链路长、不稳定）
-- 不用消息通道media参数发图（有bug，fallback为文本📎）
+- 不用`/tmp`路径发图（不在mediaLocalRoots白名单内）
 - 不发纯代码让Captain自己渲染
 
 ## 图类型选择
