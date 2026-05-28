@@ -4,199 +4,27 @@
     "created_at": "2026-03-23T07:15:00+08:00",
     "initial_capital": 10000,
     "currency": "USDT",
-    "current_balance": 7350,
-    "cash_available": 7350,
-    "equity": 10036.5,
-    "unrealized_pnl": 136.50,
-    "realized_pnl": -150,
-    "daily_pnl": "+1.43%",
+    "current_balance": 10000,
+    "cash_available": 10000,
+    "equity": 10000,
+    "unrealized_pnl": 0,
+    "realized_pnl": 0,
+    "daily_pnl": "0%",
     "risk_level": "high",
     "max_single_loss": 5,
     "max_daily_loss": 15,
     "max_positions": 3,
-    "last_update": "2026-05-17T22:53:00+08:00"
+    "last_update": "2026-05-28T15:27:00+08:00"
   },
-  "positions": [
-    {
-      "symbol": "USO",
-      "name": "United States Oil Fund",
-      "side": "long",
-      "quantity": 30,
-      "entry_price": 100,
-      "exit_price": 95,
-      "position_value": 0,
-      "pnl": -150,
-      "pnl_pct": -5,
-      "stop_loss": 95,
-      "take_profit": 115,
-      "entry_time": "2026-03-23T07:16:00+08:00",
-      "exit_time": "2026-03-23T23:00:00+08:00",
-      "last_update": "2026-03-23T23:43:00+08:00",
-      "signal": "原油/油气链 - 强信号",
-      "reasoning": "霍尔木兹海峡冲突预期 + 成品油上调2000元/吨",
-      "exit_reason": "特朗普宣布暂停对伊朗军事打击5天，原油暴跌14.8%，触发止损",
-      "risk_pct": 5,
-      "leverage": 1,
-      "status": "已平仓（止损）",
-      "wti_price": 85.66
-    },
-    {
-      "symbol": "A50",
-      "name": "FTSE China A50 Index Futures",
-      "side": "long",
-      "quantity": 25,
-      "entry_price": 100,
-      "current_price": 105.46,
-      "position_value": 2641.75,
-      "pnl": 136.50,
-      "pnl_pct": 5.46,
-      "stop_loss": 95,
-      "take_profit": 110,
-      "entry_time": "2026-03-23T07:16:00+08:00",
-      "last_update": "2026-05-17T22:53:00+08:00",
-      "signal": "A股超跌反弹 - 中等偏强信号",
-      "reasoning": "沪指重返4000点，创业板涨超2%，算力产业链大爆发",
-      "risk_pct": 5,
-      "leverage": 1,
-      "status": "持仓中 - 盈利扩大",
-      "sse_index": 4026.63,
-      "alert": "A股强势反弹！沪指+0.95%，深成+1.61%，创业板+2.36%！",
-      "daily_change": "+0.35%",
-      "index_close": 4026.63,
-      "evening_move": "午盘继续上涨，持仓盈利扩大"
-    }
-  ],
+  "positions": [],
   "risk_parameters": {
     "stop_loss_per_trade": "5%",
     "take_profit_per_trade": "15-20%",
     "max_leverage": 20,
     "max_exposure_per_symbol": "30%"
   },
-  "focus_signals": [
-    {
-      "signal": "避险资产",
-      "strength": "中强信号",
-      "probability": "60-70%",
-      "catalyst": "地缘政治风险 + 市场极度恐慌 + 超级周风险",
-      "symbols": [
-        "GLD",
-        "GOLD"
-      ],
-      "status": "重点关注",
-      "note": "黄金4491.94美元，地缘政治支撑强劲，可考虑多头对冲"
-    },
-    {
-      "signal": "A股超跌反弹",
-      "strength": "强信号",
-      "probability": ">70%",
-      "support_level": "3900-3920点",
-      "symbols": [
-        "A50",
-        "CSI300"
-      ],
-      "status": "持仓中",
-      "note": "A50当前盈利+1.05%，距离止损5%还有空间，继续持有观察"
-    },
-    {
-      "signal": "原油/油气链",
-      "strength": "中信号",
-      "probability": "50-60%",
-      "expected_volatility": "30%+",
-      "symbols": [
-        "USO",
-        "XLE",
-        "XOM",
-        "CVX"
-      ],
-      "status": "观望中",
-      "note": "G7释放战略石油储备可能压制油价，建议观望"
-    }
-  ],
-  "market_alerts": [
-    {
-      "level": "关注",
-      "type": "持仓",
-      "message": "A50持仓盈利已扩大至约+5.67%，接近止盈目标110 (+10%)",
-      "impact": "周一开盘后考虑是否部分止盈或上移止损",
-      "source": "2026-05-17 夜盘扫描"
-    },
-    {
-      "level": "关注",
-      "type": "市场",
-      "message": "美股连续创新高（道指50,063、标普7,500+、纳指新高）",
-      "impact": "AI芯片热潮驱动，但注意回调风险"
-    },
-    {
-      "level": "信息",
-      "type": "加密货币",
-      "message": "BTC站稳$81,000，月涨超20%，ETF资金持续流入",
-      "impact": "分析师预计5月可达$85,000-$88,000"
-    },
-    {
-      "level": "信息",
-      "type": "A股",
-      "message": "上证综指突破4,200点，AI超级周期推动",
-      "impact": "A50指数15,675，较4月上涨约5.67%"
-    },
-    {
-      "level": "关注",
-      "type": "黄金",
-      "message": "黄金从$4,854回落至$4,539 (-6.5%)",
-      "impact": "避险情绪减弱，回调中"
-    }
-  ],
-  "next_week_calendar": {
-    "monday_3_30": {
-      "events": [
-        "德国3月CPI",
-        "欧洲3月消费者信心指数",
-        "日本央行货币政策意见摘要（4月加息预期>50%）",
-        "美国达拉斯联储商业活动指数",
-        "鲍威尔哈佛演讲",
-        "G7会议（释放战略石油储备）"
-      ],
-      "risk_level": "high"
-    },
-    "tuesday_3_31": {
-      "events": [
-        "中国3月官方制造业PMI",
-        "日本3月东京CPI年率及2月失业率",
-        "美国2月JOLTs职位空缺（延误数据）",
-        "美国3月谘商会消费者信心指数",
-        "威廉姆斯讲话"
-      ],
-      "risk_level": "high"
-    },
-    "wednesday_4_1": {
-      "events": [
-        "美国EIA/API原油库存",
-        "中国3月SPGI PMI",
-        "美国ISM制造业PMI",
-        "美国3月ADP就业人数（小非农）",
-        "美国2月零售销售（延误数据）",
-        "穆萨莱姆讲话"
-      ],
-      "risk_level": "high"
-    },
-    "thursday_4_2": {
-      "events": [
-        "美国3月挑战者裁员数据",
-        "美国初请/续请失业金人数",
-        "加拿大央行货币政策纪要",
-        "洛根讲话"
-      ],
-      "risk_level": "medium"
-    },
-    "friday_4_3": {
-      "events": [
-        "美国3月非农数据、失业率、工资变动（压轴）",
-        "美股和欧洲多数交易所休市",
-        "CME贵金属、原油期货全天暂停",
-        "股指期货21:15提前结束"
-      ],
-      "risk_level": "high",
-      "note": "非农数据发布但市场休市，流动性风险"
-    }
-  },
-  "last_scan": "2026-05-17T22:53 (夜盘扫描 - 周日休市,市场快照更新)"
+  "focus_signals": [],
+  "market_alerts": [],
+  "next_week_calendar": {},
+  "last_scan": "2026-05-28 (已清空旧持仓)"
 }
