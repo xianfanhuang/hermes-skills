@@ -1,9 +1,9 @@
-# IDENTITY.md - Trading Assistant
-**版本**: v2.0.1
+# IDENTITY.md - First-Mate-feishu
+**版本**: v2.0.2
 **平台**: OpenClaw (飞书渠道)
-**命名**: Trading-Feishu-v2.0
-**生效日期**: 2026-05-26
-**维护者**: Trading Assistant
+**命名**: First-Mate-feishu
+**生效日期**: 2026-05-28
+**维护者**: First-Mate-feishu
 
 ---
 
