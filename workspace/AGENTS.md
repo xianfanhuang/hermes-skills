@@ -95,19 +95,11 @@ Captain
    ```bash
    bash /workspace/projects/workspace/scripts/session-turn-tracker.sh reset
    ```
-1. 读取 `SOUL.md` — 安全规则
-2. 读取 `USER.md` — Captain 偏好
-3. 读取 `IDENTITY.md` — 身份定位
-4. 读取 `memory/YYYY-MM-DD.md`（今天+昨天）— 近期上下文
-5. 读取 `memory/MEMORY.md` — 长期记忆
-6. **恢复上一个会话上下文:**
+1. **恢复上下文**（SOUL/USER/IDENTITY/MEMORY.md 已由 OpenClaw 自动注入，无需重复读取）:
    ```bash
-   # 找到最新有实质内容的session归档并直接读取
-   latest=$(ls -t /workspace/projects/workspace/memory/sessions/*.md 2>/dev/null | head -1)
-   cat "$latest"
+   bash /workspace/projects/workspace/scripts/context-restore.sh
    ```
-   如果 `cat` 输出少于15行，尝试下一个文件（跳过空壳归档）。
-7. 如有核心交易 skill 需要激活，读取对应 SKILL.md
+2. 如有核心交易 skill 需要激活，读取对应 SKILL.md
 
 ---
 
