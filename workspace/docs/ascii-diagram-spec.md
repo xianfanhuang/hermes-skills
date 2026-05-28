@@ -15,6 +15,7 @@
 **禁止：**
 - 不调用kroki.io/mermaid.ink等外部API
 - 不下载PNG再发送（链路长、不稳定）
+- 不用消息通道media参数发图（有bug，fallback为文本📎）
 - 不发纯代码让Captain自己渲染
 
 ## 图类型选择
