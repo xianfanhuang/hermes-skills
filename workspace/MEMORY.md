@@ -105,11 +105,10 @@
 
 ---
 
-## 📌 飞书图片发送（已解决）
-- message工具的`media`参数可以正常发送本地图片（workspace路径下）
-- 第一次用kroki.io URL发送也成功了（Captain确认能看到渲染后的Mermaid图）
-- 不需要飞书文档绕路，直接`media`参数即可
-- 之前误判为失败，实际是发送成功的
+## 📌 飞书图片发送
+- ✅ 飞书文档upload_image正常（API测试通过）
+- ❌ 消息通道media参数发送图片失败（sendMediaFeishu报错→fallback为📎文本）
+- **结论**: 图示统一走飞书文档（Mermaid代码→feishu_doc create→发链接）
 
 ---
 
