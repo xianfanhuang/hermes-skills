@@ -51,6 +51,8 @@
 - **配置**: `config.json`（标的列表）+ `portfolio.json`（持仓）
 - **SOP**: `sop.py --pre-scan / --monitor / --post-summary`
 - **三层止损**: 入场止损（逻辑位+缓冲）/ 结构止损 / 移动止损
+- **图示仓库**: [hermes-mermaid](https://github.com/xianfanhuang/hermes-mermaid) — Mermaid图表协作
+- **团队汇报**: 问题梳理+Mermaid图→hermes-mermaid→Issue讨论
 
 ### 数据源
 | 源 | 用途 | 备注 |
