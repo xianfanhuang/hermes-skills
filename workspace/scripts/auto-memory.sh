@@ -1,229 +1,93 @@
 #!/bin/bash
-# auto-memory.sh - OpenClaw 自动记忆管理脚本 (v2 - 幂等版)
-# 用途: 自动检测重要对话并写入记忆文件
-# 调用方式: cron 每小时执行一次
-# 修复: 所有操作幂等，不重复追加已有内容
+# auto-memory-v3.sh — 单一写入源，分级存储
+# 核心原则：每日记忆只保留精简摘要，session原始数据不进每日记忆
+# 
+# 写入规则：
+#   1. 每日记忆 = 最多1个文件，最多50行，只记决策/教训/状态
+#   2. session原始数据 → memory/sessions/raw/ (不进每日记忆)
+#   3. 知识提取 → knowledge/ (每6小时)
+#   4. 不追加模板，不重复写入
 
 set -euo pipefail
 
-# 配置
 WORKSPACE_DIR="/workspace/projects/workspace"
 MEMORY_DIR="${WORKSPACE_DIR}/memory"
-LONG_TERM_MEMORY="${WORKSPACE_DIR}/MEMORY.md"
-USER_FILE="${WORKSPACE_DIR}/USER.md"
-IDENTITY_FILE="${WORKSPACE_DIR}/IDENTITY.md"
-SESSIONS_DIR="/workspace/projects/agents/main/sessions"
-
-# 当前日期
 TODAY=$(date +%Y-%m-%d)
-YESTERDAY=$(date -d "1 day ago" +%Y-%m-%d)
 TODAY_MEMORY="${MEMORY_DIR}/${TODAY}.md"
-YESTERDAY_MEMORY="${MEMORY_DIR}/${YESTERDAY}.md"
+SESSIONS_DIR="/workspace/projects/agents/main/sessions"
+MAX_LINES=50
 
-# 颜色输出
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
+# 确保目录存在
+mkdir -p "${MEMORY_DIR}"
 
-log_info() { echo -e "${GREEN}[INFO]${NC} $1"; }
-log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
-log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+# 如果今日记忆不存在，创建精简模板
+if [[ ! -f "${TODAY_MEMORY}" ]]; then
+    cat > "${TODAY_MEMORY}" << 'EOF'
+# 每日记忆
 
-# 检查文件中是否已包含某个标记文本（精确匹配一行即可）
-has_marker() {
-    local file="$1"
-    local marker="$2"
-    grep -qF "$marker" "$file" 2>/dev/null
-}
+## 决策与教训
+*(当日重要决策和教训)*
 
-# 初始化今天记忆文件（仅创建，不覆盖）
-init_today_memory() {
-    mkdir -p "${MEMORY_DIR}"
-    if [[ ! -f "${TODAY_MEMORY}" ]]; then
-        log_info "创建今天的记忆文件: ${TODAY_MEMORY}"
-        cat > "${TODAY_MEMORY}" << EOF
-# ${TODAY} 每日记忆
-
-## 📅 基本信息
-- 日期: ${TODAY}
-- 星期: $(date +%A)
-- Agent: Trading Assistant 🦞
-
----
-
-## 💬 对话摘要
-*(自动生成，待更新)*
-
----
-
-## 🔑 关键信息
-*(自动检测并记录)*
-
----
-
-## 📝 决策与行动
-*(自动记录重要决策)*
-
----
-
-## ⚠️ 问题与教训
-*(自动记录错误和教训)*
-
----
-
-*自动生成时间: $(date "+%Y-%m-%d %H:%M:%S")*
+## 系统状态
+*(引擎/持仓/cron状态)*
 EOF
-    fi
-}
+fi
 
-# 提取用户偏好（幂等：已存在则跳过）
-extract_user_preferences() {
-    if has_marker "${TODAY_MEMORY}" "### 🎯 当前用户偏好"; then
-        log_info "用户偏好已存在，跳过"
-        return
-    fi
-
-    log_info "提取用户偏好..."
-    local preferences=""
-
-    if [[ -f "${USER_FILE}" ]]; then
-        if grep -q "单笔最大亏损" "${USER_FILE}"; then
-            local loss=$(grep "单笔最大亏损" "${USER_FILE}" | head -1 | cut -d':' -f2- | xargs 2>/dev/null || echo "")
-            [[ -n "$loss" ]] && preferences="${preferences}\n- 单笔最大亏损: ${loss}"
+# 从最新session提取今日决策/教训（如果有的话）
+# 只提取非模板内容，写入"决策与教训"段落
+latest_session=$(ls -t "${SESSIONS_DIR}"/*.jsonl 2>/dev/null | head -1 || echo "")
+if [[ -n "$latest_session" ]]; then
+    session_name=$(basename "$latest_session" .jsonl)
+    marker="<!-- s:${session_name} -->"
+    
+    # 跳过已处理的session（在截断之前检查）
+    if ! grep -qF "$marker" "${TODAY_MEMORY}" 2>/dev/null; then
+        # 从session提取包含关键词的用户消息
+        decisions=$(tail -100 "$latest_session" | \
+            jq -r 'select(.type == "message") | select(.message.role == "user") | .message.content[] | select(.type == "text") | .text' 2>/dev/null | \
+            grep -iE "教训|决策|修复|bug|重要|注意|不要|必须|规则" | \
+            grep -v "auto-memory\|session-turn-tracker\|heartbeat\|System:" | \
+            head -5 || true)
+        
+        if [[ -n "$decisions" ]]; then
+            # 追加到文件末尾
+            {
+                echo ""
+                echo "$marker"
+                echo "### $(date +%H:%M) Session更新"
+                while IFS= read -r line; do
+                    [[ -n "$line" ]] && echo "- ${line:0:150}"
+                done <<< "$decisions"
+            } >> "${TODAY_MEMORY}"
+            echo "[memory] 写入session决策: ${session_name}"
+        else
+            # 标记已处理但无内容
+            echo -e "\n${marker}" >> "${TODAY_MEMORY}"
         fi
-        if grep -q "关注品种" "${USER_FILE}"; then
-            local symbols=$(grep -A 8 "关注品种" "${USER_FILE}" | grep -E "^\s*-\s*\*\*" | head -5 | sed 's/^\s*//' | tr '\n' ' ' | xargs 2>/dev/null || echo "")
-            [[ -n "$symbols" ]] && preferences="${preferences}\n- 关注品种: ${symbols}"
-        fi
-    fi
-
-    if [[ -n "$preferences" ]]; then
-        echo -e "\n### 🎯 当前用户偏好\n${preferences}" >> "${TODAY_MEMORY}"
-        log_info "用户偏好已写入"
-    fi
-}
-
-# 分析最近 Session 的用户消息（幂等：按session文件名标记）
-analyze_recent_session() {
-    local latest_session=$(ls -t "${SESSIONS_DIR}"/*.jsonl 2>/dev/null | head -1 || echo "")
-    [[ -z "${latest_session}" ]] && return
-
-    local session_name=$(basename "${latest_session}" .jsonl)
-    local marker="<!-- session:${session_name} -->"
-
-    if has_marker "${TODAY_MEMORY}" "$marker"; then
-        log_info "Session ${session_name} 已分析过，跳过"
-        return
-    fi
-
-    log_info "分析 Session: ${session_name}"
-
-    local recent_messages=$(tail -100 "${latest_session}" | jq -r 'select(.type == "message") | select(.message.role == "user") | .message.content[] | select(.type == "text") | .text' 2>/dev/null | tail -20 || echo "")
-
-    [[ -z "$recent_messages" ]] && return
-
-    local keywords=("记住" "重要" "偏好" "喜欢" "决策" "策略" "交易" "风险" "止损" "止盈" "不要" "避免" "注意" "教训" "bug" "修复")
-    local important_messages=()
-
-    while IFS= read -r line; do
-        [[ -z "$line" ]] && continue
-        # 跳过系统自动消息
-        echo "$line" | grep -q "执行自动记忆更新" && continue
-        echo "$line" | grep -q "auto-memory.sh" && continue
-        for keyword in "${keywords[@]}"; do
-            if echo "$line" | grep -qi "$keyword"; then
-                important_messages+=("$line")
-                break
-            fi
-        done
-    done <<< "$recent_messages"
-
-    if [[ ${#important_messages[@]} -gt 0 ]]; then
-        {
-            echo ""
-            echo "${marker}"
-            echo "### 🔑 关键对话记录 ($(date +%H:%M))"
-            echo ""
-            for msg in "${important_messages[@]}"; do
-                # 截断过长的消息
-                local short_msg="${msg:0:200}"
-                echo "- ${short_msg}"
-            done
-        } >> "${TODAY_MEMORY}"
-        log_info "写入 ${#important_messages[@]} 条关键消息"
     else
-        # 即使没有重要消息也写标记，避免重复扫描
-        echo -e "\n${marker}\n<!-- 无关键消息 -->" >> "${TODAY_MEMORY}"
+        echo "[memory] Session ${session_name} 已处理，跳过"
     fi
-}
+fi
 
-# 生成对话摘要（幂等：按session文件名标记）
-generate_summary() {
-    local latest_session=$(ls -t "${SESSIONS_DIR}"/*.jsonl 2>/dev/null | head -1 || echo "")
-    [[ -z "${latest_session}" ]] && return
+# 截断检查（在写入之后，确保不超过上限）
+current_lines=$(wc -l < "${TODAY_MEMORY}")
+if [[ "$current_lines" -gt "$MAX_LINES" ]]; then
+    head -n "$MAX_LINES" "${TODAY_MEMORY}" > "${TODAY_MEMORY}.tmp"
+    mv "${TODAY_MEMORY}.tmp" "${TODAY_MEMORY}"
+    echo "[memory] 截断: ${current_lines} → ${MAX_LINES} 行"
+fi
 
-    local session_name=$(basename "${latest_session}" .jsonl)
-    local marker="<!-- summary:${session_name} -->"
+# 知识提取（每6小时）
+KNOWLEDGE_MARKER="${WORKSPACE_DIR}/knowledge/.last_extract_hour"
+current_hour=$(date +%H)
+last_hour=""
+[[ -f "$KNOWLEDGE_MARKER" ]] && last_hour=$(cat "$KNOWLEDGE_MARKER")
 
-    if has_marker "${TODAY_MEMORY}" "$marker"; then
-        log_info "摘要 ${session_name} 已存在，跳过"
-        return
-    fi
+if [[ "$current_hour" != "$last_hour" ]] && [[ $((10#$current_hour % 6)) -eq 0 ]]; then
+    echo "[memory] 执行知识提取..."
+    bash "${WORKSPACE_DIR}/scripts/session-to-md.sh" 2>&1 | tail -1
+    bash "${WORKSPACE_DIR}/scripts/knowledge-extract.sh" 2>&1 | tail -1
+    echo "$current_hour" > "$KNOWLEDGE_MARKER"
+fi
 
-    log_info "生成对话摘要..."
-
-    local user_messages=$(tail -50 "${latest_session}" | jq -r 'select(.type == "message") | select(.message.role == "user") | .message.content[] | select(.type == "text") | .text' 2>/dev/null | grep -v "执行自动记忆更新" | grep -v "auto-memory.sh" | head -3 || echo "")
-
-    if [[ -n "$user_messages" ]]; then
-        {
-            echo ""
-            echo "${marker}"
-            echo "## 💬 对话摘要 ($(date +%H:%M))"
-            echo ""
-            while IFS= read -r line; do
-                [[ -n "$line" ]] && echo "- ${line:0:200}"
-            done <<< "$user_messages"
-        } >> "${TODAY_MEMORY}"
-    fi
-}
-
-# 主函数
-main() {
-    log_info "======================================"
-    log_info "OpenClaw 自动记忆管理 v2"
-    log_info "时间: $(date)"
-    log_info "======================================"
-
-    init_today_memory
-    extract_user_preferences
-    analyze_recent_session
-    generate_summary
-
-    log_info "✅ 自动记忆更新完成"
-    log_info "记忆文件: ${TODAY_MEMORY} ($(wc -c < "${TODAY_MEMORY}") bytes)"
-}
-
-# 知识提取集成（每6小时执行一次）
-run_knowledge_pipeline() {
-    local marker="${KNOWLEDGE_DIR:-/workspace/projects/workspace/knowledge}/.last_extract_hour"
-    mkdir -p "$(dirname "$marker")"
-
-    local last_hour=""
-    [[ -f "$marker" ]] && last_hour=$(cat "$marker")
-
-    # 每6小时执行一次（00, 06, 12, 18）
-    # 注意: 10# 前缀强制十进制，避免 08/09 被 bash 当八进制解析
-    local current_hour=$(date +%H)
-    if [[ "$current_hour" != "$last_hour" ]] && [[ $((10#$current_hour % 6)) -eq 0 ]]; then
-        log_info "执行知识提取流水线..."
-        bash "${WORKSPACE_DIR}/scripts/session-to-md.sh" 2>&1 | tail -1
-        bash "${WORKSPACE_DIR}/scripts/knowledge-extract.sh" 2>&1 | tail -3
-        bash "${WORKSPACE_DIR}/scripts/knowledge-consolidate.sh" 2>&1 | tail -3
-        bash "${WORKSPACE_DIR}/scripts/knowledge-index.sh" 2>&1 | tail -1
-        echo "$current_hour" > "$marker"
-    fi
-}
-
-main "$@"
-run_knowledge_pipeline
+echo "[memory] 完成: ${TODAY_MEMORY} ($(wc -l < "${TODAY_MEMORY}") 行)"
