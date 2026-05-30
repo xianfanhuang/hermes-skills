@@ -15,7 +15,14 @@ description: "中英双语语音消息生成与识别。MIMO TTS语音合成 + A
 | **ASR** | 语音→文字（coze-voice-gen ASR） |
 | **飞书语音** | OGG OPUS格式，可直接播放 |
 
-## TTS 工作流程
+## TTS 引擎选择
+
+| 引擎 | 说明 | 默认 |
+|------|------|------|
+| **MIMO** | 小米MIMO TTS，中英双语自然 | ✅ 默认 |
+| **Coze** | 扣子TTS，中文音色丰富 | 备用 |
+
+### MIMO TTS（默认）
 
 ```bash
 # 1. 调用MIMO TTS API生成WAV
@@ -26,6 +33,13 @@ ffmpeg -y -i /tmp/output.wav -c:a libopus -b:a 32k /tmp/output.ogg
 
 # 3. 发送飞书语音消息
 # 使用 message tool: asVoice=true, media=/tmp/output.ogg
+```
+
+### Coze TTS（备用）
+
+```bash
+# 使用coze-voice-gen技能
+npx ts-node {baseDir}/../coze-voice-gen/scripts/tts.ts --text "要转换的文字" --speaker zh_male_taocheng_uranus_bigtts --format ogg_opus
 ```
 
 ## ASR 工作流程

@@ -4,7 +4,14 @@
 
 ## 快速开始
 
-### 1. 生成语音
+### TTS 引擎选择
+
+| 引擎 | 说明 | 默认 |
+|------|------|------|
+| **MIMO** | 小米MIMO TTS，中英双语自然 | ✅ 默认 |
+| **Coze** | 扣子TTS，中文音色丰富 | 备用 |
+
+### 1. 生成语音（MIMO默认）
 
 ```bash
 # 列出可用音色
@@ -15,6 +22,13 @@ python3 scripts/mimo_tts.py --text "你好，我是AI助手" --voice Milo --outp
 
 # 转换为飞书语音格式
 bash scripts/wav_to_ogg.sh voice.wav voice.ogg
+```
+
+### 1. 生成语音（Coze备用）
+
+```bash
+# 使用coze-voice-gen技能
+npx ts-node ../coze-voice-gen/scripts/tts.ts --text "你好" --speaker zh_male_taocheng_uranus_bigtts --format ogg_opus
 ```
 
 ### 2. 发送飞书语音消息
@@ -67,9 +81,17 @@ voice-assistant/
 
 ## 技术参数
 
-- **TTS模型**: mimo-v2.5-tts
+### MIMO TTS（默认）
+- **模型**: mimo-v2.5-tts
 - **API**: OpenAI兼容 (chat/completions)
 - **音频格式**: WAV → OGG OPUS
+- **采样率**: 24kHz
+- **飞书格式**: OGG OPUS (asVoice=true)
+
+### Coze TTS（备用）
+- **模型**: coze-coding-dev-sdk
+- **API**: 扣子TTS API
+- **音频格式**: OGG OPUS直接输出
 - **采样率**: 24kHz
 - **飞书格式**: OGG OPUS (asVoice=true)
 
