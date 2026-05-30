@@ -3,10 +3,36 @@
   "generated": "2026-05-23T05:13:00+08:00",
   "skills": [
     {
-      "name": "skills-豆包",
+      "name": "hermes-migration",
+      "version": "2.0",
+      "priority": 100,
+      "description": "跨平台迁移系统"
+    },
+    {
+      "name": "token-budget-manager",
+      "version": "2.1",
+      "priority": 90,
+      "description": "Token 成本管控"
+    },
+    {
+      "name": "trading-assistant",
+      "version": "1.0.1",
+      "priority": 80,
+      "description": "交易助手索引"
+    },
+    {
+      "name": "context-restore",
+      "version": "1.0.0",
+      "priority": 85,
+      "description": "会话归档后上下文自动恢复"
+    },
+    {
+      "name": "voice-assistant",
       "version": "1.0.0",
       "priority": 70,
-      "description": "豆包平台技能"
+      "description": "中英双语语音消息生成与识别",
+      "author": "First-Mate-feishu",
+      "created": "2026-05-31"
     }
   ]
 }
