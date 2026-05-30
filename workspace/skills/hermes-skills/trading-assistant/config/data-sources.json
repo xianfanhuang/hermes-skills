@@ -1,0 +1,40 @@
+{
+  "routing": {
+    "us_realtime": ["finnhub", "itick", "polygon"],
+    "us_history": ["tiger"],
+    "hk": ["tiger"],
+    "a_stock": ["tiger"],
+    "crypto": ["binance"]
+  },
+  "sources": {
+    "finnhub": {
+      "keys": 5,
+      "rate_limit": "60/min",
+      "coverage": ["us_stock", "forex", "crypto"],
+      "cost": "free"
+    },
+    "tiger": {
+      "region": "SG",
+      "sandbox": true,
+      "coverage": ["us_history", "hk_l2", "a_stock_l1"],
+      "cost": "free_limited"
+    },
+    "binance": {
+      "auth": false,
+      "coverage": ["crypto"],
+      "cost": "free"
+    },
+    "polygon": {
+      "version": "v2",
+      "coverage": ["us_stock"],
+      "cost": "free_limited",
+      "note": "15min delay"
+    },
+    "itick": {
+      "keys": 1,
+      "rate_limit": "5/min",
+      "coverage": ["us", "hk", "a_stock"],
+      "expires": "2026-05-25"
+    }
+  }
+}
