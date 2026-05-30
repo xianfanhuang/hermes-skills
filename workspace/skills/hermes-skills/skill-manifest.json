@@ -28,6 +28,14 @@
       "dependencies": [
         "hermes-sync-core/session_manager.py"
       ]
+    },
+    {
+      "name": "voice-assistant",
+      "version": "1.0.0",
+      "priority": 70,
+      "description": "中英双语语音消息生成与识别",
+      "author": "First-Mate-feishu",
+      "created": "2026-05-31"
     }
   ]
 }
