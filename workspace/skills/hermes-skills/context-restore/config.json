@@ -1,8 +1,0 @@
-{
-  "last_n_messages": 30,
-  "include_summary": true,
-  "include_keywords": true,
-  "compress_threshold": 50,
-  "compress_strategy": "keep_decisions",
-  "storage_backend": "local"
-}
