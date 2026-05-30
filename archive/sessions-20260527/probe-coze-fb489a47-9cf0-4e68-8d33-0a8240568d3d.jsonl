@@ -1,6 +1,0 @@
-{"type":"session","version":3,"id":"probe-coze-fb489a47-9cf0-4e68-8d33-0a8240568d3d","timestamp":"2026-05-22T17:02:42.542Z","cwd":"/workspace/projects/workspace"}
-{"type":"model_change","id":"27340a58","parentId":null,"timestamp":"2026-05-22T17:02:42.547Z","provider":"coze","modelId":"deepseek-v3-2-251201"}
-{"type":"thinking_level_change","id":"c15db040","parentId":"27340a58","timestamp":"2026-05-22T17:02:42.547Z","thinkingLevel":"off"}
-{"type":"custom","customType":"model-snapshot","data":{"timestamp":1779469362555,"provider":"coze","modelApi":"openai-completions","modelId":"deepseek-v3-2-251201"},"id":"35d53f3f","parentId":"c15db040","timestamp":"2026-05-22T17:02:42.555Z"}
-{"type":"message","id":"52dba1ef","parentId":"35d53f3f","timestamp":"2026-05-22T17:02:42.568Z","message":{"role":"user","content":[{"type":"text","text":"Reply with OK. Do not use tools."}],"timestamp":1779469362563}}
-{"type":"message","id":"76f19808","parentId":"52dba1ef","timestamp":"2026-05-22T17:02:46.075Z","message":{"role":"assistant","content":[{"type":"text","text":"OK"}],"api":"openai-completions","provider":"coze","model":"deepseek-v3-2-251201","usage":{"input":24322,"output":1,"cacheRead":0,"cacheWrite":0,"totalTokens":24323,"cost":{"input":0,"output":0,"cacheRead":0,"cacheWrite":0,"total":0}},"stopReason":"stop","timestamp":1779469362566}}
