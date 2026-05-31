@@ -42,7 +42,6 @@ python3 hermes-cli.py --list
 | trading-assistant | 1.0 | 80 | 交易助手核心能力（缠论/数据路由/风控/反思） |
 | voice-assistant | 1.0.0 | 70 | 中英双语语音消息生成与识别（MIMO TTS + ASR） |
 | architecture-knowledge-graph | 1.0.0 | 60 | 交互式架构知识图谱构建（Cytoscape.js 可视化） |
-| session-lifecycle | 2.0 | 50 | Session 全生命周期管理（归档/防溢出/上下文恢复/备份同步） |
 
 ## 新增技能
 
@@ -66,6 +65,20 @@ python3 scripts/generate_graph.py --output my_arch.html
 - 节点关联高亮
 - 响应式布局
 - 自包含 HTML 输出
+
+## 版本管理
+
+- 每个skill独立版本
+- Git tag格式: `skill-name-vx.x.x`
+- manifest自动追踪版本
+
+## 开发规范
+
+1. 每个skill必须有SKILL.md，包含version字段
+2. 敏感信息不进仓库（API key等）
+3. 更新后及时打tag
+
+---
 
 ## 新增技能
 
@@ -93,15 +106,3 @@ open SKILL.md
 # 需要细节时看原文
 open session-lifecycle-backup.md
 ```
-
-## 版本管理
-
-- 每个skill独立版本
-- Git tag格式: `skill-name-vx.x.x`
-- manifest自动追踪版本
-
-## 开发规范
-
-1. 每个skill必须有SKILL.md，包含version字段
-2. 敏感信息不进仓库（API key等）
-3. 更新后及时打tag
