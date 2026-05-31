@@ -65,6 +65,102 @@ FEATURE_DIMS = [
 DIMENSION = len(FEATURE_DIMS)  # 26维
 
 
+def _find_zhongshu(bi_list) -> list[dict]:
+    """从笔列表推导中枢（至少3笔重叠区间）"""
+    if len(bi_list) < 3:
+        return []
+
+    zss = []
+    i = 0
+    while i < len(bi_list) - 2:
+        b1, b2, b3 = bi_list[i], bi_list[i+1], bi_list[i+2]
+
+        # 计算3笔重叠区间
+        overlap_high = min(b1.high, b2.high, b3.high)
+        overlap_low = max(b1.low, b2.low, b3.low)
+
+        if overlap_high > overlap_low:
+            # 有重叠，形成中枢
+            height = overlap_high - overlap_low
+            zs = {
+                'high': overlap_high,
+                'low': overlap_low,
+                'height': height,
+                'center': (overlap_high + overlap_low) / 2,
+                'bi_count': 3,
+                'start_bi': i,
+                'level': 1,
+                'overlap_ratio': 1.0,
+            }
+
+            # 尝试扩展
+            j = i + 3
+            while j < len(bi_list):
+                bj = bi_list[j]
+                if bj.low < overlap_high and bj.high > overlap_low:
+                    zs['bi_count'] += 1
+                    j += 1
+                else:
+                    break
+
+            # 计算重叠度（所有笔在中枢区间的占比）
+            total_range = max(b.high for b in bi_list[i:j]) - min(b.low for b in bi_list[i:j])
+            zs['overlap_ratio'] = height / total_range if total_range > 0 else 0
+
+            # 中枢级别（笔数越多级别越高）
+            zs['level'] = 1 + (zs['bi_count'] - 3) // 2
+
+            zss.append(zs)
+            i = j
+        else:
+            i += 1
+
+    return zss
+
+
+def _detect_beichi(bi_list, zss) -> list[dict]:
+    """检测背驰：中枢前后同向笔力度衰减"""
+    bc_list = []
+
+    for zs in zss:
+        end = zs['start_bi'] + zs['bi_count']
+        if end >= len(bi_list):
+            continue
+
+        # 中枢第一笔和最后一笔
+        entry_bi = bi_list[zs['start_bi']]
+        exit_bi = bi_list[end - 1]
+
+        # 离开中枢的笔
+        leave_bi = bi_list[end] if end < len(bi_list) else None
+
+        if leave_bi is None:
+            continue
+
+        # 比较同向笔力度：entry_bi vs leave_bi
+        if hasattr(entry_bi, 'power') and hasattr(leave_bi, 'power'):
+            entry_power = entry_bi.power
+            leave_power = leave_bi.power
+
+            if entry_power > 0 and leave_power < entry_power * 0.8:
+                strength = 1 - leave_power / entry_power
+                # 可靠度：基于R²和信噪比
+                reliability = 0.5
+                if hasattr(leave_bi, 'rsq'):
+                    reliability = min(leave_bi.rsq, 1.0)
+                if hasattr(leave_bi, 'power_snr'):
+                    reliability = (reliability + min(leave_bi.power_snr, 1.0)) / 2
+
+                bc_list.append({
+                    'direction': str(leave_bi.direction),
+                    'strength': strength,
+                    'reliability': reliability,
+                    'price': leave_bi.high if 'Up' in str(leave_bi.direction) else leave_bi.low,
+                })
+
+    return bc_list
+
+
 def extract_features_from_czsc(bars: list, bi_list: list, fx_list: list, zs_list: list) -> ChanlunFeatures:
     """
     从 czsc 分析结果提取特征向量
@@ -98,26 +194,28 @@ def extract_features_from_czsc(bars: list, bi_list: list, fx_list: list, zs_list
         vec[6] = min(amplitudes) if amplitudes else 0
         vec[7] = np.std(amplitudes) if len(amplitudes) > 1 else 0
 
-    # --- 中枢特征 ---
-    if zs_list:
-        heights = [getattr(zs, 'high', 0) - getattr(zs, 'low', 0) for zs in zs_list]
-        durations = [getattr(zs, 'length', 0) or 0 for zs in zs_list]
+    # --- 中枢特征（从笔推导）---
+    zss = _find_zhongshu(bi_list)
+    if zss:
+        heights = [zs['height'] for zs in zss]
+        durations = [zs['bi_count'] for zs in zss]
+        overlaps = [zs['overlap_ratio'] for zs in zss]
 
-        vec[8] = len(zs_list)
-        vec[9] = np.mean(heights) if heights else 0
-        vec[10] = np.mean(durations) if durations else 0
-        vec[11] = 0  # 重叠度需额外计算
-        vec[12] = max(getattr(zs, 'level', 1) for zs in zs_list) if zs_list else 0
-        vec[13] = 0  # 转移概率需额外计算
+        vec[8] = len(zss)
+        vec[9] = np.mean(heights)
+        vec[10] = np.mean(durations)
+        vec[11] = np.mean(overlaps)
+        vec[12] = max(zs['level'] for zs in zss)
+        vec[13] = len(zss) / max(len(bi_list), 1)  # 中枢密度
 
-    # --- 背驰特征 ---
-    bc_list = [fx for fx in fx_list if getattr(fx, 'fx_mark', '') in ('d', 'g')]
+    # --- 背驰特征（从笔力度对比推导）---
+    bc_list = _detect_beichi(bi_list, zss)
     if bc_list:
+        strengths = [bc['strength'] for bc in bc_list]
         vec[14] = len(bc_list)
-        vec[15] = 0  # 强度需额外计算
-        last_fx = bc_list[-1]
-        vec[16] = 1 if getattr(last_fx, 'fx_mark', '') == 'g' else -1
-        vec[17] = 0.5  # 可靠度默认值
+        vec[15] = np.mean(strengths)
+        vec[16] = 1 if bc_list[-1]['direction'] == 'Up' else -1
+        vec[17] = np.mean([bc['reliability'] for bc in bc_list])
 
     # --- 成交量特征 ---
     if bars:
