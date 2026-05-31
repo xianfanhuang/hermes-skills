@@ -100,7 +100,7 @@ python3 scripts/generate_graph.py --output my_arch.html
 
 **快速开始**:
 ```bash
-cd skills/session-lifecycle
+cd session-lifecycle
 # 读技能文档
 cat SKILL.md
 # 需要细节时看原文
