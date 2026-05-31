@@ -40,6 +40,31 @@ python3 hermes-cli.py --list
 | hermes-migration | 2.0 | 100 | 迁移系统 |
 | token-budget-manager | 2.1 | 90 | 轻量预算管理 |
 | trading-assistant | 1.0 | 80 | 交易助手核心能力（缠论/数据路由/风控/反思） |
+| voice-assistant | 1.0.0 | 70 | 中英双语语音消息生成与识别（MIMO TTS + ASR） |
+| architecture-knowledge-graph | 1.0.0 | 60 | 交互式架构知识图谱构建（Cytoscape.js 可视化） |
+
+## 新增技能
+
+### architecture-knowledge-graph (2026-05-31)
+
+**功能**: 将系统架构描述转化为可交互的 Web 知识图谱
+
+**使用场景**:
+- 系统架构可视化
+- 技术文档增强
+- 知识图谱展示
+
+**快速开始**:
+```bash
+cd architecture-knowledge-graph
+python3 scripts/generate_graph.py --output my_arch.html
+```
+
+**特性**:
+- 可拖拽、缩放、点击查看详情
+- 节点关联高亮
+- 响应式布局
+- 自包含 HTML 输出
 
 ## 版本管理
 
