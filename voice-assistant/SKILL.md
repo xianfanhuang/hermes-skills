@@ -35,9 +35,20 @@ python3 scripts/mimo_tts.py --text "要转换的文字" --voice Milo --output /t
 # 2. 转换为OGG OPUS（飞书语音消息格式）
 ffmpeg -y -i /tmp/output.wav -c:a libopus -b:a 32k /tmp/output.ogg
 
-# 3. 发送飞书语音消息
-# 使用 message tool: asVoice=true, media=/tmp/output.ogg
+# 3. 发送飞书语音消息（Coze端）
+# 复制到用户上传目录，用 computer:// 协议引用
+cp /tmp/output.ogg ./用户上传/output.ogg
+# 发送格式: [描述](computer://用户上传/output.ogg)
 ```
+
+**Coze 飞书渠道语音消息格式**（2026-05-31验证）：
+```markdown
+[语音消息](computer://用户上传/filename.ogg)
+```
+- 文件必须放在 `./用户上传/` 目录下
+- 使用 `computer://` 协议引用（不是 `file://`）
+- 格式必须是 **OGG OPUS**（24kHz，单声道，32kbps）
+- 其他格式（MP3/WAV）会显示为文件附件而非语音卡片
 
 ### Coze TTS（备用）
 
