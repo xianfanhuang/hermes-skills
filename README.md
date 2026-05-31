@@ -42,6 +42,7 @@ python3 hermes-cli.py --list
 | trading-assistant | 1.0 | 80 | 交易助手核心能力（缠论/数据路由/风控/反思） |
 | voice-assistant | 1.0.0 | 70 | 中英双语语音消息生成与识别（MIMO TTS + ASR） |
 | architecture-knowledge-graph | 1.0.0 | 60 | 交互式架构知识图谱构建（Cytoscape.js 可视化） |
+| session-lifecycle | 2.0 | 50 | Session 全生命周期管理（归档/防溢出/上下文恢复/备份同步） |
 
 ## 新增技能
 
@@ -65,6 +66,33 @@ python3 scripts/generate_graph.py --output my_arch.html
 - 节点关联高亮
 - 响应式布局
 - 自包含 HTML 输出
+
+## 新增技能
+
+### session-lifecycle (2026-05-31)
+
+**功能**: Session 全生命周期机制管理
+
+**包含**:
+- 启动流程（context-restore → auto-archive）
+- /new 与 /reset 机制
+- 四层防溢出（输出/轮次/时间/context）
+- 五层定时保护（归档/备份/清理/记忆压缩）
+- 排查指南
+
+**使用场景**:
+- 理解 OpenClaw session 机制
+- 排查 session 卡住/context 满等问题
+- 新 agent 快速了解系统运行原理
+
+**快速开始**:
+```bash
+cd session-lifecycle
+# 读技能文档
+open SKILL.md
+# 需要细节时看原文
+open session-lifecycle-backup.md
+```
 
 ## 版本管理
 
