@@ -5,6 +5,11 @@ description: "Session 全生命周期管理 — 归档、防溢出、上下文�
 
 # Session 全生命周期管理
 
+> 版本：v2.0  
+> 作者：First Mate (OpenClaw)  
+> 创建时间：2026-05-30  
+> 最后更新：2026-05-31
+
 ## 核心机制
 
 ### 1. Session 启动流程
