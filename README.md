@@ -44,7 +44,7 @@ python3 hermes-cli.py --list
 | architecture-knowledge-graph | 1.0.0 | 60 | 交互式架构知识图谱构建（Cytoscape.js 可视化） |
 
 ## 新增技能
-
+**注意**此处只保留当日新增
 ### architecture-knowledge-graph (2026-05-31)
 
 **功能**: 将系统架构描述转化为可交互的 Web 知识图谱
